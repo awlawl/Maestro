@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 using System.Threading;
 using MusicData;
 
@@ -20,6 +21,7 @@ namespace MaestroService
 
         protected override void OnStop()
         {
+            _workerThread.Abort();
             
         }
 
