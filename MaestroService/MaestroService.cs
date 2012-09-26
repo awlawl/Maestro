@@ -46,9 +46,12 @@ namespace MaestroService
 
             var player = new Player(playlist, dummyAudio);
 
-            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\one.mp3");
-            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\two.mp3");
-            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\three.mp3");
+            //loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\one.mp3");
+            //loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\two.mp3");
+            //loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\three.mp3");
+
+            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Music\Soundgarden\Superunknown\10 - Soundgarden - The Day I Tried To Live.mp3");
+            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Music\Soundgarden\Superunknown\05 - Soundgarden - Superunknown.mp3");
             
             loopingWatcher.AttachToPlaylist(playlist);
         }

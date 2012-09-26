@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiHosting.cs" />
+    <Compile Include="SkipController.cs" />
     <Compile Include="StopController.cs" />
     <Compile Include="PlayController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
