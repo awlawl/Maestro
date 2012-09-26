@@ -2,13 +2,14 @@
 using System.ServiceProcess;
 using System.Threading;
 using MusicData;
+using RestAPI;
 
 namespace MaestroService
 {
     partial class MaestroService : ServiceBase
     {
-        private Thread _workerThread = null;
-
+        private ApiHosting _apiHosting = null;
+        
         public MaestroService()
         {
             InitializeComponent();
@@ -21,20 +22,25 @@ namespace MaestroService
 
         protected override void OnStop()
         {
-            _workerThread.Abort();
+           _apiHosting.Stop();
+            Player.Current.Stop();
             
         }
 
         public void Start()
         {
-            _workerThread = new Thread(new ThreadStart(WorkerThread));
-            _workerThread.Name = "Worker Thread";
-            _workerThread.Start();
+            
+            StartPlayer();
+
+            _apiHosting = new ApiHosting();
+            _apiHosting.Start();
+
         }
 
-        private void WorkerThread()
+        private void StartPlayer()
         {
-             var loopingWatcher = new LoopingPlaylistWatcher();
+            //POC code for playing in the service
+            var loopingWatcher = new LoopingPlaylistWatcher();
             var playlist = new Playlist(loopingWatcher);
             var dummyAudio = new NAudioInteractor();
 
@@ -43,11 +49,10 @@ namespace MaestroService
             loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\one.mp3");
             loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\two.mp3");
             loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\three.mp3");
-
+            
             loopingWatcher.AttachToPlaylist(playlist);
-
-            player.Play();   
-           
         }
+
+       
     }
 }

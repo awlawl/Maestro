@@ -1,5 +1,4 @@
-﻿
-using MusicData;
+﻿using MusicData;
 using NUnit.Framework;
 
 namespace Tests
@@ -104,6 +103,14 @@ namespace Tests
             player.Stop();
 
             Assert.IsTrue(dummyAudio.WasStopped, "It should stop.");
+        }
+        
+        [Test]
+        public void PlayerShouldHaveASingletonishInstance()
+        {
+            var player = new Player(null, null);
+
+            Assert.AreEqual(player, Player.Current, "The global Current player must be the same as the one just created.");
         }
     }
 }

@@ -7,47 +7,60 @@ namespace MusicData
 {
     public class NAudioInteractor : IAudioInteractor
     {
-        
-        
-        public NAudioInteractor()
-        {
-        
-            
-        }
-        
+        private Thread _playingThread = null;
+        private WaveOut _waveOutDevice = null;
 
         public void PlaySong(string filename)
         {
-            var waveOutDevice = new WaveOut();
-            WaveChannel32 inputStream;
-            WaveStream mp3Reader;
-            if (filename.EndsWith(".mp3"))
+            _playingThread = new Thread(new ParameterizedThreadStart(PlayInThread));
+            _playingThread.Name = "Audio Interactor Player";
+            _playingThread.Start(filename);
+            _playingThread.Join();
+        }
+
+        
+        private void PlayInThread(object data)
+        {
+            string filename = (string)data;
+
+            _waveOutDevice = new WaveOut();
+            WaveChannel32 inputStream = null;
+            WaveStream mp3Reader = null;
+
+            try
             {
-                mp3Reader= new Mp3FileReader(filename);
+                if (filename.EndsWith(".mp3"))
+                {
+                    mp3Reader = new Mp3FileReader(filename);
 
-                inputStream = new WaveChannel32(mp3Reader);
+                    inputStream = new WaveChannel32(mp3Reader);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unsupported extension");
+                }
+
+                _waveOutDevice.Init(inputStream);
+                _waveOutDevice.Play();
+
+                Thread.Sleep(mp3Reader.TotalTime);
             }
-            else
+            finally
             {
-                throw new InvalidOperationException("Unsupported extension");
+                _waveOutDevice.Stop();
+                mp3Reader.Close();
+                inputStream.Close();
+
+                _waveOutDevice.Dispose();
             }
 
-            waveOutDevice.Init(inputStream);
-            waveOutDevice.Play();
-
-            Thread.Sleep(mp3Reader.TotalTime);
-
-            waveOutDevice.Stop();
-            mp3Reader.Close();
-            inputStream.Close();
             
-            waveOutDevice.Dispose();
         }
 
         public event EventHandler SongChanged;
         public void PauseSong()
         {
-            throw new NotImplementedException();
+
         }
 
         public void ResumeSong()
@@ -57,7 +70,8 @@ namespace MusicData
 
         public void StopSong()
         {
-            throw new NotImplementedException();
+            _waveOutDevice.Stop();
+            _playingThread.Abort();
         }
     }
 }

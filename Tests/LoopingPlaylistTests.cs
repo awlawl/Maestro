@@ -33,5 +33,6 @@ namespace Tests
 
             Assert.AreEqual(2, playlist.Count, "After playing three songs there must still be 2 songs in the playlist.");
         }
+
     }
 }

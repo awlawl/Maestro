@@ -5,24 +5,43 @@ namespace MusicData
     {
         private IAudioInteractor _audioInteractor = null;
         private Playlist _playlist = null;
-        public bool _paused = false;
+        private bool _paused = false;
+        private bool _stopped = false;
 
         public int MaxPlayCount { get; set; }
         public int PlayCount { get; set; }
+        private bool _isPlaying = false;
+
+        private static Player _current;
+
+        public static Player Current {
+            get
+            {
+                return _current;
+            }
+        }
 
         public Player(Playlist playlist, IAudioInteractor audioInteractor)
         {
             _audioInteractor = audioInteractor;
             _playlist = playlist;
+            _current = this;
         }
         
         public void Play()
         {
-            while (ShouldPlayASong())
+            if (_isPlaying)
+                return;
+            
+            _stopped = false;
+            _isPlaying = true;
+
+            while (ShouldPlayASong() && !_stopped)
             {
                 _audioInteractor.PlaySong(_playlist.GetNextSong());
                 PlayCount++;
             }
+            _isPlaying = false;
         }
 
         private bool ShouldPlayASong()
@@ -51,6 +70,7 @@ namespace MusicData
 
         public void Stop()
         {
+            _stopped = true;
             _audioInteractor.StopSong();
         }
         
