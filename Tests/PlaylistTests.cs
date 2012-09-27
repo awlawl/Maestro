@@ -36,5 +36,25 @@ namespace Tests
             Assert.IsFalse(playlist.AreSongsAvailable(), "There must not be any songs available.");
             
         }
+
+        [Test]
+        public void PlaylistsCanGoBack()
+        {
+            string filename = "song1";
+            var dummyPlaylistWatcher = new DummyPlaylistWatcher();
+            var playlist = new Playlist(dummyPlaylistWatcher);
+
+            playlist.Enqueue(filename);
+
+            Assert.AreEqual(1, playlist.Count, "There must be one song in the playlist.");
+
+            string song = playlist.GetNextSong();
+
+            Assert.IsTrue(playlist.HistoryIsAvailable(), "There must be songs in the history.");
+
+            string backOneSong = playlist.GetLastSong();
+
+            Assert.AreEqual(song, backOneSong, "The last song must be the same as the first.");
+        }
     }
 }

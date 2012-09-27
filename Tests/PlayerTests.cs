@@ -112,5 +112,22 @@ namespace Tests
 
             Assert.AreEqual(player, Player.Current, "The global Current player must be the same as the one just created.");
         }
+
+        [Test]
+        public void PlayerCanGoBack()
+        {
+            var playlist = new Playlist(new DummyPlaylistWatcher());
+            var dummyAudio = new DummyAudioInteractor();
+            var player = new Player(playlist, dummyAudio);
+
+            var song = "song1";
+            playlist.Enqueue(song);
+
+            player.Play();
+            player.Back();
+
+            Assert.AreEqual(2, dummyAudio.PlayHistory.Count, "There must be two songs in the history.");
+            
+        }
     }
 }

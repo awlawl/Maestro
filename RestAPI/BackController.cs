@@ -4,11 +4,11 @@ using MusicData;
 
 namespace RestAPI
 {
-    public class NextController : ApiController
+    public class BackController : ApiController
     {
-        public void Next()
+        public void Back()
         {
-            Player.Current.Next();
+            Player.Current.Back();
         }
         
     }

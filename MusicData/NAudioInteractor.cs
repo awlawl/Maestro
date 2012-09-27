@@ -72,6 +72,7 @@ namespace MusicData
         {
             _waveOutDevice.Stop();
             _playingThread.Abort();
+            _playingThread.Join();
         }
     }
 }

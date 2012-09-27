@@ -1,4 +1,6 @@
 ﻿
+using System.Threading;
+
 namespace MusicData
 {
     public class Player
@@ -66,6 +68,23 @@ namespace MusicData
                 _audioInteractor.ResumeSong();
                 _paused = false;
             }
+        }
+
+        public void Next()
+        {
+            Stop();
+            var playThread = new Thread(new ThreadStart(Play));
+            playThread.Name = "Player Play Loop via Next";
+            playThread.Start();
+        }
+
+        public void Back()
+        {
+            Stop();
+            int beforeSize = _playlist.Count;
+            _playlist.Enqueue(_playlist.GetLastSong());
+
+            Play();
         }
 
         public void Stop()
