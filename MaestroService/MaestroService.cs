@@ -1,5 +1,5 @@
-﻿using System;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
+using System.Linq;
 using System.Threading;
 using MusicData;
 using RestAPI;
@@ -29,11 +29,10 @@ namespace MaestroService
 
         public void Start()
         {
-            
-            StartPlayer();
-
             _apiHosting = new ApiHosting();
             _apiHosting.Start();
+
+            StartPlayer();
 
         }
 
@@ -46,11 +45,14 @@ namespace MaestroService
 
             var player = new Player(playlist, dummyAudio);
 
-            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\one.mp3");
-            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\two.mp3");
-            loopingWatcher.AddToLoop(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles\three.mp3");
+            var musicInfoReader = new MusicInfoReader();
+            var files = musicInfoReader.CrawlDirectory(@"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles").Select(X => X.FullPath);
+
+            foreach (var file in files)
+                loopingWatcher.AddToLoop(file);
             
             loopingWatcher.AttachToPlaylist(playlist);
+            
         }
 
        

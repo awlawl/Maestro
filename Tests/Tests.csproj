@@ -46,6 +46,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,6 +61,8 @@
     <Compile Include="DummyAudioInteractor.cs" />
     <Compile Include="DummyPlaylistWatcher.cs" />
     <Compile Include="LoopingPlaylistTests.cs" />
+    <Compile Include="MusicCrawlerTests.cs" />
+    <Compile Include="MusicInfoReaderTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="PlaylistTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,5 +1,4 @@
 ﻿
-using System.Threading;
 
 namespace MusicData
 {
@@ -73,9 +72,7 @@ namespace MusicData
         public void Next()
         {
             Stop();
-            var playThread = new Thread(new ThreadStart(Play));
-            playThread.Name = "Player Play Loop via Next";
-            playThread.Start();
+            Play();
         }
 
         public void Back()

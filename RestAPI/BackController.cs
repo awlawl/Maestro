@@ -8,7 +8,7 @@ namespace RestAPI
     {
         public void Back()
         {
-            Player.Current.Back();
+            (new Thread(new ThreadStart(Player.Current.Back))).Start();
         }
         
     }
