@@ -37,6 +37,8 @@ namespace MusicData
             _stopped = false;
             _isPlaying = true;
 
+            Log.Debug("Play starting");
+
             while (ShouldPlayASong() && !_stopped)
             {
                 _audioInteractor.PlaySong(_playlist.GetNextSong());
@@ -56,12 +58,14 @@ namespace MusicData
 
         public void Pause()
         {
+            Log.Debug("Pausing");
             _audioInteractor.PauseSong();
             _paused = true;
         }
 
         public void Resume()
         {
+            Log.Debug("Resuming");
             if (_paused)
             {
                 _audioInteractor.ResumeSong();
@@ -71,12 +75,14 @@ namespace MusicData
 
         public void Next()
         {
+            Log.Debug("Next-ing.");
             Stop();
             Play();
         }
 
         public void Back()
         {
+            Log.Debug("Back-ing");
             Stop();
             int beforeSize = _playlist.Count;
             _playlist.Enqueue(_playlist.GetLastSong());
@@ -86,6 +92,7 @@ namespace MusicData
 
         public void Stop()
         {
+            Log.Debug("Stopping");
             _stopped = true;
             _audioInteractor.StopSong();
         }

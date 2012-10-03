@@ -1,5 +1,6 @@
 ﻿using System.ServiceProcess;
 using System.Threading;
+using MusicData;
 
 namespace MaestroService
 {
@@ -19,6 +20,7 @@ namespace MaestroService
 #if !SERVICE_DEBUG
             ServiceBase.Run(ServicesToRun);
 #else
+           Log.Debug("Starting in test mode.");
            ((MaestroService) ServicesToRun[0]).Start();
            while (true)
                Thread.Sleep(1000);

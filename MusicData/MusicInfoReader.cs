@@ -6,6 +6,8 @@ namespace MusicData
 {
     public class MusicInfoReader
     {
+        //TODO: make this configurable somehow
+        private string[] _supportedExtentions = {"mp3"};
        
         public MusicInfo GetInfoForFile(string fullPath)
         {
@@ -28,11 +30,19 @@ namespace MusicData
             var result = new List<MusicInfo>();
 
             var musicInfoReader = new MusicInfoReader();
-            var files = Directory.GetFiles(audioDirectory);
+            var files = Directory.GetFiles(audioDirectory, "*." + _supportedExtentions[0]);
 
             foreach (var file in files)
             {
                 result.Add(musicInfoReader.GetInfoForFile(file));
+            }
+
+            //look for subdirectories, recursively get files
+            var directories = Directory.GetDirectories(audioDirectory);
+
+            foreach (var directory in directories)
+            {
+                result.AddRange(CrawlDirectory(directory));
             }
 
             return result;
