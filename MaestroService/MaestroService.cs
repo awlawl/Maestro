@@ -39,21 +39,19 @@ namespace MaestroService
         private void StartPlayer()
         {
             //POC code for playing in the service
-            var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
+            //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
             //var testDirectory = @"C:\Users\Public\Music\Manchester Orchestra\Simple Math";
+            var testDirectory = @"C:\Users\awl\Dropbox\Stuff\Maestro\TestFiles";
             var loopingWatcher = new LoopingPlaylistWatcher();
             var playlist = new Playlist(loopingWatcher);
             var dummyAudio = new NAudioInteractor();
+            var library = new MemoryLibraryRepository();
 
             var player = new Player(playlist, dummyAudio);
 
-            var musicInfoReader = new MusicInfoReader();
-            var files = musicInfoReader.CrawlDirectory(testDirectory).Select(X => X.FullPath).ToArray();
-
-            foreach (var file in files)
-                loopingWatcher.AddToLoop(file);
+            library.AddDirectoryToLibrary(testDirectory);
             
-            loopingWatcher.AttachToPlaylist(playlist);
+            loopingWatcher.AttachToPlaylist(playlist, library);
             
         }
 

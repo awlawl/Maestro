@@ -129,5 +129,41 @@ namespace Tests
             Assert.AreEqual(2, dummyAudio.PlayHistory.Count, "There must be two songs in the history.");
             
         }
+
+        [Test]
+        public void PlayerCanBeGivenANewPlaylist()
+        {
+            var library = new MemoryLibraryRepository();
+            var looping = new LoopingPlaylistWatcher();
+            var playlist = new Playlist(looping);
+            var dummyAudio = new DummyAudioInteractor();
+            var player = new Player(playlist, dummyAudio);
+
+            var song = "song1";
+
+            library.ClearLibrary();
+            library.AddMusicToLibrary(new MusicInfo[] { new MusicInfo() { FullPath = song } });
+
+            looping.AttachToPlaylist(playlist, library);
+
+            player.MaxPlayCount = 1;
+            player.Play();
+
+            Assert.AreEqual(song, playlist.GetLastSong(), "The last song played must be the only one in the library.");
+            
+
+            var song2 = "song 2";
+
+            library.ClearLibrary();
+            library.AddMusicToLibrary(new MusicInfo[] { new MusicInfo() { FullPath = song2 } });
+
+            looping.AttachToPlaylist(playlist, library);
+
+            player.PlayCount = 0;
+            player.Play();
+            //player.Play();
+
+            Assert.AreEqual(song2, playlist.GetLastSong(), "The last song played must be new song in the library.");
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace MusicData
 {
     public interface IPlaylistWatcher
     {
-        void AttachToPlaylist(Playlist playlist);
+        void AttachToPlaylist(Playlist playlist, ILibraryRepository library);
         void PlaySong(string filename);
     }
 }

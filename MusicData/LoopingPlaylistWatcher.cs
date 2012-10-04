@@ -18,9 +18,15 @@ namespace MusicData
             _loop.Enqueue(song);
         }
 
-        public void AttachToPlaylist(Playlist playlist)
+        public void AttachToPlaylist(Playlist playlist, ILibraryRepository library)
         {
             _playlist = playlist;
+            _playlist.Clear();
+
+            List<MusicInfo> songs = library.GetAllMusic();
+
+            foreach (var song in songs)
+                _loop.Enqueue(song.FullPath);
 
             for (int i = 0; i < _loop.Count; i++)
                 PutNextSongInThePlaylist();

@@ -15,6 +15,7 @@ namespace RestAPI
             config.Routes.MapHttpRoute(
                 "API Default", "api/{controller}/{id}",
                 new { id = RouteParameter.Optional });
+            
 
             _server = new HttpSelfHostServer(config);
             _server.OpenAsync().Wait();

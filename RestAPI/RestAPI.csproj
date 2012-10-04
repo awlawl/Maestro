@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="ApiHosting.cs" />
     <Compile Include="BackController.cs" />
+    <Compile Include="AddToLibraryController.cs" />
+    <Compile Include="RestartController.cs" />
     <Compile Include="NextController.cs" />
     <Compile Include="StopController.cs" />
     <Compile Include="PlayController.cs" />

@@ -5,19 +5,19 @@ namespace MusicData
 {
     public class Playlist : Queue<string>
     {
-        private IPlaylistWatcher _playlistWatcher = null;
+        public IPlaylistWatcher PlaylistWatcher { get; set; }
         private Stack<string> _pastSongs = null; 
 
         public Playlist(IPlaylistWatcher watcher)
         {
-            _playlistWatcher = watcher;
+            PlaylistWatcher = watcher;
             _pastSongs = new Stack<string>();
         }
 
         public string GetNextSong()
         {
             string nextSong = this.Dequeue();
-            _playlistWatcher.PlaySong(nextSong);
+            PlaylistWatcher.PlaySong(nextSong);
             _pastSongs.Push(nextSong);
             return nextSong;
         }

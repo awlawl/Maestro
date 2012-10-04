@@ -65,11 +65,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAudioInteractor.cs" />
+    <Compile Include="IMusicInfoDataProvider.cs" />
+    <Compile Include="ILibraryRepository.cs" />
     <Compile Include="IPlaylistWatcher.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MusicCrawler.cs" />
     <Compile Include="MusicInfo.cs" />
     <Compile Include="MusicInfoReader.cs" />
+    <Compile Include="MemoryLibraryRepository..cs" />
     <Compile Include="NAudioInteractor.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Playlist.cs" />

@@ -13,7 +13,7 @@ namespace Tests
             PlayHistory = new List<string>();
         }
 
-        public void AttachToPlaylist(Playlist playlist)
+        public void AttachToPlaylist(Playlist playlist, ILibraryRepository library)
         {
             throw new System.NotImplementedException();
         }

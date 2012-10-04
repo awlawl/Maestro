@@ -12,16 +12,21 @@ namespace Tests
             var song1 = "song1";
             var song2 = "song2";
 
+            var library = new MemoryLibraryRepository();
+            library.ClearLibrary();
+            library.AddMusicToLibrary(
+                new MusicInfo[] { 
+                    new MusicInfo() { FullPath = song1 }, 
+                    new MusicInfo() { FullPath = song2 } 
+                });
+
             var loopingWatcher = new LoopingPlaylistWatcher();
             var playlist = new Playlist(loopingWatcher);
             var dummyAudio = new DummyAudioInteractor();
 
             var player = new Player(playlist, dummyAudio);
-
-            loopingWatcher.AddToLoop(song1);
-            loopingWatcher.AddToLoop(song2);
-
-            loopingWatcher.AttachToPlaylist(playlist);
+                        
+            loopingWatcher.AttachToPlaylist(playlist, library);
 
             player.MaxPlayCount = 3;
             player.Play();      
