@@ -6,6 +6,7 @@ namespace RestAPI
 {
     public class StopController : ApiController
     {
+        [HttpGet]
         public void Stop()
         {
             Player.Current.Stop();

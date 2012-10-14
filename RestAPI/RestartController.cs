@@ -7,7 +7,7 @@ namespace RestAPI
     public class RestartController : ApiController
     {
 
-        [HttpPost]
+        [HttpGet]
         public void Restart()
         {
             Player.Current.Stop();

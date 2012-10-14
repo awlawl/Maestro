@@ -6,6 +6,7 @@ namespace RestAPI
 {
     public class BackController : ApiController
     {
+        [HttpGet]
         public void Back()
         {
             (new Thread(new ThreadStart(Player.Current.Back))).Start();

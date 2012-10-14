@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Maestro</title>
+  
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+      <style>
+          body {
+			font-size: 18px;
+			padding-top: 60px;
+			padding-bottom: 40px;
+		}
+      </style> 
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+      <script>
+          $(document).ready(function () {
+              $("#btnPlay").click(play);
+              $("#btnStop").click(stop);
+              $("#btnNext").click(next);
+              $("#btnBack").click(back);
+          });
+
+          function play() {
+              callUrl('http://192.168.1.103:20202/api/play');
+          }
+
+          function stop() {
+              callUrl('http://192.168.1.103:20202/api/stop');
+          }
+
+          function next() {
+              callUrl('http://192.168.1.103:20202/api/next');
+          }
+
+          function back() {
+              callUrl('http://192.168.1.103:20202/api/back');
+          }
+
+          function callUrl(urlGet) {
+              $.ajax({
+                  url: urlGet
+              });
+          }
+      </script>
+  </head>
+  <body >
+    <div class="span5">
+      <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
+        </div>
+    
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
