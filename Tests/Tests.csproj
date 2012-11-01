@@ -70,6 +70,8 @@
     <Compile Include="PlayerTests.cs" />
     <Compile Include="PlaylistTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PubnubMessageTranslatorTests.cs" />
+    <Compile Include="PubnubMessagingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -78,6 +80,10 @@
     <ProjectReference Include="..\MusicData\MusicData.csproj">
       <Project>{34fdbba7-da83-4f90-955c-56209aa0dfbd}</Project>
       <Name>MusicData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealTimeMessaging\RealTimeMessaging.csproj">
+      <Project>{d29daf70-b560-4698-8752-2f49d99dfeb8}</Project>
+      <Name>RealTimeMessaging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

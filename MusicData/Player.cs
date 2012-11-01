@@ -1,8 +1,6 @@
-﻿
-
-namespace MusicData
+﻿namespace MusicData
 {
-    public class Player
+    public class Player : IPlayer
     {
         private IAudioInteractor _audioInteractor = null;
         public Playlist Playlist {get;set;}

@@ -87,6 +87,10 @@
       <Project>{34fdbba7-da83-4f90-955c-56209aa0dfbd}</Project>
       <Name>MusicData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RealTimeMessaging\RealTimeMessaging.csproj">
+      <Project>{d29daf70-b560-4698-8752-2f49d99dfeb8}</Project>
+      <Name>RealTimeMessaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RestAPI\RestAPI.csproj">
       <Project>{7686095a-13c2-41b7-a4c6-f26c5451965f}</Project>
       <Name>RestAPI</Name>

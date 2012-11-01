@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Web
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicData", "MusicData\MusicData.csproj", "{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}"
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaestroService", "MaestroService\MaestroService.csproj", "{D161E47A-5764-467E-824F-26C820B2CD50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestAPI", "RestAPI\RestAPI.csproj", "{7686095A-13C2-41B7-A4C6-F26C5451965F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeMessaging", "RealTimeMessaging\RealTimeMessaging.csproj", "{D29DAF70-B560-4698-8752-2F49D99DFEB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,12 @@ Global
 		{7686095A-13C2-41B7-A4C6-F26C5451965F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7686095A-13C2-41B7-A4C6-F26C5451965F}.Service Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7686095A-13C2-41B7-A4C6-F26C5451965F}.Service Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Service Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Service Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
