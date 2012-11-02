@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="TopToBottom" Layout="Sugiyama" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="MaestroService" Category="Project" Bounds="414.316666666667,0,100.82,25.96" Label="MaestroService" />
+    <Node Id="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Category="Package" Bounds="130.303333333333,167.88,252.846666666667,25.96" Label="Microsoft.AspNet.WebApi.Client 4.0.20710.0" />
+    <Node Id="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Category="Package" Bounds="133.036666666667,111.92,247.38,25.96" Label="Microsoft.AspNet.WebApi.Core 4.0.20710.0" />
+    <Node Id="Microsoft.AspNet.WebApi.SelfHost 4.0.20710.0" Category="Package" Bounds="123.48,55.9600000000002,266.493333333333,25.96" Label="Microsoft.AspNet.WebApi.SelfHost 4.0.20710.0" />
+    <Node Id="Microsoft.Net.Http 2.0.20710.0" Category="Package" Bounds="166.001666666667,223.84,181.45,25.96" Label="Microsoft.Net.Http 2.0.20710.0" />
+    <Node Id="MusicData" Category="Project" Bounds="545.825,0,75.8033333333333,25.96" Label="MusicData" />
+    <Node Id="NAudio 1.5" Category="Package" Bounds="657.058333333333,55.96,79.3366666666666,25.96" Label="NAudio 1.5" />
+    <Node Id="NUnit 2.6.1" Category="Package" Bounds="910.286666666667,55.96,78.8800000000001,25.96" Label="NUnit 2.6.1" />
+    <Node Id="Newtonsoft.Json 4.5.9" Category="Package" Bounds="0,223.84,135.453333333333,25.96" Label="Newtonsoft.Json 4.5.9" />
+    <Node Id="Pubnub 3.0" Category="Package" Bounds="22.7133333333334,335.76,80.0233333333333,25.96" Label="Pubnub 3.0" />
+    <Node Id="RealTimeMessaging" Category="Project" Bounds="7.105427357601E-15,279.8,125.45,25.96" Label="RealTimeMessaging" />
+    <Node Id="RestAPI" Category="Project" Bounds="323.593333333333,1.13686837721616E-13,60.2666666666667,25.96" Label="RestAPI" />
+    <Node Id="RhinoMocks 3.6.1" Category="Package" Bounds="767.228333333333,55.96,112.996666666667,25.96" Label="RhinoMocks 3.6.1" />
+    <Node Id="Tests" Category="Project" Bounds="671.726666666667,0,50,25.96" Label="Tests" />
+    <Node Id="log4net 2.0.0" Category="Package" Bounds="420.475,55.96,88.5033333333333,25.96" Label="log4net 2.0.0" />
+    <Node Id="taglib 2.1.0.0" Category="Package" Bounds="539.19,55.96,87.0733333333334,25.96" Label="taglib 2.1.0.0" />
+  </Nodes>
+  <Links>
+    <Link Source="MaestroService" Target="log4net 2.0.0" Category="Installed Package" Bounds="464.726654052734,25.9599990844727,0,21" />
+    <Link Source="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Target="Microsoft.Net.Http 2.0.20710.0" Category="Package Dependency" Bounds="256.726654052734,193.839996337891,0,21" />
+    <Link Source="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Target="Newtonsoft.Json 4.5.9" Category="Package Dependency" Bounds="120.195159912109,193.839996337891,92.6926879882813,27.4448852539063" />
+    <Link Source="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Target="Microsoft.AspNet.WebApi.Client 4.0.20710.0" Category="Package Dependency" Bounds="256.726654052734,137.880004882813,0,21" />
+    <Link Source="Microsoft.AspNet.WebApi.SelfHost 4.0.20710.0" Target="Microsoft.AspNet.WebApi.Core 4.0.20710.0" Category="Package Dependency" Bounds="256.726654052734,81.9199981689453,0,21" />
+    <Link Source="MusicData" Target="NAudio 1.5" Category="Installed Package" Bounds="609.937194824219,25.9599990844727,52.5137329101563,26.0059432983398" />
+    <Link Source="MusicData" Target="log4net 2.0.0" Category="Installed Package" Bounds="500.473297119141,25.9599990844727,55.6511535644531,26.1700706481934" />
+    <Link Source="MusicData" Target="taglib 2.1.0.0" Category="Installed Package" Bounds="583.119445800781,25.9599990844727,0.375244140625,21.0014381408691" />
+    <Link Source="RealTimeMessaging" Target="Pubnub 3.0" Category="Installed Package" Bounds="62.7249984741211,305.760009765625,0,21" />
+    <Link Source="RestAPI" Target="Microsoft.AspNet.WebApi.SelfHost 4.0.20710.0" Category="Installed Package" Bounds="287.021667480469,25.9599990844727,44.2057189941406,25.5025901794434" />
+    <Link Source="RestAPI" Target="log4net 2.0.0" Category="Installed Package" Bounds="379.473266601563,25.9599990844727,51.4703063964844,25.9484558105469" />
+    <Link Source="Tests" Target="NAudio 1.5" Category="Installed Package" Bounds="696.726684570313,25.9599990844727,0,21" />
+    <Link Source="Tests" Target="NUnit 2.6.1" Category="Installed Package" Bounds="721.726684570313,18.5096435546875,179.772399902344,39.7630958557129" />
+    <Link Source="Tests" Target="RhinoMocks 3.6.1" Category="Installed Package" Bounds="721.567077636719,23.9254283905029,64.4658203125,28.4055767059326" />
+    <Link Source="Tests" Target="log4net 2.0.0" Category="Installed Package" Bounds="517.650451660156,19.0101718902588,154.076232910156,37.1642513275146" />
+  </Links>
+  <Categories>
+    <Category Id="Installed Package" />
+    <Category Id="Package" />
+    <Category Id="Package Dependency" />
+    <Category Id="Project" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="GraphDirection" DataType="Microsoft.VisualStudio.Diagrams.Layout.LayoutOrientation" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Project" ValueLabel="True">
+      <Condition Expression="HasCategory('Project')" />
+      <Setter Property="Background" Value="Blue" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Package Dependency" ValueLabel="True">
+      <Condition Expression="HasCategory('Package Dependency')" />
+      <Setter Property="Background" Value="Yellow" />
+    </Style>
+  </Styles>
+</DirectedGraph>

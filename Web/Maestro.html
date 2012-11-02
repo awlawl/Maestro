@@ -2,7 +2,11 @@
 <html>
   <head>
     <title>Maestro</title>
-  
+      <div id="pubnub" 
+           pub-key="demo" 
+           sub-key="demo" ssl="off" origin="pubsub.pubnub.com">
+      </div>
+
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
       <style>
           body {
@@ -12,37 +16,67 @@
 		}
       </style> 
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="http://cdn.pubnub.com/pubnub-3.3.min.js"></script>
 
-      <script>
-          $(document).ready(function () {
-              $("#btnPlay").click(play);
-              $("#btnStop").click(stop);
-              $("#btnNext").click(next);
-              $("#btnBack").click(back);
-          });
+    <script>
 
-          function play() {
-              callUrl('http://192.168.1.103:20202/api/play');
-          }
+        var channel = 'maestrotest';
+        
+        $(document).ready(function () {
+            $("#btnPlay").click(play);
+            $("#btnStop").click(stop);
+            $("#btnNext").click(next);
+            $("#btnBack").click(back);
+            
+            PUBNUB.subscribe({
+                channel: channel,
+                callback: function (message) {
+                    console.log(JSON.stringify(message));
+                      
+                },
+                error: function () {
+                    // The internet is gone.
+                    console.log("###Connection Lost");
+                },
+                connect: function () {
+                    console.log("Now listening.");
+                      
+                }
+            });
+        });
+          
+        function publishMessage(message) {
+	
+            PUBNUB.publish({
+                channel: 'maestrotest',
+                message: message,
+                callback: function (info) {
+                    console.log("Wrote message");
+                    if (!info[0]) {
+                        console.log("!!!!!!!!!!!!!!!!!!!! Failed! -> " + info[1]);
+                      
+                    } 
+                }
+            });
+        };
 
-          function stop() {
-              callUrl('http://192.168.1.103:20202/api/stop');
-          }
+        function play() {
+            publishMessage({ action: "Play" });
+        }
 
-          function next() {
-              callUrl('http://192.168.1.103:20202/api/next');
-          }
+        function stop() {
+            publishMessage({ action: "Stop" });
+        }
 
-          function back() {
-              callUrl('http://192.168.1.103:20202/api/back');
-          }
+        function next() {
+              
+        }
 
-          function callUrl(urlGet) {
-              $.ajax({
-                  url: urlGet
-              });
-          }
-      </script>
+        function back() {
+              
+        }
+          
+    </script>
   </head>
   <body >
     <div class="span5">
