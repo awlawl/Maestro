@@ -15,8 +15,11 @@ namespace Tests
 
             var song1 = "song1";
             var song2 = "song2";
-            playlist.Enqueue(song1);
-            playlist.Enqueue(song2);
+            var music1 = new MusicInfo() { FullPath = song1 };
+            var music2 = new MusicInfo() { FullPath = song2 };
+
+            playlist.Enqueue(music1);
+            playlist.Enqueue(music2);
 
             player.Play();
             
@@ -46,7 +49,9 @@ namespace Tests
             var player = new Player(playlist, dummyAudio);
 
             var song = "song1";
-            playlist.Enqueue(song);
+            var music = new MusicInfo() { FullPath = song };
+
+            playlist.Enqueue(music);
 
             player.Play();
             
@@ -62,7 +67,9 @@ namespace Tests
             var player = new Player(playlist, dummyAudio);
 
             var song = "song1";
-            playlist.Enqueue(song);
+            var music = new MusicInfo() { FullPath = song };
+
+            playlist.Enqueue(music);
 
             player.Play();
             player.Pause();
@@ -81,7 +88,9 @@ namespace Tests
             var player = new Player(playlist, dummyAudio);
 
             var song = "song1";
-            playlist.Enqueue(song);
+            var music = new MusicInfo() { FullPath = song };
+
+            playlist.Enqueue(music);
 
             player.Play();
             player.Resume();
@@ -97,7 +106,10 @@ namespace Tests
             var player = new Player(playlist, dummyAudio);
 
             var song = "song1";
-            playlist.Enqueue(song);
+            var music = new MusicInfo() { FullPath = song };
+
+            playlist.Enqueue(music);
+
 
             player.Play();
             player.Stop();
@@ -121,7 +133,9 @@ namespace Tests
             var player = new Player(playlist, dummyAudio);
 
             var song = "song1";
-            playlist.Enqueue(song);
+            var music = new MusicInfo() { FullPath = song };
+
+            playlist.Enqueue(music);
 
             player.Play();
             player.Back();

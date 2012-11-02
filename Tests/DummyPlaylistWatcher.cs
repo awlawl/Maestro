@@ -18,9 +18,9 @@ namespace Tests
             throw new System.NotImplementedException();
         }
 
-        public void PlaySong(string filename)
+        public void PlaySong(MusicInfo filename)
         {
-            PlayHistory.Add(filename);
+            PlayHistory.Add(filename.FullPath);
         }
 
         

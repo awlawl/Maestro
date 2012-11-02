@@ -39,7 +39,7 @@
 
             while (ShouldPlayASong() && !_stopped)
             {
-                _audioInteractor.PlaySong(Playlist.GetNextSong());
+                _audioInteractor.PlaySong(Playlist.GetNextSong().FullPath);
                 PlayCount++;
             }
             _isPlaying = false;
@@ -82,8 +82,8 @@
         {
             Log.Debug("Back-ing");
             
-            var lastSong = Playlist.GetLastSong();
-            var copy = new string[Playlist.Count];
+            MusicInfo lastSong = Playlist.GetLastSong();
+            var copy = new MusicInfo[Playlist.Count];
             Playlist.CopyTo(copy,0);
             Playlist.Clear();
             Playlist.Enqueue(lastSong);

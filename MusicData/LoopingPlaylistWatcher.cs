@@ -5,15 +5,15 @@ namespace MusicData
 {
     public class LoopingPlaylistWatcher : IPlaylistWatcher
     {
-        private Queue<string> _loop = null;
+        private Queue<MusicInfo> _loop = null;
         private Playlist _playlist = null;
  
         public LoopingPlaylistWatcher()
         {
-            _loop = new Queue<string>();
+            _loop = new Queue<MusicInfo>();
         }
 
-        public void AddToLoop(string song)
+        public void AddToLoop(MusicInfo song)
         {
             _loop.Enqueue(song);
         }
@@ -26,13 +26,13 @@ namespace MusicData
             List<MusicInfo> songs = library.GetAllMusic();
 
             foreach (var song in songs)
-                _loop.Enqueue(song.FullPath);
+                _loop.Enqueue(song);
 
             for (int i = 0; i < _loop.Count; i++)
                 PutNextSongInThePlaylist();
         }
 
-        public void PlaySong(string filename)
+        public void PlaySong(MusicInfo filename)
         {
             PutNextSongInThePlaylist();
         }
