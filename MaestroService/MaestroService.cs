@@ -34,9 +34,10 @@ namespace MaestroService
         private void StartPlayer()
         {
             //POC code for playing in the service
-            var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
+            //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
             //var testDirectory = @"C:\Users\Public\Music\Manchester Orchestra\Simple Math";
-            //avar testDirectory = @"C:\Users\awl\Dropbox\Stuff\Maestro\TestFiles";
+            //var testDirectory = @"C:\Users\awl\Dropbox\Stuff\Maestro\TestFiles";
+            var testDirectory = @"C:\Users\Public\Music\Manchester Orchestra\Simple Math";
             var loopingWatcher = new LoopingPlaylistWatcher();
             var playlist = new Playlist(loopingWatcher);
             var dummyAudio = new NAudioInteractor();

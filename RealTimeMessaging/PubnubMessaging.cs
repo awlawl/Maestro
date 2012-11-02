@@ -63,6 +63,20 @@ namespace RealTimeMessaging
                 case PubnubMessage.ACTION_STOP:
                     _player.Stop();
                     break;
+                    
+                case PubnubMessage.ACTION_NEXT:
+                     if (_doThreading)
+                        (new Thread(new ThreadStart(_player.Next))).Start();
+                    else
+                        _player.Next();
+                    break;
+
+                case PubnubMessage.ACTION_BACK:
+                    if (_doThreading)
+                        (new Thread(new ThreadStart(_player.Back))).Start();
+                    else
+                        _player.Back();
+                    break;
                 
                 default:
                     Log.Debug("Unknow action type: "+ message.Action);

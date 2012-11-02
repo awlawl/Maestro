@@ -4,5 +4,7 @@ namespace MusicData
     {
         void Play();
         void Stop();
+        void Next();
+        void Back();
     }
 }

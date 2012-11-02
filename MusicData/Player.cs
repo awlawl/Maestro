@@ -81,10 +81,17 @@
         public void Back()
         {
             Log.Debug("Back-ing");
-            Stop();
-            int beforeSize = Playlist.Count;
-            Playlist.Enqueue(Playlist.GetLastSong());
+            
+            var lastSong = Playlist.GetLastSong();
+            var copy = new string[Playlist.Count];
+            Playlist.CopyTo(copy,0);
+            Playlist.Clear();
+            Playlist.Enqueue(lastSong);
 
+            foreach (var song in copy)
+                Playlist.Enqueue(song);
+
+            Stop();
             Play();
         }
 

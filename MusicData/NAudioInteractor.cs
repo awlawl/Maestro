@@ -44,6 +44,8 @@ namespace MusicData
                 _waveOutDevice.Volume = 0.5f;
                 _waveOutDevice.Play();
 
+                Log.Debug("Playing " + filename);
+
                 Thread.Sleep(mp3Reader.TotalTime);
             }
             finally

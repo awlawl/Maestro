@@ -41,5 +41,37 @@ namespace Tests
 
             playerStub.AssertWasCalled(X => X.Stop());
         }
+
+        [Test]
+        public void NextMessage()
+        {
+            var rawNubs = new Dictionary<string, object>();
+            rawNubs.Add("action", PubnubMessage.ACTION_NEXT);
+
+            var playerStub = MockRepository.GenerateStub<IPlayer>();
+            playerStub.Stub(X => X.Next());
+
+            var pubnub = new PubnubMessaging(playerStub, false);
+
+            pubnub.HandleMessage(rawNubs);
+
+            playerStub.AssertWasCalled(X => X.Next());
+        }
+
+        [Test]
+        public void BackMessage()
+        {
+            var rawNubs = new Dictionary<string, object>();
+            rawNubs.Add("action", PubnubMessage.ACTION_BACK);
+
+            var playerStub = MockRepository.GenerateStub<IPlayer>();
+            playerStub.Stub(X => X.Back());
+
+            var pubnub = new PubnubMessaging(playerStub, false);
+
+            pubnub.HandleMessage(rawNubs);
+
+            playerStub.AssertWasCalled(X => X.Back());
+        }
     }
 }
