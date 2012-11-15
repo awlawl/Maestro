@@ -15,13 +15,13 @@ namespace Tests
 
             var expected = new PubnubMessage()
                 {
-                    Action = PubnubMessage.ACTION_PLAY
+                    action = PubnubMessage.ACTION_PLAY
                 };
 
             var pubnub = new PubnubMessaging(null, false);
             PubnubMessage result = pubnub.Translate(rawNubs);
 
-            Assert.AreEqual(expected.Action, result.Action, "The action must be correct.");
+            Assert.AreEqual(expected.action, result.action, "The action must be correct.");
 
         }
         

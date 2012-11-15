@@ -32,7 +32,7 @@ namespace MusicData
                 PutNextSongInThePlaylist();
         }
 
-        public void PlaySong(MusicInfo filename)
+        public void PlaySong(MusicInfo song)
         {
             PutNextSongInThePlaylist();
         }

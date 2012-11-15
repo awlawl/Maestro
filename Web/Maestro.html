@@ -11,7 +11,7 @@
       <style>
           body {
 			font-size: 18px;
-			padding-top: 60px;
+			/*padding-top: 60px;*/
 			padding-bottom: 40px;
 		}
       </style> 
@@ -32,7 +32,8 @@
                 channel: channel,
                 callback: function (message) {
                     console.log(JSON.stringify(message));
-                      
+                    handleMessage(message);
+
                 },
                 error: function () {
                     // The internet is gone.
@@ -75,14 +76,45 @@
         function back() {
             publishMessage({ action: "Back" });
         }
+        
+        function handleMessage(message) {
+            if (message.action == "Now Playing") {
+                nowPlaying(message.data);
+            }
+        }
+        
+        function nowPlaying(songInfo) {
+            //$("#divNowPlaying").toggle();
+            setField("#ddArtist", songInfo.Artist);
+            $("#ddTitle").html(songInfo.Title);
+            $("#ddAlbum").html(songInfo.Album);
+        }
+        
+        function setField(id, val) {
+            if (!val)
+                val = '...';
+            $(id).text(val);
+        }
           
     </script>
   </head>
-  <body >
-    <div class="span5">
-      <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
+    <body >
+        <div class="row">
+        <div class="span5" id="divNowPlaying" >
+            <dl class="dl-horizontal">
+                <dt>Artist</dt>
+                <dd id="ddArtist"></dd>
+                <dt>Title</dt>
+                <dd id="ddTitle"></dd>
+                <dt>Album</dt>
+                <dd id="ddAlbum"></dd>
+            </dl>
+        </div>
+            </div>
+        <div class="span5">
+            <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
         </div>
     
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
-  </body>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+    </body>
 </html>

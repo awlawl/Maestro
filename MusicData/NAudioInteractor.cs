@@ -41,7 +41,7 @@ namespace MusicData
                 }
 
                 _waveOutDevice.Init(inputStream);
-                _waveOutDevice.Volume = 0.5f;
+                _waveOutDevice.Volume = 0.1f;
                 _waveOutDevice.Play();
 
                 Log.Debug("Playing " + filename);
@@ -51,8 +51,11 @@ namespace MusicData
             finally
             {
                 _waveOutDevice.Stop();
-                mp3Reader.Close();
-                inputStream.Close();
+                if (mp3Reader!=null)
+                    mp3Reader.Close();
+
+                if (inputStream!=null)
+                    inputStream.Close();
 
                 _waveOutDevice.Dispose();
             }

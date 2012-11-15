@@ -6,7 +6,7 @@ using PubNub_Messaging;
 
 namespace RealTimeMessaging
 {
-    public class PubnubMessaging
+    public class PubnubMessaging : IRealTimeMessaging
     {
         private string PUBLISH_KEY = "demo";
         private string SUBSCRIBE_KEY = "demo";
@@ -15,6 +15,7 @@ namespace RealTimeMessaging
 
         private IPlayer _player = null;
         private bool _doThreading = false;
+        private Pubnub _pubnub;
 
         public PubnubMessaging(IPlayer player, bool doThreading)
         {
@@ -24,8 +25,8 @@ namespace RealTimeMessaging
 
         public void StartListening()
         {
-            var pubnub = new Pubnub(PUBLISH_KEY, SUBSCRIBE_KEY);
-            pubnub.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
+            _pubnub = new Pubnub(PUBLISH_KEY, SUBSCRIBE_KEY);
+            _pubnub.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
             {
                     if (e.PropertyName=="ReturnMessage") {
                         Log.Debug("Got Message");
@@ -33,7 +34,7 @@ namespace RealTimeMessaging
                     }
                 
             };
-            pubnub.subscribe(channel);
+            _pubnub.subscribe(channel);
         }
 
 
@@ -43,7 +44,7 @@ namespace RealTimeMessaging
         {
             return new PubnubMessage()
                 {
-                    Action = rawNubs["action"].ToString()
+                    action = rawNubs["action"].ToString()
                 };
         }
 
@@ -51,7 +52,7 @@ namespace RealTimeMessaging
         {
             PubnubMessage message = this.Translate(rawNubs);
 
-            switch (message.Action)
+            switch (message.action)
             {
                 case PubnubMessage.ACTION_PLAY:
                     if (_doThreading)
@@ -79,11 +80,16 @@ namespace RealTimeMessaging
                     break;
                 
                 default:
-                    Log.Debug("Unknow action type: "+ message.Action);
+                    Log.Debug("Unknow action type: "+ message.action);
                     break;
                     
             }
 
+        }
+
+        public void SendMessage(PubnubMessage message)
+        {
+            _pubnub.publish(this.channel, message);
         }
     }
 }

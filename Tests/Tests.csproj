@@ -65,6 +65,7 @@
     <Compile Include="DummyAudioInteractor.cs" />
     <Compile Include="DummyPlaylistWatcher.cs" />
     <Compile Include="LoopingPlaylistTests.cs" />
+    <Compile Include="MessagingPlaylistWatcherTests.cs" />
     <Compile Include="MusicInfoReaderTests.cs" />
     <Compile Include="MusicInfoRepositoryTests.cs" />
     <Compile Include="PlayerTests.cs" />
