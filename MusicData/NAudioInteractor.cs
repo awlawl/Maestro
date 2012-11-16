@@ -76,7 +76,9 @@ namespace MusicData
 
         public void StopSong()
         {
-            _waveOutDevice.Stop();
+            if (_waveOutDevice!=null)
+                _waveOutDevice.Stop();
+
             _playingThread.Abort();
             _playingThread.Join();
         }
