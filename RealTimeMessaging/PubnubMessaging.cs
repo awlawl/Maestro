@@ -55,10 +55,17 @@ namespace RealTimeMessaging
             switch (message.action)
             {
                 case PubnubMessage.ACTION_PLAY:
-                    if (_doThreading)
-                        (new Thread(new ThreadStart(_player.Play))).Start();
+                    if (_player.IsPaused)
+                    {
+                        _player.Resume();
+                    }
                     else
-                        _player.Play();
+                    {
+                        if (_doThreading)
+                            (new Thread(new ThreadStart(_player.Play))).Start();
+                        else
+                            _player.Play();
+                    }
                     break;
                     
                 case PubnubMessage.ACTION_STOP:
@@ -77,6 +84,10 @@ namespace RealTimeMessaging
                         (new Thread(new ThreadStart(_player.Back))).Start();
                     else
                         _player.Back();
+                    break;
+
+                case PubnubMessage.ACTION_PAUSE:
+                    _player.Pause();
                     break;
                 
                 default:

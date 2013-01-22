@@ -6,5 +6,8 @@ namespace MusicData
         void Stop();
         void Next();
         void Back();
+        void Pause();
+        void Resume();
+        bool IsPaused { get; set; }
     }
 }

@@ -41,9 +41,9 @@ namespace MusicData
                 }
 
                 _waveOutDevice.Init(inputStream);
-                _waveOutDevice.Volume = 0.1f;
+                _waveOutDevice.Volume = 0.3f;
                 _waveOutDevice.Play();
-
+                
                 Log.Debug("Playing " + filename);
 
                 Thread.Sleep(mp3Reader.TotalTime);
@@ -66,12 +66,12 @@ namespace MusicData
         public event EventHandler SongChanged;
         public void PauseSong()
         {
-
+            _waveOutDevice.Pause();
         }
 
         public void ResumeSong()
         {
-            throw new NotImplementedException();
+            _waveOutDevice.Resume();
         }
 
         public void StopSong()

@@ -36,7 +36,7 @@ namespace MaestroService
             //POC code for playing in the service
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
             //var testDirectory = @"C:\Users\awl\Dropbox\Stuff\Maestro\TestFiles";
-            var testDirectory = @"C:\Users\Public\Music\Manchester Orchestra\Simple Math";
+            var testDirectory = @"C:\Users\alyons2\Music\Deftones\White Pony";
             var loopingWatcher = new LoopingPlaylistWatcher();
             var messagingWatcher = new MessagingPlaylistWatcher();
             var playlist = new Playlist(new IPlaylistWatcher[] {loopingWatcher,messagingWatcher});

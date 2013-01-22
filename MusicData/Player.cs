@@ -4,7 +4,6 @@
     {
         private IAudioInteractor _audioInteractor = null;
         public Playlist Playlist {get;set;}
-        private bool _paused = false;
         private bool _stopped = false;
 
         public int MaxPlayCount { get; set; }
@@ -19,6 +18,8 @@
                 return _current;
             }
         }
+
+        public bool IsPaused { get; set; }
 
         public Player(Playlist playlist, IAudioInteractor audioInteractor)
         {
@@ -58,16 +59,16 @@
         {
             Log.Debug("Pausing");
             _audioInteractor.PauseSong();
-            _paused = true;
+            IsPaused = true;
         }
 
         public void Resume()
         {
             Log.Debug("Resuming");
-            if (_paused)
+            if (IsPaused)
             {
                 _audioInteractor.ResumeSong();
-                _paused = false;
+                IsPaused = false;
             }
         }
 

@@ -6,6 +6,7 @@
         public const string ACTION_STOP = "Stop";
         public const string ACTION_NEXT = "Next";
         public const string ACTION_BACK = "Back";
+        public const string ACTION_PAUSE = "Pause";
         public const string ACTION_NOWPLAYING = "Now Playing";
 
         public string action { get; set; }
