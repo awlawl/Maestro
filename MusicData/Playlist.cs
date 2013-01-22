@@ -1,48 +1,89 @@
 ﻿
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MusicData
 {
-    public class Playlist : Queue<MusicInfo>
+    public class Playlist : List<MusicInfo>
     {
         public IPlaylistWatcher[] PlaylistWatcher { get; set; }
-        private Stack<MusicInfo> _pastSongs = null; 
+        private int _currentPosition = 0;
+        private int _lastPlayedPosition = -1;
 
         public Playlist(IPlaylistWatcher watcher)
         {
             PlaylistWatcher = new IPlaylistWatcher[] { watcher};
-            _pastSongs = new Stack<MusicInfo>();
         }
 
         public Playlist(IPlaylistWatcher[] watcher)
         {
             PlaylistWatcher = watcher;
-            _pastSongs = new Stack<MusicInfo>();
         }
 
-        public MusicInfo GetNextSong()
+        public void MoveToNextSong()
         {
-            MusicInfo nextSong = this.Dequeue();
-            foreach (var playlistWatcher in PlaylistWatcher)
-                playlistWatcher.PlaySong(nextSong);
-
-            _pastSongs.Push(nextSong);
-            return nextSong;
+            if (_currentPosition + 1 < this.Count)
+            {
+                _currentPosition++;
+            }
         }
 
-        public MusicInfo GetLastSong()
+        public void MoveBackOneSong()
         {
-            return _pastSongs.Peek();
+            if (_currentPosition - 1 >= 0)
+            {
+                _currentPosition--;
+            }
+            else
+                _lastPlayedPosition = -1;
+        }
+
+        public MusicInfo CurrentSong {
+            get { return this[_currentPosition]; }
+        }
+
+        public MusicInfo PreviousSong
+        {
+            get
+            {
+                if (_currentPosition > 0)
+                    return this[_currentPosition - 1];
+                else
+                    return null;
+            }
         }
         
-        public bool AreSongsAvailable()
+        public bool AreMoreSongsAvailable()
         {
-            return this.Count > 0;
+            if (_lastPlayedPosition == -1)
+                return this.Count > 0;
+            else
+                return this.RemainingSongs > 0;
+        }
+        
+        public void Enqueue(MusicInfo song)
+        {
+            this.Add(song);
         }
 
-        public bool HistoryIsAvailable()
+        public int RemainingSongs
         {
-            return _pastSongs.Count > 0;
+            get { return this.Count - (_currentPosition + 1); }
+        }
+
+        public void CurrentSongIsStarting()
+        {
+            _lastPlayedPosition = _currentPosition;
+
+            foreach (var playlistWatcher in PlaylistWatcher)
+                playlistWatcher.SongStarting(CurrentSong);
+        }
+
+        public void CurrentSongIsEnding()
+        {
+            _lastPlayedPosition = _currentPosition;
+            foreach (var playlistWatcher in PlaylistWatcher)
+                playlistWatcher.SongEnding(CurrentSong);
         }
     }
 }

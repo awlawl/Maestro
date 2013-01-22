@@ -53,6 +53,8 @@ namespace MaestroService
             loopingWatcher.AttachToPlaylist(playlist, library);
 
             _pubnub.StartListening();
+
+            player.Play();
         }
 
        

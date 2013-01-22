@@ -36,7 +36,7 @@ namespace Tests
             Assert.AreEqual(song2, dummyAudio.PlayHistory[1], "The second song must play second.");
             Assert.AreEqual(song1, dummyAudio.PlayHistory[2], "The first song must play third.");
 
-            Assert.AreEqual(2, playlist.Count, "After playing three songs there must still be 2 songs in the playlist.");
+            Assert.AreEqual(2, playlist.RemainingSongs, "After playing three songs there must still be 2 songs in the playlist.");
         }
 
     }

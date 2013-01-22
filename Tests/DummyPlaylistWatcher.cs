@@ -18,11 +18,14 @@ namespace Tests
             throw new System.NotImplementedException();
         }
 
-        public void PlaySong(MusicInfo filename)
+        public void SongStarting(MusicInfo filename)
         {
             PlayHistory.Add(filename.FullPath);
         }
 
-        
+        public void SongEnding(MusicInfo song)
+        {
+            
+        }
     }
 }

@@ -163,7 +163,7 @@ namespace Tests
             player.MaxPlayCount = 1;
             player.Play();
 
-            Assert.AreEqual(song, playlist.GetLastSong(), "The last song played must be the only one in the library.");
+            Assert.AreEqual(song, playlist.PreviousSong, "The last song played must be the only one in the library.");
             
 
             var song2 = "song 2";
@@ -177,7 +177,7 @@ namespace Tests
             player.Play();
             //player.Play();
 
-            Assert.AreEqual(song2, playlist.GetLastSong(), "The last song played must be new song in the library.");
+            Assert.AreEqual(song2, playlist.PreviousSong, "The last song played must be new song in the library.");
         }
     }
 }

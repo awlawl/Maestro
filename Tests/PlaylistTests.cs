@@ -19,7 +19,8 @@ namespace Tests
 
             Assert.AreEqual(1, playlist.Count, "There must be one song in the playlist.");
 
-            MusicInfo song = playlist.GetNextSong();
+            MusicInfo song = playlist.CurrentSong;
+            playlist.CurrentSongIsStarting();
 
             Assert.AreEqual(filename, song.FullPath, "The next song must be the one that was enqueued.");
             Assert.AreEqual(1, dummyPlaylistWatcher.PlayHistory.Count, "Only one song must have been played.");
@@ -39,8 +40,8 @@ namespace Tests
             playlist.Enqueue(music);
 
             Assert.AreEqual(1, playlist.Count, "There must be one song in the playlist.");
-
-            MusicInfo song = playlist.GetNextSong();
+            MusicInfo song = playlist.CurrentSong;
+            playlist.CurrentSongIsStarting();
 
             Assert.AreEqual(filename, song.FullPath, "The next song must be the one that was enqueued.");
             Assert.AreEqual(1, dummyPlaylistWatcher1.PlayHistory.Count, "Only one song must have been played.");
@@ -53,33 +54,38 @@ namespace Tests
         [Test]
         public void WhenThePlayListIsEmpty()
         {
-            string filename = "song1";
             var dummyPlaylistWatcher = new DummyPlaylistWatcher();
             var playlist = new Playlist(dummyPlaylistWatcher);
-            
-            Assert.IsFalse(playlist.AreSongsAvailable(), "There must not be any songs available.");
-            
+
+            Assert.IsFalse(playlist.AreMoreSongsAvailable(), "There must not be any songs available.");
         }
 
         [Test]
         public void PlaylistsCanGoBack()
         {
-            string filename = "song1";
-            var music = new MusicInfo() { FullPath = filename };
+            string filename1 = "song1";
+            string filename2 = "song1";
+            var music1 = new MusicInfo() { FullPath = filename1 };
+            var music2 = new MusicInfo() { FullPath = filename2 };
             var dummyPlaylistWatcher = new DummyPlaylistWatcher();
             var playlist = new Playlist(dummyPlaylistWatcher);
 
-            playlist.Enqueue(music);
+            playlist.Enqueue(music1);
+            playlist.Enqueue(music2);
 
-            Assert.AreEqual(1, playlist.Count, "There must be one song in the playlist.");
+            Assert.AreEqual(2, playlist.Count, "There must be two songs in the playlist.");
 
-            MusicInfo song = playlist.GetNextSong();
-
-            Assert.IsTrue(playlist.HistoryIsAvailable(), "There must be songs in the history.");
-
-            MusicInfo backOneSong = playlist.GetLastSong();
-
-            Assert.AreEqual(song, backOneSong, "The last song must be the same as the first.");
+            MusicInfo song = playlist.CurrentSong;
+            Assert.AreEqual(filename1, song.FullPath, "The first item in the playlist must be correct.");
+            
+            playlist.MoveToNextSong();
+            
+            MusicInfo nextSong = playlist.CurrentSong;
+            Assert.AreEqual(filename2, nextSong.FullPath, "The second item in the playlist must be correct.");
+            
+            playlist.MoveBackOneSong();
+            Assert.AreEqual(filename1, playlist.CurrentSong.FullPath, "Going back one song should go back to the first one.");
+            
         }
     }
 }

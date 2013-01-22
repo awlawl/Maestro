@@ -73,10 +73,7 @@ namespace RealTimeMessaging
                     break;
                     
                 case PubnubMessage.ACTION_NEXT:
-                     if (_doThreading)
-                        (new Thread(new ThreadStart(_player.Next))).Start();
-                    else
-                        _player.Next();
+                     _player.Next();
                     break;
 
                 case PubnubMessage.ACTION_BACK:

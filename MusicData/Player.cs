@@ -38,10 +38,22 @@
 
             Log.Debug("Play starting");
 
-            while (ShouldPlayASong() && !_stopped)
+            if (ShouldPlayASong())
             {
-                _audioInteractor.PlaySong(Playlist.GetNextSong().FullPath);
-                PlayCount++;
+
+                while (!_stopped)
+                {
+                    Playlist.CurrentSongIsStarting();
+                    _audioInteractor.PlaySong(Playlist.CurrentSong.FullPath);
+                    PlayCount++;
+                    Playlist.CurrentSongIsEnding();
+
+                    if (!ShouldPlayASong())
+                        break;
+
+                    Playlist.MoveToNextSong();
+
+                }
             }
             _isPlaying = false;
         }
@@ -49,9 +61,9 @@
         private bool ShouldPlayASong()
         {
             if (MaxPlayCount > 0)
-                return Playlist.AreSongsAvailable() && PlayCount < MaxPlayCount;
+                return Playlist.AreMoreSongsAvailable() && PlayCount < MaxPlayCount;
             else
-                return Playlist.AreSongsAvailable();
+                return Playlist.AreMoreSongsAvailable();
             
         }
 
@@ -75,25 +87,21 @@
         public void Next()
         {
             Log.Debug("Next-ing.");
-            Stop();
-            Play();
+            _audioInteractor.StopSong();
+            //Stop();
+            /*Playlist.MoveToNextSong();
+            Play();*/
         }
 
         public void Back()
         {
             Log.Debug("Back-ing");
+
+            Playlist.MoveBackOneSong();
+            Playlist.MoveBackOneSong();
+            _audioInteractor.StopSong();
             
-            MusicInfo lastSong = Playlist.GetLastSong();
-            var copy = new MusicInfo[Playlist.Count];
-            Playlist.CopyTo(copy,0);
-            Playlist.Clear();
-            Playlist.Enqueue(lastSong);
 
-            foreach (var song in copy)
-                Playlist.Enqueue(song);
-
-            Stop();
-            Play();
         }
 
         public void Stop()
