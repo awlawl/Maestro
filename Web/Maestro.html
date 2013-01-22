@@ -21,6 +21,7 @@
     <script>
 
         var channel = 'maestrotest';
+        var hostRootUrl = '';
         
         $(document).ready(function () {
             $("#btnPlay").click(play);
@@ -42,7 +43,8 @@
                 },
                 connect: function () {
                     console.log("Now listening.");
-                      
+                    ping();
+
                 }
             });
         });
@@ -82,9 +84,15 @@
             publishMessage({ action: "Pause" });
         }
         
+        function ping() {
+            publishMessage({ action: "Ping" });
+        }
+        
         function handleMessage(message) {
             if (message.action == "Now Playing") {
                 nowPlaying(message.data);
+            } else if (message.action == "Ping Reply") {
+                pingReply(message.data);
             }
         }
         
@@ -93,6 +101,11 @@
             setField("#ddArtist", songInfo.Artist);
             $("#ddTitle").html(songInfo.Title);
             $("#ddAlbum").html(songInfo.Album);
+            $("#imgAlbumArt").attr('src',hostRootUrl + "/api/AlbumArt?" + (new Date()).getTime().toString());
+        }
+        
+        function pingReply(pingData) {
+            hostRootUrl = pingData.HostRootUrl;
         }
         
         function setField(id, val) {
@@ -105,17 +118,22 @@
   </head>
     <body >
         <div class="row">
-        <div class="span5" id="divNowPlaying" >
-            <dl class="dl-horizontal">
-                <dt>Artist</dt>
-                <dd id="ddArtist"></dd>
-                <dt>Title</dt>
-                <dd id="ddTitle"></dd>
-                <dt>Album</dt>
-                <dd id="ddAlbum"></dd>
-            </dl>
-        </div>
+            <div class="span5" >
+                <img id="imgAlbumArt"/>
             </div>
+        </div>
+        <div class="row">
+            <div class="span5" id="divNowPlaying" >
+                <dl class="dl-horizontal">
+                    <dt>Artist</dt>
+                    <dd id="ddArtist"></dd>
+                    <dt>Title</dt>
+                    <dd id="ddTitle"></dd>
+                    <dt>Album</dt>
+                    <dd id="ddAlbum"></dd>
+                </dl>
+            </div>
+        </div>
         <div class="span5">
             <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnPause" class="btn">Pause</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
         </div>

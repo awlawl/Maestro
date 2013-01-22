@@ -29,10 +29,11 @@ namespace MaestroService
 
         public void Start()
         {
-            
-            StartPlayer();
             _api = new RestAPI.ApiHosting();
             _api.Start();
+            
+            StartPlayer();
+           
 
         }
 
@@ -55,8 +56,10 @@ namespace MaestroService
             loopingWatcher.AttachToPlaylist(playlist, library);
 
             _pubnub.StartListening();
+            _pubnub.SendPingReply();
+            _pubnub.SendNowPlaying(player.Playlist.CurrentSong);
 
-            //player.Play();
+            player.Play();
         }
 
         private void InsertTestSongs(ILibraryRepository library)
@@ -64,11 +67,12 @@ namespace MaestroService
             //POC code for playing in the service
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
-            //var testDirectory = @"C:\Users\alyons2\Music\Deftones\White Pony";
-            var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
+            var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
+            var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
 
             library.ClearLibrary();
             library.AddDirectoryToLibrary(testDirectory);
+            library.AddDirectoryToLibrary(testDirectory2);
         }
 
        

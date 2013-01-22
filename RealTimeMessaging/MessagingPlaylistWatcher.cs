@@ -19,11 +19,7 @@ namespace RealTimeMessaging
 
         public void SongStarting(MusicInfo song)
         {
-            _messaging.SendMessage(new PubnubMessage()
-                {
-                    action = PubnubMessage.ACTION_NOWPLAYING,
-                    data = song
-                });   
+            _messaging.SendNowPlaying(song);
         }
 
         public void SongEnding(MusicInfo song)

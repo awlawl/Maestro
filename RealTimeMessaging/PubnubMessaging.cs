@@ -87,6 +87,10 @@ namespace RealTimeMessaging
                     _player.Pause();
                     break;
                 
+                case PubnubMessage.ACTION_PING:
+                    SendPingReply();
+                    break;
+
                 default:
                     Log.Debug("Unknow action type: "+ message.action);
                     break;
@@ -94,10 +98,33 @@ namespace RealTimeMessaging
             }
 
         }
-
+        
         public void SendMessage(PubnubMessage message)
         {
             _pubnub.publish(this.channel, message);
+        }
+
+        public void SendNowPlaying(MusicInfo song)
+        {
+            SendMessage(new PubnubMessage()
+            {
+                action = PubnubMessage.ACTION_NOWPLAYING,
+                data = song
+            });
+        }
+
+        public void SendPingReply()
+        {
+            SendMessage(new PubnubMessage()
+            {
+                action = PubnubMessage.ACTION_PING_REPLY,
+                data = new
+                {
+                    HostRootUrl = "http://localhost:20202"
+                }
+            });
+
+            SendNowPlaying(Player.Current.Playlist.CurrentSong);
         }
     }
 }
