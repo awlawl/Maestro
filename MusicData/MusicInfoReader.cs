@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MusicData
 {
@@ -19,8 +20,26 @@ namespace MusicData
             result.Title = file.Tag.Title;
             result.FullPath = fullPath;
             result.TrackNumber = file.Tag.Track;
-
+            
             return result;
+        }
+
+        public AlbumArt GetAlbumArtForFile(string fullPath)
+        {
+            TagLib.File file = TagLib.File.Create(fullPath);
+
+            var pic = file.Tag.Pictures.FirstOrDefault();
+
+            if (pic == null)
+                return null;
+            else
+            {
+                return new AlbumArt()
+                    {
+                        ContentType = pic.MimeType,
+                        RawData = pic.Data.Data
+                    };
+            }
         }
 
 

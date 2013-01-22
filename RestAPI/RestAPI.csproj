@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlbumArtController.cs" />
     <Compile Include="ApiHosting.cs" />
     <Compile Include="BackController.cs" />
     <Compile Include="AddToLibraryController.cs" />

@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlbumArt.cs" />
     <Compile Include="IAudioInteractor.cs" />
     <Compile Include="IMusicInfoDataProvider.cs" />
     <Compile Include="ILibraryRepository.cs" />

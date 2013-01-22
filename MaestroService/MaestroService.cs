@@ -46,7 +46,7 @@ namespace MaestroService
             //var library = new MemoryLibraryRepository();
             var library = new MongoLibraryRepository();
             
-            //InsertTestSongs(library);
+            InsertTestSongs(library);
 
             var player = new Player(playlist, dummyAudio);
             _pubnub = new PubnubMessaging(player,true);
@@ -63,8 +63,9 @@ namespace MaestroService
         {
             //POC code for playing in the service
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
-            //var testDirectory = @"C:\Users\awl\Dropbox\Stuff\Maestro\TestFiles";
-            var testDirectory = @"C:\Users\alyons2\Music\Deftones\White Pony";
+            //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
+            //var testDirectory = @"C:\Users\alyons2\Music\Deftones\White Pony";
+            var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
 
             library.ClearLibrary();
             library.AddDirectoryToLibrary(testDirectory);
