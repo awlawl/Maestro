@@ -15,6 +15,7 @@ namespace Tests
             var artist = "awl";
             var title = "one";
             var album = "TestAlbum";
+            var trackNumber = 1;
             
             var musicInfoReader = new MusicInfoReader();
 
@@ -24,6 +25,7 @@ namespace Tests
             Assert.AreEqual(artist, result.Artist, "The artist must be correct.");
             Assert.AreEqual(album, result.Album, "It must be for the correct album.");
             Assert.AreEqual(testFilePath, result.FullPath,"The full path must be correct.");
+            Assert.AreEqual(trackNumber, result.TrackNumber, "The track number must be correct.");
             
         }
 

@@ -18,6 +18,7 @@ namespace MusicData
             result.Album = file.Tag.Album;
             result.Title = file.Tag.Title;
             result.FullPath = fullPath;
+            result.TrackNumber = file.Tag.Track;
 
             return result;
         }
