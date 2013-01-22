@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using MongoLibrary;
 using MusicData;
 using RealTimeMessaging;
 
@@ -41,7 +42,9 @@ namespace MaestroService
             var messagingWatcher = new MessagingPlaylistWatcher();
             var playlist = new Playlist(new IPlaylistWatcher[] {loopingWatcher,messagingWatcher});
             var dummyAudio = new NAudioInteractor();
-            var library = new MemoryLibraryRepository();
+            //var library = new MemoryLibraryRepository();
+            var library = new MongoLibraryRepository();
+            library.ClearLibrary();
 
             var player = new Player(playlist, dummyAudio);
             _pubnub = new PubnubMessaging(player,true);
