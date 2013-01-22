@@ -14,7 +14,7 @@ namespace MusicData
              var result = new MusicInfo();
 
             TagLib.File file = TagLib.File.Create(fullPath);
-            result.Artist = file.Tag.FirstAlbumArtist;
+            result.Artist = file.Tag.FirstAlbumArtist ?? file.Tag.FirstPerformer;
             result.Album = file.Tag.Album;
             result.Title = file.Tag.Title;
             result.FullPath = fullPath;
