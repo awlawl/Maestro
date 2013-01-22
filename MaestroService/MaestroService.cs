@@ -2,12 +2,14 @@
 using MongoLibrary;
 using MusicData;
 using RealTimeMessaging;
+using RestAPI;
 
 namespace MaestroService
 {
     partial class MaestroService : ServiceBase
     {
         private PubnubMessaging _pubnub = null;
+        private ApiHosting _api = null;
         
         public MaestroService()
         {
@@ -22,13 +24,15 @@ namespace MaestroService
         protected override void OnStop()
         {
             Player.Current.Stop();
-            
+            _api.Stop();
         }
 
         public void Start()
         {
             
             StartPlayer();
+            _api = new RestAPI.ApiHosting();
+            _api.Start();
 
         }
 
@@ -52,7 +56,7 @@ namespace MaestroService
 
             _pubnub.StartListening();
 
-            player.Play();
+            //player.Play();
         }
 
         private void InsertTestSongs(ILibraryRepository library)
