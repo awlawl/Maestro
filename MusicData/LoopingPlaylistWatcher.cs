@@ -1,4 +1,4 @@
-﻿
+﻿using System.Linq;
 using System.Collections.Generic;
 
 namespace MusicData
@@ -23,7 +23,11 @@ namespace MusicData
             _playlist = playlist;
             _playlist.Clear();
 
-            List<MusicInfo> songs = library.GetAllMusic();
+            List<MusicInfo> songs = library.GetAllMusic()
+                                        .OrderBy(X => X.Artist)
+                                        .ThenBy(X => X.Album)
+                                        .ThenBy(X => X.TrackNumber)
+                                        .ToList();
 
             foreach (var song in songs)
                 _loop.Enqueue(song);
