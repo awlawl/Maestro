@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
+using System.Linq;
 using MusicData;
 using PubNub_Messaging;
+using System.Net.NetworkInformation;
 
 namespace RealTimeMessaging
 {
@@ -92,7 +94,7 @@ namespace RealTimeMessaging
                     break;
 
                 default:
-                    Log.Debug("Unknow action type: "+ message.action);
+                    Log.Debug("Unknown action type: "+ message.action);
                     break;
                     
             }
@@ -115,6 +117,8 @@ namespace RealTimeMessaging
 
         public void SendPingReply()
         {
+            string ip = GetIP();
+
             SendMessage(new PubnubMessage()
             {
                 action = PubnubMessage.ACTION_PING_REPLY,
@@ -126,5 +130,20 @@ namespace RealTimeMessaging
 
             SendNowPlaying(Player.Current.Playlist.CurrentSong);
         }
+
+        private string GetIP()
+        {
+            var props = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(Z => Z.OperationalStatus == OperationalStatus.Up)
+                .SelectMany(X => X.GetIPProperties().UnicastAddresses)
+                .Where(G => G.Address.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork)
+                .ToList();
+                
+            var ips=    props.Select(Y => Y.Address.ToString())
+                .ToList();
+
+            return ips.FirstOrDefault();
+        }
+
     }
 }

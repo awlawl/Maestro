@@ -69,10 +69,12 @@ namespace MaestroService
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
             var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
             var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
+            //var td3 = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
 
             library.ClearLibrary();
-            library.AddDirectoryToLibrary(testDirectory);
             library.AddDirectoryToLibrary(testDirectory2);
+            library.AddDirectoryToLibrary(testDirectory);
+            //library.AddDirectoryToLibrary(td3);
         }
 
        
