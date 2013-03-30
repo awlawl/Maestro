@@ -78,6 +78,17 @@ namespace Tests
             Assert.AreEqual(0, result.Count, "There must not be any results.");
         }
 
+        [Test]
+        public void MusicWithoutMetaDataShouldDefaultToFilename()
+        {
+            var testFile = @"..\..\..\TestFiles\NoMetadata\NoMetadata.mp3";
+
+            var musicInfoReader = new MusicInfoReader();
+            var info = musicInfoReader.GetInfoForFile(testFile);
+
+            Assert.AreEqual("NoMetadata", info.Title, "When the metadata is missing, the title must be the name of the file.");
+        }
+
         
     }
 }

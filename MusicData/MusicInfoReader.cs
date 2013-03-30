@@ -20,6 +20,11 @@ namespace MusicData
             result.Title = file.Tag.Title;
             result.FullPath = fullPath;
             result.TrackNumber = file.Tag.Track;
+
+            if (string.IsNullOrEmpty(result.Title))
+            {
+                result.Title = Path.GetFileNameWithoutExtension(fullPath);
+            }
             
             return result;
         }

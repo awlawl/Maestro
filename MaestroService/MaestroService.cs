@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using System.Threading;
 using MongoLibrary;
 using MusicData;
 using RealTimeMessaging;
@@ -10,6 +11,7 @@ namespace MaestroService
     {
         private PubnubMessaging _pubnub = null;
         private ApiHosting _api = null;
+        private Thread _player = null;
         
         public MaestroService()
         {
@@ -25,15 +27,18 @@ namespace MaestroService
         {
             Player.Current.Stop();
             _api.Stop();
+
+            _player.Abort();
         }
 
         public void Start()
         {
             _api = new RestAPI.ApiHosting();
             _api.Start();
-            
-            StartPlayer();
-           
+
+            _player = new Thread(new ThreadStart(StartPlayer));
+            _player.Name = "Main Player";
+            _player.Start();
 
         }
 
@@ -67,9 +72,11 @@ namespace MaestroService
             //POC code for playing in the service
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
-            var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
-            var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
+            //var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
+            //var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
             //var td3 = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
+            var testDirectory = @"E:\music\garbage";
+            var testDirectory2 = @"E:\music\KOMPRESSOR";
 
             library.ClearLibrary();
             library.AddDirectoryToLibrary(testDirectory2);
