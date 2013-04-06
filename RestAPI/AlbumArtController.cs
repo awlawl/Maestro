@@ -43,14 +43,6 @@ namespace RestAPI
 
             return resp;
         }
-
-        private string GetBetterPath()
-        {
-            //get the full location of the assembly with DaoTests in it
-            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(AlbumArtController)).Location;
-
-            //get the folder that's in
-            return Path.GetDirectoryName(fullPath);
-        }
+               
     }
 }
