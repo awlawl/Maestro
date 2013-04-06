@@ -101,10 +101,6 @@
       <Project>{d29daf70-b560-4698-8752-2f49d99dfeb8}</Project>
       <Name>RealTimeMessaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RestAPI\RestAPI.csproj">
-      <Project>{7686095a-13c2-41b7-a4c6-f26c5451965f}</Project>
-      <Name>RestAPI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Website\Website.csproj">
       <Project>{0d3e056d-643b-423c-8133-58cfd688582b}</Project>
       <Name>Website</Name>

@@ -3,7 +3,6 @@ using System.Threading;
 using MongoLibrary;
 using MusicData;
 using RealTimeMessaging;
-using RestAPI;
 using Website;
 
 namespace MaestroService
@@ -11,7 +10,6 @@ namespace MaestroService
     partial class MaestroService : ServiceBase
     {
         private PubnubMessaging _pubnub = null;
-        private ApiHosting _api = null;
         private Thread _player = null;
         private SelfHostedWebsite _website = null;
         
@@ -28,7 +26,6 @@ namespace MaestroService
         protected override void OnStop()
         {
             Player.Current.Stop();
-            _api.Stop();
 
             _player.Abort();
 
@@ -37,9 +34,6 @@ namespace MaestroService
 
         public void Start()
         {
-            _api = new RestAPI.ApiHosting();
-            //_api.Start();
-
             _website = new SelfHostedWebsite();
             _website.Start();
 
