@@ -124,7 +124,7 @@ namespace RealTimeMessaging
                 action = PubnubMessage.ACTION_PING_REPLY,
                 data = new
                 {
-                    HostRootUrl = "http://localhost:20202"
+                    HostRootUrl = "http://localhost:1234"
                 }
             });
 
