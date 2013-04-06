@@ -4,6 +4,7 @@ using MongoLibrary;
 using MusicData;
 using RealTimeMessaging;
 using RestAPI;
+using Website;
 
 namespace MaestroService
 {
@@ -12,6 +13,7 @@ namespace MaestroService
         private PubnubMessaging _pubnub = null;
         private ApiHosting _api = null;
         private Thread _player = null;
+        private SelfHostedWebsite _website = null;
         
         public MaestroService()
         {
@@ -29,12 +31,17 @@ namespace MaestroService
             _api.Stop();
 
             _player.Abort();
+
+            _website.Stop();
         }
 
         public void Start()
         {
             _api = new RestAPI.ApiHosting();
-            _api.Start();
+            //_api.Start();
+
+            _website = new SelfHostedWebsite();
+            _website.Start();
 
             _player = new Thread(new ThreadStart(StartPlayer));
             _player.Name = "Main Player";
@@ -71,15 +78,15 @@ namespace MaestroService
         {
             //POC code for playing in the service
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
-            //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
+            var testDirectory = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
             //var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
             //var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
             //var td3 = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
-            var testDirectory = @"E:\music\garbage";
-            var testDirectory2 = @"E:\music\KOMPRESSOR";
+            //var testDirectory = @"E:\music\garbage";
+            //var testDirectory2 = @"E:\music\KOMPRESSOR";
 
             library.ClearLibrary();
-            library.AddDirectoryToLibrary(testDirectory2);
+            //library.AddDirectoryToLibrary(testDirectory2);
             library.AddDirectoryToLibrary(testDirectory);
             //library.AddDirectoryToLibrary(td3);
         }

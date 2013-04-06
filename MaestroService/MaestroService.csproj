@@ -105,6 +105,10 @@
       <Project>{7686095a-13c2-41b7-a4c6-f26c5451965f}</Project>
       <Name>RestAPI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Website\Website.csproj">
+      <Project>{0d3e056d-643b-423c-8133-58cfd688582b}</Project>
+      <Name>Website</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

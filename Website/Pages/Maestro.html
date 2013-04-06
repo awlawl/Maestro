@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Maestro</title>
+      <div id="pubnub" 
+           pub-key="demo" 
+           sub-key="demo" ssl="off" origin="pubsub.pubnub.com">
+      </div>
+
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+      <style>
+          body {
+			font-size: 18px;
+			/*padding-top: 60px;*/
+			padding-bottom: 40px;
+		}
+      </style> 
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="http://cdn.pubnub.com/pubnub-3.3.min.js"></script>
+
+    <script>
+
+        var channel = 'maestrotest';
+        var hostRootUrl = '';
+        
+        $(document).ready(function () {
+            $("#btnPlay").click(play);
+            $("#btnStop").click(stop);
+            $("#btnNext").click(next);
+            $("#btnBack").click(back);
+            $("#btnPause").click(pause);
+            
+            PUBNUB.subscribe({
+                channel: channel,
+                callback: function (message) {
+                    console.log(JSON.stringify(message));
+                    handleMessage(message);
+
+                },
+                error: function () {
+                    // The internet is gone.
+                    console.log("###Connection Lost");
+                },
+                connect: function () {
+                    console.log("Now listening.");
+                    ping();
+
+                }
+            });
+        });
+          
+        function publishMessage(message) {
+	
+            PUBNUB.publish({
+                channel: 'maestrotest',
+                message: message,
+                callback: function (info) {
+                    console.log("Wrote message");
+                    if (!info[0]) {
+                        console.log("!!!!!!!!!!!!!!!!!!!! Failed! -> " + info[1]);
+                      
+                    } 
+                }
+            });
+        };
+
+        function play() {
+            publishMessage({ action: "Play" });
+        }
+
+        function stop() {
+            publishMessage({ action: "Stop" });
+        }
+
+        function next() {
+            publishMessage({ action: "Next" });
+        }
+
+        function back() {
+            publishMessage({ action: "Back" });
+        }
+        
+        function pause() {
+            publishMessage({ action: "Pause" });
+        }
+        
+        function ping() {
+            publishMessage({ action: "Ping" });
+        }
+        
+        function handleMessage(message) {
+            if (message.action == "Now Playing") {
+                nowPlaying(message.data);
+            } else if (message.action == "Ping Reply") {
+                pingReply(message.data);
+            }
+        }
+        
+        function nowPlaying(songInfo) {
+            //$("#divNowPlaying").toggle();
+            setField("#ddArtist", songInfo.Artist);
+            $("#ddTitle").html(songInfo.Title);
+            $("#ddAlbum").html(songInfo.Album);
+            $("#imgAlbumArt").attr('src',hostRootUrl + "/api/AlbumArt?" + (new Date()).getTime().toString());
+        }
+        
+        function pingReply(pingData) {
+            hostRootUrl = pingData.HostRootUrl;
+        }
+        
+        function setField(id, val) {
+            if (!val)
+                val = '...';
+            $(id).text(val);
+        }
+          
+    </script>
+  </head>
+    <body >
+        <div class="row">
+            <div class="span5" >
+                <img id="imgAlbumArt"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span5" id="divNowPlaying" >
+                <dl class="dl-horizontal">
+                    <dt>Artist</dt>
+                    <dd id="ddArtist"></dd>
+                    <dt>Title</dt>
+                    <dd id="ddTitle"></dd>
+                    <dt>Album</dt>
+                    <dd id="ddAlbum"></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="span5">
+            <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnPause" class="btn">Pause</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
+        </div>
+    
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+    </body>
+</html>
