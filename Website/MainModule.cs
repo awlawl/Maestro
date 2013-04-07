@@ -20,6 +20,11 @@ namespace Website
                 return File.ReadAllText(@"..\..\..\Website\Pages\Maestro.html");
             };
 
+            Get["/Scripts/Maestro.js"] = x =>
+            {
+                return File.ReadAllText(@"..\..\..\Website\Pages\Scripts\Maestro.js");
+            };
+
             Get["/AlbumArt"] = x =>
             {
                 var musicInfoReader = new MusicInfoReader();
@@ -49,9 +54,5 @@ namespace Website
             
         }
 
-        private Stream Wtf()
-        {
-            return null;
-        }
     }
 }

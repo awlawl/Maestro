@@ -17,11 +17,15 @@
       </style> 
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
       <script src="http://cdn.pubnub.com/pubnub-3.3.min.js"></script>
+      <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+      <script src="/Scripts/Maestro.js"></script>
+      
 
     <script>
 
         var channel = 'maestrotest';
         var hostRootUrl = '';
+        var viewModel = new MaestroViewModel();
         
         $(document).ready(function () {
             $("#btnPlay").click(play);
@@ -47,6 +51,9 @@
 
                 }
             });
+
+            
+            ko.applyBindings(viewModel);
         });
           
         function publishMessage(message) {
@@ -97,21 +104,26 @@
         }
         
         function nowPlaying(songInfo) {
-            //$("#divNowPlaying").toggle();
-            setField("#ddArtist", songInfo.Artist);
-            $("#ddTitle").html(songInfo.Title);
-            $("#ddAlbum").html(songInfo.Album);
-            $("#imgAlbumArt").attr('src',hostRootUrl + "/AlbumArt?" + (new Date()).getTime().toString());
+            viewModel.artist(setField(songInfo.Artist));
+            viewModel.title(songInfo.Title);
+            viewModel.album(songInfo.Album);
+            refreshAlbumArt();
         }
         
         function pingReply(pingData) {
             hostRootUrl = pingData.HostRootUrl;
+            refreshAlbumArt();
+        }
+
+        function refreshAlbumArt() {
+            viewModel.albumArt(hostRootUrl + "/AlbumArt?" + (new Date()).getTime().toString());
         }
         
         function setField(id, val) {
             if (!val)
                 val = '...';
-            $(id).text(val);
+            
+            return val;
         }
           
     </script>
@@ -119,18 +131,18 @@
     <body >
         <div class="row">
             <div class="span5" >
-                <img id="imgAlbumArt" style="width: 200px"/>
+                <img style="width: 200px" data-bind="attr: {src:albumArt}"/>
             </div>
         </div>
         <div class="row">
             <div class="span5" id="divNowPlaying" >
                 <dl class="dl-horizontal">
                     <dt>Artist</dt>
-                    <dd id="ddArtist"></dd>
+                    <dd data-bind="text: artist"></dd>
                     <dt>Title</dt>
-                    <dd id="ddTitle"></dd>
+                    <dd data-bind="text: title"></dd>
                     <dt>Album</dt>
-                    <dd id="ddAlbum"></dd>
+                    <dd data-bind="text: album"></dd>
                 </dl>
             </div>
         </div>

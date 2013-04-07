@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\Maestro.html" />
+    <Content Include="Pages\Scripts\Maestro.js" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MusicData\MusicData.csproj">

@@ -139,7 +139,7 @@ namespace RealTimeMessaging
                 .Where(G => G.Address.AddressFamily==System.Net.Sockets.AddressFamily.InterNetwork)
                 .ToList();
                 
-            var ips=    props.Select(Y => Y.Address.ToString())
+            var ips=props.Select(Y => Y.Address.ToString())
                 .ToList();
 
             return ips.FirstOrDefault();
