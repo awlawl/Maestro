@@ -72,11 +72,11 @@ namespace MaestroService
         {
             //POC code for playing in the service
             //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
-            var testDirectory = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
+            //var testDirectory = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
             //var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
             //var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
             //var td3 = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
-            //var testDirectory = @"E:\music\deftones\Koi No Yokan [Explicit]";
+            var testDirectory = @"E:\music\deftones\Koi No Yokan [Explicit]";
             //var testDirectory2 = @"E:\music\KOMPRESSOR";
 
             library.ClearLibrary();

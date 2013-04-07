@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ImageResponse.cs" />
     <Compile Include="MainModule.cs" />
+    <Compile Include="Routes\AlbumArtRoute.cs" />
     <Compile Include="SelfHostedWebsite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
