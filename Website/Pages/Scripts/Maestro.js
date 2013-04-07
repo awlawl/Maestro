@@ -3,6 +3,8 @@
     this.album = ko.observable("");
     this.title = ko.observable("");
     this.albumArt = ko.observable("");
+    this.currentSongIndex = ko.observable("");
+    this.playlist = ko.observableArray([]);
 }
 
 var channel = 'maestrotest';
@@ -90,6 +92,7 @@ function nowPlaying(songInfo) {
     viewModel.title(songInfo.Title);
     viewModel.album(songInfo.Album);
     refreshAlbumArt();
+    getPlaylist()
 }
 
 function pingReply(pingData) {
@@ -106,5 +109,15 @@ function setField(val) {
         val = '...';
 
     return val;
+}
+
+function getPlaylist() {
+    $.ajax({
+        url: "/Playlist",
+        dataType: "json"
+    })
+    .done(function (data) {
+        viewModel.playlist(data.Playlist);
+    })
 }
 

@@ -31,6 +31,13 @@ namespace Website
                 return (new AlbumArtRoute()).GetAlbumArt();
             };
 
+            Get["/Playlist"] = x =>
+            {
+                var response = (Nancy.Response)(new PlaylistRoute()).GetPlayList();
+                response.ContentType = "application/json";
+                return response;
+            };
+
             
         }
 

@@ -7,7 +7,6 @@ namespace MusicData
     public class Playlist : List<MusicInfo>
     {
         public IPlaylistWatcher[] PlaylistWatcher { get; set; }
-        private int _currentPosition = 0;
         private int _lastPlayedPosition = -1;
 
         public Playlist(IPlaylistWatcher watcher)
@@ -22,36 +21,38 @@ namespace MusicData
 
         public void MoveToNextSong()
         {
-            if (_currentPosition + 1 < this.Count)
+            if (CurrentPosition + 1 < this.Count)
             {
-                _currentPosition++;
+                CurrentPosition++;
             }
         }
 
         public void MoveBackOneSong()
         {
-            if (_currentPosition - 1 >= 0)
+            if (CurrentPosition - 1 >= 0)
             {
-                _currentPosition--;
+                CurrentPosition--;
             }
             else
                 _lastPlayedPosition = -1;
         }
 
         public MusicInfo CurrentSong {
-            get { return this[_currentPosition]; }
+            get { return this[CurrentPosition]; }
         }
 
         public MusicInfo PreviousSong
         {
             get
             {
-                if (_currentPosition > 0)
-                    return this[_currentPosition - 1];
+                if (CurrentPosition > 0)
+                    return this[CurrentPosition - 1];
                 else
                     return null;
             }
         }
+
+        public int CurrentPosition { get; set; }
         
         public bool AreMoreSongsAvailable()
         {
@@ -68,12 +69,12 @@ namespace MusicData
 
         public int RemainingSongs
         {
-            get { return this.Count - (_currentPosition + 1); }
+            get { return this.Count - (CurrentPosition + 1); }
         }
 
         public void CurrentSongIsStarting()
         {
-            _lastPlayedPosition = _currentPosition;
+            _lastPlayedPosition = CurrentPosition;
 
             foreach (var playlistWatcher in PlaylistWatcher)
                 playlistWatcher.SongStarting(CurrentSong);
@@ -81,7 +82,7 @@ namespace MusicData
 
         public void CurrentSongIsEnding()
         {
-            _lastPlayedPosition = _currentPosition;
+            _lastPlayedPosition = CurrentPosition;
             foreach (var playlistWatcher in PlaylistWatcher)
                 playlistWatcher.SongEnding(CurrentSong);
         }

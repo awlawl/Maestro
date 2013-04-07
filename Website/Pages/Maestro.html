@@ -23,12 +23,8 @@
   </head>
     <body >
         <div class="row">
-            <div class="span5" >
-                <img style="width: 200px" data-bind="attr: {src:albumArt}"/>
-            </div>
-        </div>
-        <div class="row">
             <div class="span5" id="divNowPlaying" >
+                <img style="width: 200px" data-bind="attr: {src:albumArt}"/>
                 <dl class="dl-horizontal">
                     <dt>Artist</dt>
                     <dd data-bind="text: artist"></dd>
@@ -38,11 +34,33 @@
                     <dd data-bind="text: album"></dd>
                 </dl>
             </div>
+            <div span="span6">
+                 <table class="table span6 table-striped table-bordered table-condensed">
+                    <tr>
+                    <thead>
+                        <th>Artist</th>
+                        <th>Title</th>
+                        <th>Album</th>
+                    </thead>
+                    </tr>
+                     <tbody data-bind="foreach: playlist">
+                    <tr >
+                        <td data-bind="text: Artist"></td>
+                        <td data-bind="text: Title"></td>
+                        <td data-bind="text: Album"></td>
+                    </tr>
+                         </tbody>
+                        
+                </table>
+            </div>
         </div>
-        <div class="span5">
-            <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnPause" class="btn">Pause</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
+        <div class="row">
+            <div class="span5">
+                <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnPause" class="btn">Pause</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
+            </div>
         </div>
     
         <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+       
     </body>
 </html>

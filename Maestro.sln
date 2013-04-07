@@ -10,9 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeMessaging", "RealTimeMessaging\RealTimeMessaging.csproj", "{D29DAF70-B560-4698-8752-2F49D99DFEB8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{4022D667-0185-41AC-A84A-36A461089B60}"
-	ProjectSection(SolutionItems) = preProject
-		Web\Maestro.html = Web\Maestro.html
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoLibrary", "MongoLibrary\MongoLibrary.csproj", "{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}"
 EndProject
