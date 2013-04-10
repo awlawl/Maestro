@@ -117,6 +117,7 @@ function getPlaylist() {
         dataType: "json"
     })
     .done(function (data) {
+        viewModel.currentSongIndex(data.CurrentSongIndex);
         viewModel.playlist(data.Playlist);
     })
 }
