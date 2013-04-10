@@ -7,6 +7,14 @@
     this.playlist = ko.observableArray([]);
 }
 
+var PlaylistViewModel = function (PlaylistItem) {
+    this.Song = ko.observable(PlaylistItem.Song);
+    this.PlaylistIndex = ko.observable(PlaylistItem.PlaylistIndex);
+    this.PlayFomPlaylist = function (e) {
+        playFromPlaylist(e.PlaylistIndex());
+    }
+}
+
 var channel = 'maestrotest';
 var hostRootUrl = '';
 var viewModel = new MaestroViewModel();
@@ -79,6 +87,10 @@ function ping() {
     publishMessage({ action: "Ping" });
 }
 
+function playFromPlaylist(playlistIndex) {
+    publishMessage({ action: "PlayFromPlaylist", data: { PlaylistIndex: playlistIndex } });
+};
+
 function handleMessage(message) {
     if (message.action == "Now Playing") {
         nowPlaying(message.data);
@@ -118,7 +130,15 @@ function getPlaylist() {
     })
     .done(function (data) {
         viewModel.currentSongIndex(data.CurrentSongIndex);
-        viewModel.playlist(data.Playlist);
+        //viewModel.playlist(data.Playlist);
+        
+        var newPlaylist = [];
+
+        for (var i=0; i<data.Playlist.length; i++) {
+            newPlaylist.push(new PlaylistViewModel(data.Playlist[i]));
+        }
+
+        viewModel.playlist(newPlaylist);
     })
 }
 

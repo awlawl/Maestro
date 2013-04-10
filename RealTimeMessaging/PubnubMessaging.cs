@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading;
 using System.Linq;
+using System.Dynamic;
 using MusicData;
 using PubNub_Messaging;
 using System.Net.NetworkInformation;
@@ -44,10 +45,20 @@ namespace RealTimeMessaging
 
         public PubnubMessage Translate(Dictionary<string, object> rawNubs)
         {
-            return new PubnubMessage()
+            var message = new PubnubMessage()
                 {
-                    action = rawNubs["action"].ToString()
+                    action = rawNubs["action"].ToString(),
+                    data = new ExpandoObject()
                 };
+
+            if (rawNubs.ContainsKey("data"))
+            {
+                var dictionary = (Dictionary<string, object>)rawNubs["data"];
+                if (dictionary.ContainsKey("PlaylistIndex"))
+                    message.data.PlaylistIndex = int.Parse(dictionary["PlaylistIndex"].ToString());
+            }
+
+            return message;
         }
 
         public void HandleMessage(Dictionary<string, object> rawNubs)
@@ -92,7 +103,12 @@ namespace RealTimeMessaging
                 case PubnubMessage.ACTION_PING:
                     SendPingReply();
                     break;
+                case PubnubMessage.ACTION_PLAY_FROM_PLAYLIST:
+                    _player.JumpToPlaylistIndex(message.data.PlaylistIndex);
+                    break;
 
+                case PubnubMessage.ACTION_PING_REPLY: break; //we sent these, ignore it
+                case PubnubMessage.ACTION_NOWPLAYING: break;
                 default:
                     Log.Debug("Unknown action type: "+ message.action);
                     break;

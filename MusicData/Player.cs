@@ -51,7 +51,8 @@
                     if (!ShouldPlayASong())
                         break;
 
-                    Playlist.MoveToNextSong();
+                    if (!_stopped)
+                        Playlist.MoveToNextSong();
 
                 }
             }
@@ -110,6 +111,14 @@
             _stopped = true;
             _audioInteractor.StopSong();
         }
-        
+
+        public void JumpToPlaylistIndex(int playlistIndex)
+        {
+            Log.Debug("Jumping to index in playlist " + playlistIndex);
+            this.Playlist.CurrentPosition = playlistIndex-1;
+            _audioInteractor.StopSong();
+            
+            //this.Play();
+        }
     }
 }

@@ -7,19 +7,23 @@
            sub-key="demo" ssl="off" origin="pubsub.pubnub.com">
       </div>
 
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+      <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
       <style>
-          body {
-			font-size: 18px;
-			/*padding-top: 60px;*/
-			padding-bottom: 40px;
-		}
-
+            body {
+			    font-size: 18px;
+			    /*padding-top: 60px;*/
+			    padding-bottom: 40px;
+            }
+            .playButton {
+                width: 50px;
+                height: 50px;
+            }
       </style> 
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
       <script src="http://cdn.pubnub.com/pubnub-3.3.min.js"></script>
       <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
       <script src="/Scripts/Maestro.js"></script>
+      
 
   </head>
     <body >
@@ -45,12 +49,11 @@
                     </thead>
                     </tr>
                      <tbody data-bind="foreach: playlist">
-                    <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex}">
-                        <td data-bind="text: Song.Artist"></td>
-                        <td data-bind="text: Song.Title"></td>
-                        <td data-bind="text: Song.Album"></td>
-                        <td data-bind="text: $parent.currentSongIndex()"></td>
-                        <td data-bind="text: PlaylistIndex"></td>
+                    <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex()}">
+                        <td data-bind="text: Song().Artist"></td>
+                        <td data-bind="text: Song().Title"></td>
+                        <td data-bind="text: Song().Album"></td>
+                        <td><a href="javascript:;" data-bind="click: PlayFomPlaylist">Play</a></td>
                     </tr>
                          </tbody>
                         
