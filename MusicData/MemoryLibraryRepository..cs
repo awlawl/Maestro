@@ -5,10 +5,25 @@ namespace MusicData
     public class MemoryLibraryRepository : ILibraryRepository
     {
         private static List<MusicInfo> _library = new List<MusicInfo>();
+        private IRealTimeMessaging _messaging = null;
+
+        public MemoryLibraryRepository()
+        {
+        }
+
+        public MemoryLibraryRepository(IRealTimeMessaging messaging)
+        {
+            _messaging = messaging;
+        }
 
         public void AddMusicToLibrary(MusicInfo[] song)
         {
             _library.AddRange(song);
+
+            if (_messaging != null)
+                _messaging.SendSongsAdded(song);
+            
+                
         }
 
         public List<MusicInfo> GetAllMusic()

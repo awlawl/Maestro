@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IRealTimeMessaging.cs" />
     <Compile Include="MessagingPlaylistWatcher.cs" />
     <Compile Include="PubnubMessage.cs" />
     <Compile Include="PubnubMessaging.cs" />

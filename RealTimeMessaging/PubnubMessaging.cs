@@ -107,8 +107,9 @@ namespace RealTimeMessaging
                     _player.JumpToPlaylistIndex(message.data.PlaylistIndex);
                     break;
 
-                case PubnubMessage.ACTION_PING_REPLY: break; //we sent these, ignore it
+                case PubnubMessage.ACTION_PING_REPLY: break; //we sent these, ignore them
                 case PubnubMessage.ACTION_NOWPLAYING: break;
+                case PubnubMessage.ACTION_ADDED_SONG_TO_LIBRARY: break;
                 default:
                     Log.Debug("Unknown action type: "+ message.action);
                     break;
@@ -133,18 +134,39 @@ namespace RealTimeMessaging
 
         public void SendPingReply()
         {
-            /*string ip = GetIP();
-
-            SendMessage(new PubnubMessage()
-            {
-                action = PubnubMessage.ACTION_PING_REPLY,
-                data = new
-                {
-                    HostRootUrl = "http://localhost:1234"
-                }
-            });*/
-
             SendNowPlaying(Player.Current.Playlist.CurrentSong);
+        }
+
+        public void SendSongsAdded(MusicInfo[] song)
+        {
+            PubnubMessage message;
+
+            if (song.Length == 1)
+            {
+                message = new PubnubMessage()
+                    {
+                        action = PubnubMessage.ACTION_ADDED_SONG_TO_LIBRARY,
+                        data = new
+                            {
+                                howMany = 1,
+                                firstSong = song[0]
+                            }
+                        
+                    };
+            }
+            else
+            {
+                message = new PubnubMessage()
+                    {
+                        action = PubnubMessage.ACTION_ADDED_SONG_TO_LIBRARY,
+                        data = new
+                            {
+                                howMany = song.Length,
+                                firstSong = song[0]
+                            }
+                        
+                    };
+            }
         }
 
         private string GetIP()

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using MusicData;
 using NUnit.Framework;
+using RealTimeMessaging;
+using Rhino.Mocks;
 
 namespace Tests
 {
@@ -18,7 +20,10 @@ namespace Tests
                 Title = "Test Title"
             };
 
-            var repository = new MemoryLibraryRepository();
+            var pubnubStub = MockRepository.GenerateStub<IRealTimeMessaging>();
+            pubnubStub.Stub(X => X.SendSongsAdded(null));
+
+            var repository = new MemoryLibraryRepository(pubnubStub);
             repository.ClearLibrary();
 
             repository.AddMusicToLibrary(new MusicInfo[] {music});
@@ -32,6 +37,7 @@ namespace Tests
             Assert.AreEqual(music.Title, result[0].Title, "The title must be correct.");
             Assert.AreEqual(music.FullPath, result[0].FullPath, "The full path must be correct.");
 
+            pubnubStub.AssertWasCalled(X => X.SendSongsAdded(null), Y => Y.IgnoreArguments());
         }
 
         [Test]
@@ -50,7 +56,6 @@ namespace Tests
             Assert.IsNotNull(result, "The result must not be null.");
             Assert.Greater(result.Count, 0, "There must many songs.");
             Assert.AreEqual(title, result[0].Title, "The title must be correct.");
-            
         }
 
 

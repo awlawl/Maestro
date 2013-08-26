@@ -11,6 +11,7 @@
         public const string ACTION_PING = "Ping";
         public const string ACTION_PING_REPLY = "Ping Reply";
         public const string ACTION_PLAY_FROM_PLAYLIST = "PlayFromPlaylist";
+        public const string ACTION_ADDED_SONG_TO_LIBRARY = "AddedSongToLibrary";
 
         public string action { get; set; }
         public dynamic data { get; set; }

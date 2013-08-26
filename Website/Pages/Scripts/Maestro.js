@@ -1,19 +1,19 @@
-﻿var MaestroViewModel = function () {
+﻿var MaestroViewModel = function() {
     this.artist = ko.observable("");
     this.album = ko.observable("");
     this.title = ko.observable("");
     this.albumArt = ko.observable("");
     this.currentSongIndex = ko.observable("");
     this.playlist = ko.observableArray([]);
-}
+};
 
-var PlaylistViewModel = function (PlaylistItem) {
+var PlaylistViewModel = function(PlaylistItem) {
     this.Song = ko.observable(PlaylistItem.Song);
     this.PlaylistIndex = ko.observable(PlaylistItem.PlaylistIndex);
-    this.PlayFomPlaylist = function (e) {
+    this.PlayFomPlaylist = function(e) {
         playFromPlaylist(e.PlaylistIndex());
-    }
-}
+    };
+};
 
 var channel = 'maestrotest';
 var viewModel = new MaestroViewModel();
@@ -95,7 +95,10 @@ function handleMessage(message) {
         nowPlaying(message.data);
     } else if (message.action == "Ping Reply") {
         pingReply(message.data);
+    } else if (message.action == "AddedSongToLibrary") {
+        newSongAdded(message.data);
     }
+
 }
 
 function nowPlaying(songInfo) {
@@ -142,5 +145,15 @@ function getPlaylist() {
 
 function popupInfoToaster(message) {
     toastr.info(message);
+}
+
+function newSongAdded(data) {
+    var message = data.firstSong.Artist + " - " + data.firstSong.Title;
+
+    if (data.howMany > 1)
+        message += " and " + data.howMany + " others";
+
+    message += " added to library";
+    popupInfoToaster(message);
 }
 
