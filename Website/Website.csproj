@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="ImageResponse.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="Routes\AlbumArtRoute.cs" />

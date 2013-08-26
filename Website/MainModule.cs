@@ -39,10 +39,10 @@ namespace Website
                 return response;
             };
 
-            Get["/Search(?"] = x =>
+            Get["/Search/{term}"] = x =>
                 {
-                    var q = x.q;
-                    return Response.AsJson<string>("hi");
+                    string q = x.term.ToString();
+                    return Response.AsJson<string>(q);
                 };
 
 
