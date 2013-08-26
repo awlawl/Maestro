@@ -132,15 +132,20 @@ namespace Tests
             var dummyAudio = new DummyAudioInteractor();
             var player = new Player(playlist, dummyAudio);
 
-            var song = "song1";
-            var music = new MusicInfo() { FullPath = song };
+            var song1 = new MusicInfo() { FullPath = "song1" };
+            var song2 = new MusicInfo() { FullPath = "song2" };
 
-            playlist.Enqueue(music);
+            playlist.Enqueue(song1);
+            playlist.Enqueue(song2);
 
+            player.MaxPlayCount = 2;
             player.Play();
+
+            Assert.AreEqual(1, playlist.CurrentPosition, "The song must have moved one song ahead.");
+
             player.Back();
 
-            Assert.AreEqual(2, dummyAudio.PlayHistory.Count, "There must be two songs in the history.");
+            Assert.AreEqual(0, playlist.CurrentPosition, "The song must have moved one song back.");
             
         }
 
@@ -148,8 +153,7 @@ namespace Tests
         public void PlayerCanBeGivenANewPlaylist()
         {
             var library = new MemoryLibraryRepository();
-            var looping = new LoopingPlaylistWatcher();
-            var playlist = new Playlist(looping);
+            var playlist = new Playlist();
             var dummyAudio = new DummyAudioInteractor();
             var player = new Player(playlist, dummyAudio);
 
@@ -158,26 +162,24 @@ namespace Tests
             library.ClearLibrary();
             library.AddMusicToLibrary(new MusicInfo[] { new MusicInfo() { FullPath = song } });
 
-            looping.AttachToPlaylist(playlist, library);
+            playlist.AddRange(library.GetAllMusic());
 
-            player.MaxPlayCount = 1;
             player.Play();
 
-            Assert.AreEqual(song, playlist.PreviousSong, "The last song played must be the only one in the library.");
-            
+            Assert.AreEqual(song, playlist.CurrentSong.FullPath, "The last song played must be the only one in the library.");
 
             var song2 = "song 2";
 
             library.ClearLibrary();
             library.AddMusicToLibrary(new MusicInfo[] { new MusicInfo() { FullPath = song2 } });
 
-            looping.AttachToPlaylist(playlist, library);
+            playlist.AddRange(library.GetAllMusic());
 
             player.PlayCount = 0;
             player.Play();
-            //player.Play();
 
-            Assert.AreEqual(song2, playlist.PreviousSong, "The last song played must be new song in the library.");
+            Assert.AreEqual(song, playlist.PreviousSong.FullPath, "The previous played must be new song in the library.");
+            Assert.AreEqual(song2, playlist.CurrentSong.FullPath, "The current played must be new song in the library.");
         }
     }
 }

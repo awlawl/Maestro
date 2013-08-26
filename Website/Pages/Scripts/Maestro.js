@@ -16,7 +16,6 @@ var PlaylistViewModel = function (PlaylistItem) {
 }
 
 var channel = 'maestrotest';
-var hostRootUrl = '';
 var viewModel = new MaestroViewModel();
 
 $(document).ready(function () {
@@ -104,16 +103,15 @@ function nowPlaying(songInfo) {
     viewModel.title(songInfo.Title);
     viewModel.album(songInfo.Album);
     refreshAlbumArt();
-    getPlaylist()
+    getPlaylist();
 }
 
 function pingReply(pingData) {
-    hostRootUrl = pingData.HostRootUrl;
     refreshAlbumArt();
 }
 
 function refreshAlbumArt() {
-    viewModel.albumArt(hostRootUrl + "/AlbumArt?" + (new Date()).getTime().toString());
+    viewModel.albumArt("/AlbumArt?" + (new Date()).getTime().toString());
 }
 
 function setField(val) {
@@ -128,17 +126,21 @@ function getPlaylist() {
         url: "/Playlist",
         dataType: "json"
     })
-    .done(function (data) {
-        viewModel.currentSongIndex(data.CurrentSongIndex);
-        //viewModel.playlist(data.Playlist);
-        
-        var newPlaylist = [];
+        .done(function(data) {
+            viewModel.currentSongIndex(data.CurrentSongIndex);
+            //viewModel.playlist(data.Playlist);
 
-        for (var i=0; i<data.Playlist.length; i++) {
-            newPlaylist.push(new PlaylistViewModel(data.Playlist[i]));
-        }
+            var newPlaylist = [];
 
-        viewModel.playlist(newPlaylist);
-    })
+            for (var i = 0; i < data.Playlist.length; i++) {
+                newPlaylist.push(new PlaylistViewModel(data.Playlist[i]));
+            }
+
+            viewModel.playlist(newPlaylist);
+        });
+}
+
+function popupInfoToaster(message) {
+    toastr.info(message);
 }
 

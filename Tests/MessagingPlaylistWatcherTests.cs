@@ -28,7 +28,7 @@ namespace Tests
                 });
 
             var pubnubStub = MockRepository.GenerateStub<IRealTimeMessaging>();
-            pubnubStub.Stub(X => X.SendMessage(null)).IgnoreArguments();
+            pubnubStub.Stub(X => X.SendNowPlaying(null)).IgnoreArguments();
 
             var messagingWatcher = new MessagingPlaylistWatcher();
             messagingWatcher.AssignMessaging(pubnubStub);
@@ -41,18 +41,19 @@ namespace Tests
             loopingWatcher.AttachToPlaylist(playlist, library);
             messagingWatcher.AttachToPlaylist(playlist, library);
 
+            playlist.AddRange(library.GetAllMusic());
+
             player.MaxPlayCount = 1;
             player.Play();
 
-            var args = pubnubStub.GetArgumentsForCallsMadeOn(X => X.SendMessage(null), Y => Y.IgnoreArguments());
+            var args = pubnubStub.GetArgumentsForCallsMadeOn(X => X.SendNowPlaying(null), Y => Y.IgnoreArguments());
 
             Assert.AreEqual(1, args.Count, "There must be one message.");
 
-            var message = (PubnubMessage)args[0][0];
+            var nowPlayingSong = (MusicInfo)args[0][0];
 
-            Assert.AreEqual(PubnubMessage.ACTION_NOWPLAYING, message.action, "It must be a NOW PLAYING message.");
-            Assert.AreEqual(song.Album, message.data.Album, "The album must be correct.");
-            Assert.AreEqual(song.Title, message.data.Title, "The title must be correct.");
+            Assert.AreEqual(song.Album, nowPlayingSong.Album, "The album must be correct.");
+            Assert.AreEqual(song.Title, nowPlayingSong.Title, "The title must be correct.");
         }
 
         /*[Test]

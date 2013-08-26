@@ -13,7 +13,10 @@ namespace Website.Routes
         public ImageResponse GetAlbumArt()
         {
             var musicInfoReader = new MusicInfoReader();
-            AlbumArt art = musicInfoReader.GetAlbumArtForFile(Player.Current.Playlist.CurrentSong.FullPath);
+            AlbumArt art = null;
+
+            if (Player.Current.Playlist.CurrentSong!=null)
+                art = musicInfoReader.GetAlbumArtForFile(Player.Current.Playlist.CurrentSong.FullPath);
 
             byte[] data = null;
             string contentType = "";

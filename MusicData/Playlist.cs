@@ -1,22 +1,26 @@
-﻿
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MusicData
 {
     public class Playlist : List<MusicInfo>
     {
-        public IPlaylistWatcher[] PlaylistWatcher { get; set; }
+        public List<IPlaylistWatcher> PlaylistWatcher { get; set; }
         private int _lastPlayedPosition = -1;
+
+        public Playlist()
+        {
+            PlaylistWatcher = new List<IPlaylistWatcher>();  
+        }
 
         public Playlist(IPlaylistWatcher watcher)
         {
-            PlaylistWatcher = new IPlaylistWatcher[] { watcher};
+            PlaylistWatcher = new List<IPlaylistWatcher>() { watcher};
         }
 
-        public Playlist(IPlaylistWatcher[] watcher)
+        public Playlist(IPlaylistWatcher[] watchers)
         {
-            PlaylistWatcher = watcher;
+            PlaylistWatcher = new List<IPlaylistWatcher>(); 
+            PlaylistWatcher.AddRange(watchers);
         }
 
         public void MoveToNextSong()
@@ -38,7 +42,15 @@ namespace MusicData
         }
 
         public MusicInfo CurrentSong {
-            get { return this[CurrentPosition]; }
+            get
+            {
+                if (this.Count == 0)
+                    return null;
+                if (CurrentPosition >= this.Count)
+                    return this[this.Count - 1];
+                else
+                    return this[CurrentPosition];
+            }
         }
 
         public MusicInfo PreviousSong

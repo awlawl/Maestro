@@ -28,6 +28,8 @@ namespace Tests
                         
             loopingWatcher.AttachToPlaylist(playlist, library);
 
+            playlist.AddRange(library.GetAllMusic());
+
             player.MaxPlayCount = 3;
             player.Play();      
             

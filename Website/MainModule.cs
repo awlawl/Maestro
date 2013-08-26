@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using MusicData;
+using Nancy;
 using Website.Routes;
 using Nancy.Extensions;
 using Nancy.IO;
@@ -38,11 +39,15 @@ namespace Website
                 return response;
             };
 
-               
+            Get["/Search(?"] = x =>
+                {
+                    var q = x.q;
+                    return Response.AsJson<string>("hi");
+                };
 
 
 
-            
+
         }
 
     }

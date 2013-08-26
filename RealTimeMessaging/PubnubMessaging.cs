@@ -54,7 +54,7 @@ namespace RealTimeMessaging
             if (rawNubs.ContainsKey("data"))
             {
                 var dictionary = (Dictionary<string, object>)rawNubs["data"];
-                if (dictionary.ContainsKey("PlaylistIndex"))
+                if ((dictionary!=null) && (dictionary.ContainsKey("PlaylistIndex")))
                     message.data.PlaylistIndex = int.Parse(dictionary["PlaylistIndex"].ToString());
             }
 
@@ -133,7 +133,7 @@ namespace RealTimeMessaging
 
         public void SendPingReply()
         {
-            string ip = GetIP();
+            /*string ip = GetIP();
 
             SendMessage(new PubnubMessage()
             {
@@ -142,7 +142,7 @@ namespace RealTimeMessaging
                 {
                     HostRootUrl = "http://localhost:1234"
                 }
-            });
+            });*/
 
             SendNowPlaying(Player.Current.Playlist.CurrentSong);
         }
