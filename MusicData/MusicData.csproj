@@ -73,9 +73,9 @@
     <Compile Include="IPlaylistWatcher.cs" />
     <Compile Include="IRealTimeMessaging.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="MemoryLibraryRepository.cs" />
     <Compile Include="MusicInfo.cs" />
     <Compile Include="MusicInfoReader.cs" />
-    <Compile Include="MemoryLibraryRepository..cs" />
     <Compile Include="NAudioInteractor.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Playlist.cs" />
