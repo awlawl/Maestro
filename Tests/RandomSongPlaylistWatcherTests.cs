@@ -38,7 +38,7 @@ namespace Tests
             _playlist = new Playlist(loopingWatcher);
             _dummyAudio = new DummyAudioInteractor();
 
-            var player = new Player(_playlist, _dummyAudio);
+            var player = new Player(_playlist, _dummyAudio, library);
 
             _playlist.Add(_songs[0]);
             _playlist.Add(_songs[1]);

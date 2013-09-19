@@ -11,7 +11,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song1 = "song1";
             var song2 = "song2";
@@ -34,7 +34,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
             
             player.Play();
 
@@ -46,7 +46,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song = "song1";
             var music = new MusicInfo() { FullPath = song };
@@ -64,7 +64,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song = "song1";
             var music = new MusicInfo() { FullPath = song };
@@ -85,7 +85,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song = "song1";
             var music = new MusicInfo() { FullPath = song };
@@ -103,7 +103,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song = "song1";
             var music = new MusicInfo() { FullPath = song };
@@ -120,7 +120,7 @@ namespace Tests
         [Test]
         public void PlayerShouldHaveASingletonishInstance()
         {
-            var player = new Player(null, null);
+            var player = new Player(null, null, null);
 
             Assert.AreEqual(player, Player.Current, "The global Current player must be the same as the one just created.");
         }
@@ -130,7 +130,7 @@ namespace Tests
         {
             var playlist = new Playlist(new DummyPlaylistWatcher());
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song1 = new MusicInfo() { FullPath = "song1" };
             var song2 = new MusicInfo() { FullPath = "song2" };
@@ -155,7 +155,7 @@ namespace Tests
             var library = new MemoryLibraryRepository();
             var playlist = new Playlist();
             var dummyAudio = new DummyAudioInteractor();
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, null);
 
             var song = "song1";
 

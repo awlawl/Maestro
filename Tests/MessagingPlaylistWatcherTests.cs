@@ -36,7 +36,7 @@ namespace Tests
             var playlist = new Playlist(new IPlaylistWatcher[] { loopingWatcher, messagingWatcher });
             var dummyAudio = new DummyAudioInteractor();
 
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, library);
 
             loopingWatcher.AttachToPlaylist(playlist, library);
             messagingWatcher.AttachToPlaylist(playlist, library);

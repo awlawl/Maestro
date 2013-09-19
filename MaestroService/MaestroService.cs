@@ -57,7 +57,7 @@ namespace MaestroService
 
             //playlist.AddRange(library.GetAllMusic());
 
-            var player = new Player(playlist, dummyAudio);
+            var player = new Player(playlist, dummyAudio, library);
             _pubnub = new PubnubMessaging(player,true);
             
             messagingWatcher.AssignMessaging(_pubnub);

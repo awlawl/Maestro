@@ -8,5 +8,6 @@ namespace MusicData
         List<MusicInfo> GetAllMusic();
         void AddDirectoryToLibrary(string directoryPath);
         void ClearLibrary();
+        List<MusicInfo> SearchLibrary(string term);
     }
 }

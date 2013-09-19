@@ -42,7 +42,9 @@ namespace Website
             Get["/Search/{term}"] = x =>
                 {
                     string q = x.term.ToString();
-                    return Response.AsJson<string>(q);
+                    var response = (Nancy.Response)(new SearchRoute()).SearchLibrary(q);
+                    response.ContentType = "application/json";
+                    return response;
                 };
 
 

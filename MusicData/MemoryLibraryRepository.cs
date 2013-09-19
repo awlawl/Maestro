@@ -48,5 +48,11 @@ namespace MusicData
         {
             _library.Clear();
         }
+
+
+        public List<MusicInfo> SearchLibrary(string term)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

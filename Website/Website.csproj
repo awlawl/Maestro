@@ -53,6 +53,7 @@
     <Compile Include="MainModule.cs" />
     <Compile Include="Routes\AlbumArtRoute.cs" />
     <Compile Include="Routes\PlaylistRoute.cs" />
+    <Compile Include="Routes\SearchRoute.cs" />
     <Compile Include="SelfHostedWebsite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

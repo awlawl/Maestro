@@ -4,6 +4,7 @@
     {
         private IAudioInteractor _audioInteractor = null;
         public Playlist Playlist {get;set;}
+        public ILibraryRepository Library { get; set; }
         private bool _stopped = false;
 
         public int MaxPlayCount { get; set; }
@@ -21,11 +22,12 @@
 
         public bool IsPaused { get; set; }
 
-        public Player(Playlist playlist, IAudioInteractor audioInteractor)
+        public Player(Playlist playlist, IAudioInteractor audioInteractor, ILibraryRepository library)
         {
             _audioInteractor = audioInteractor;
             Playlist = playlist;
             _current = this;
+            Library = library;
         }
         
         public void Play()
