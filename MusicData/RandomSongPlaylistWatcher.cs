@@ -12,6 +12,8 @@ namespace MusicData
         private ILibraryRepository _library;
         private Random _random;
 
+        private const int PLAYLIST_SIZE = 5;
+
         public RandomSongPlaylistWatcher()
         {
             _random = new Random();
@@ -32,7 +34,7 @@ namespace MusicData
             if (_playlist.Count == 0)
             {
                 Console.WriteLine("Attaching");
-                _playlist.AddRange(_library.GetAllMusic().Shuffle(_random).Take(5));
+                _playlist.AddRange(_library.GetAllMusic().Shuffle(_random).Take(PLAYLIST_SIZE));
             }
         }
 
@@ -42,6 +44,9 @@ namespace MusicData
 
         public void SongEnding(MusicInfo song)
         {
+            if (_playlist.RemainingSongs > PLAYLIST_SIZE)
+                return;
+
             //TODO: Don't get the whole library for each song change
             var allMusic = _library.GetAllMusic().Shuffle(_random).ToArray();
             for (var i = 0; i < allMusic.Length; i++)
