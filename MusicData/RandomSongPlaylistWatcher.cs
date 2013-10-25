@@ -32,7 +32,7 @@ namespace MusicData
             if (_playlist.Count == 0)
             {
                 Console.WriteLine("Attaching");
-                _playlist.AddRange(_library.GetAllMusic().Shuffle(_random).Take(10));
+                _playlist.AddRange(_library.GetAllMusic().Shuffle(_random).Take(5));
             }
         }
 

@@ -5,6 +5,7 @@
     this.albumArt = ko.observable("");
     this.currentSongIndex = ko.observable("");
     this.playlist = ko.observableArray([]);
+    this.searchResults = ko.observableArray([]);
 };
 
 var PlaylistViewModel = function(PlaylistItem) {
@@ -15,6 +16,14 @@ var PlaylistViewModel = function(PlaylistItem) {
     };
 };
 
+var SearchResultViewModel = function (Song) {
+    this.Song = Song;
+    this.AddToPlaylist = function (e) {
+        console.log("Want to add " + e.Song.FullPath);
+        enqueueSong(e.Song.IdValue);
+    }
+}
+
 var channel = 'maestrotest';
 var viewModel = new MaestroViewModel();
 
@@ -24,6 +33,7 @@ $(document).ready(function () {
     $("#btnNext").click(next);
     $("#btnBack").click(back);
     $("#btnPause").click(pause);
+    $("#btnSearch").click(doSearch);
 
     PUBNUB.subscribe({
         channel: channel,
@@ -40,6 +50,12 @@ $(document).ready(function () {
             console.log("Now listening.");
             ping();
 
+        }
+    });
+
+    $("#txtSearch").keypress(function (e) {
+        if (e.which == 13) {
+            doSearch()
         }
     });
 
@@ -105,6 +121,8 @@ function nowPlaying(songInfo) {
     viewModel.artist(setField(songInfo.Artist));
     viewModel.title(songInfo.Title);
     viewModel.album(songInfo.Album);
+    viewModel.searchResults([]);
+
     refreshAlbumArt();
     getPlaylist();
 }
@@ -155,5 +173,38 @@ function newSongAdded(data) {
 
     message += " added to library";
     popupInfoToaster(message);
+}
+
+
+
+function doSearch() {
+    var searchText = $("#txtSearch").val();
+    //alert("searching for " + searchText);
+    $.ajax({
+        url: "/search/" + encodeURI(searchText),
+        dataType: "json"
+    })
+       .done(function (data) {
+           console.dir(data);
+           
+           var results = data.Songs.map(function (song) {
+               return new SearchResultViewModel(song);
+           });
+
+           viewModel.searchResults(results);
+           $("#txtSearch").focus();
+       });
+}
+
+function enqueueSong (id) {
+    $.ajax({
+        url: "/enqueue/" + encodeURI(id),
+        type: "POST",
+        dataType: "json"
+    })
+       .done(function (data) {
+           popupInfoToaster(data.Title + " added to queue ");
+           getPlaylist();
+       });
 }
 

@@ -54,5 +54,10 @@ namespace MusicData
         {
             throw new System.NotImplementedException();
         }
+
+        public MusicInfo GetSongById(string id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

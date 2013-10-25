@@ -51,5 +51,11 @@ namespace MongoLibrary
                 .Take(30)
                 .ToList<MusicInfo>();
         }
+
+        public MusicInfo GetSongById(string id)
+        {
+            return MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo")
+               .FindOneByIdAs<MongoMusicInfo>(ObjectId.Parse(id));
+        }
     }
 }

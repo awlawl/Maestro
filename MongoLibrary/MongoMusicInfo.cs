@@ -14,5 +14,8 @@ namespace MongoLibrary
         public ObjectId Id { get; set; }
         public DateTime CreatedDate { get; set; } 
 
+        [MongoDB.Bson.Serialization.Attributes.BsonIgnore]
+        public string IdValue { get { return this.Id.ToString(); } }
+
     }
 }

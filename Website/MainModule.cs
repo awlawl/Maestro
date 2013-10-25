@@ -47,6 +47,14 @@ namespace Website
                     return response;
                 };
 
+            Post["/Enqueue/{id}"] = x =>
+                {
+                    string id = x.id.ToString();
+                    var response = (Nancy.Response)(new EnqueueSongRoute()).EnqueueSong(id);
+                    response.ContentType = "application/json";
+                    return response;
+                };
+
 
 
 
