@@ -57,5 +57,43 @@ namespace MongoLibrary
             return MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo")
                .FindOneByIdAs<MongoMusicInfo>(ObjectId.Parse(id));
         }
+        
+        public List<SavedPlaylist> GetAllSavedPlaylists()
+        {
+            return MongoHelper.Current.GetCollection<MongoSavedPlaylist>("savedplaylist")
+                .FindAllAs<MongoSavedPlaylist>()
+                .OrderBy(X => X.Name)
+                .ToList<SavedPlaylist>();
+        }
+
+        public List<MusicInfo> GetAllSongsForSavedPlaylist(string name)
+        {
+            return MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo")
+                .FindAll()
+                .Where(X=> X.SavedPlaylists.Any(Y => Y == name))
+                .ToList<MusicInfo>();
+
+        }
+
+        public void AddNewSavedPlaylist(string name)
+        {
+            MongoHelper.Current.GetCollection<MongoSavedPlaylist>("savedplaylist")
+                .Insert(new MongoSavedPlaylist()
+                {
+                    Name=name
+                });
+        }
+
+        public void AddSongToSavedPlaylist(string savedPlaylistName, string songId)
+        {
+            var collection = MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo");
+            var song = collection
+              .FindOneByIdAs<MongoMusicInfo>(ObjectId.Parse(songId));
+
+            song.SavedPlaylists = song.SavedPlaylists.Union(new string[] { savedPlaylistName }).ToArray();
+
+            collection.Save(song);
+
+        }
     }
 }

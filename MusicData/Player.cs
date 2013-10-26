@@ -1,4 +1,6 @@
-﻿namespace MusicData
+﻿using System.Linq;
+
+namespace MusicData
 {
     public class Player : IPlayer
     {
@@ -120,6 +122,22 @@
             this.Playlist.CurrentPosition = playlistIndex-1;
             _audioInteractor.StopSong();
             
+            //this.Play();
+        }
+
+        public void JumpToPlaylistByPath(string path)
+        {
+            Log.Debug("Jumping to song " + path + " in playlist.");
+
+            var found = this.Playlist.Where(X => X.FullPath == path).FirstOrDefault();
+            if (found == null)
+                return;
+
+            var playlistIndex = this.Playlist.LastIndexOf(found);
+
+            this.Playlist.CurrentPosition = playlistIndex - 1;
+            _audioInteractor.StopSong();
+
             //this.Play();
         }
     }

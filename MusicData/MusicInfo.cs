@@ -7,6 +7,6 @@
         public string Album { get; set; }
         public string FullPath { get; set; }
         public uint TrackNumber { get; set; }
-      
+        public string[] SavedPlaylists { get; set; }
     }
 }

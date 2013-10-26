@@ -55,7 +55,45 @@ namespace Website
                     return response;
                 };
 
+            Post["/Play/{id}"] = x =>
+            {
+                string id = x.id.ToString();
+                var response = (Nancy.Response)(new PlaySongRoute()).PlaySong(id);
+                response.ContentType = "application/json";
+                return response;
+            };
 
+            Get["/SavedPlaylist"] = x =>
+                {
+                    var response = (Nancy.Response)(new SavedPlaylistRoute()).GetAllSavedPlaylists();
+                    response.ContentType = "application/json";
+                    return response;
+                };
+
+            Get["/SavedPlaylist/{name}"] = x =>
+            {
+                string name = x.name.ToString();
+                var response = (Nancy.Response)(new SavedPlaylistRoute()).GetSongsForSavedPlaylist(name);
+                response.ContentType = "application/json";
+                return response;
+            };
+
+            Post["/SavedPlaylist/{name}"] = x =>
+            {
+                string name = x.name.ToString();
+                var response = (Nancy.Response)(new SavedPlaylistRoute()).AddNewSavedPlaylist(name);
+                response.ContentType = "application/json";
+                return response;
+            };
+
+            Post["/SavedPlaylist/{name}/{id}"]  = x =>
+            {
+                string name = x.name.ToString();
+                string id = x.id.ToString();
+                var response = (Nancy.Response)(new SavedPlaylistRoute()).AddSongToSavedPlaylist(name, id);
+                response.ContentType = "application/json";
+                return response;
+            };
 
 
         }

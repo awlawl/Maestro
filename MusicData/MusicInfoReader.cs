@@ -15,9 +15,9 @@ namespace MusicData
              var result = new MusicInfo();
 
             TagLib.File file = TagLib.File.Create(fullPath);
-            result.Artist = file.Tag.FirstAlbumArtist ?? file.Tag.FirstPerformer;
-            result.Album = file.Tag.Album;
-            result.Title = file.Tag.Title;
+            result.Artist = (file.Tag.FirstAlbumArtist ?? file.Tag.FirstPerformer) ?? "";
+            result.Album = file.Tag.Album ?? "";
+            result.Title = file.Tag.Title ?? "";
             result.FullPath = fullPath;
             result.TrackNumber = file.Tag.Track;
 
@@ -25,6 +25,8 @@ namespace MusicData
             {
                 result.Title = Path.GetFileNameWithoutExtension(fullPath);
             }
+
+            result.SavedPlaylists = new string[0];
             
             return result;
         }

@@ -52,8 +52,10 @@
     <Compile Include="ImageResponse.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="Routes\AlbumArtRoute.cs" />
+    <Compile Include="Routes\PlaySongRoute.cs" />
     <Compile Include="Routes\EnqueueSongRoute.cs" />
     <Compile Include="Routes\PlaylistRoute.cs" />
+    <Compile Include="Routes\SavedPlaylistRoute.cs" />
     <Compile Include="Routes\SearchRoute.cs" />
     <Compile Include="SelfHostedWebsite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

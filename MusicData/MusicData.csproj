@@ -82,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LoopingPlaylistWatcher.cs" />
     <Compile Include="RandomSongPlaylistWatcher.cs" />
+    <Compile Include="SavedPlaylist.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

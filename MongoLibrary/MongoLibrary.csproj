@@ -49,6 +49,7 @@
     <Compile Include="MongoHelper.cs" />
     <Compile Include="MongoLibraryRepository.cs" />
     <Compile Include="MongoMusicInfo.cs" />
+    <Compile Include="MongoSavedPlaylist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

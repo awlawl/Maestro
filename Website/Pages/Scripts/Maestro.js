@@ -1,4 +1,5 @@
-﻿var MaestroViewModel = function() {
+﻿var MaestroViewModel = function () {
+    var self = this;
     this.artist = ko.observable("");
     this.album = ko.observable("");
     this.title = ko.observable("");
@@ -6,13 +7,20 @@
     this.currentSongIndex = ko.observable("");
     this.playlist = ko.observableArray([]);
     this.searchResults = ko.observableArray([]);
+    this.savedPlaylistSongList = ko.observableArray([]);
+    this.savedPlaylists = ko.observableArray([]);
+    this.selectedSavedPlaylist = ko.observable("");
+    this.setSelectedSavedPlaylist = function (pl) {
+        self.selectedSavedPlaylist(pl.name());
+        refreshSongsForSavedPlaylist();
+    };
 };
 
 var PlaylistViewModel = function(PlaylistItem) {
     this.Song = ko.observable(PlaylistItem.Song);
     this.PlaylistIndex = ko.observable(PlaylistItem.PlaylistIndex);
     this.PlayFomPlaylist = function(e) {
-        playFromPlaylist(e.PlaylistIndex());
+        playFromPlaylist(e.Song().IdValue);
     };
 };
 
@@ -22,6 +30,16 @@ var SearchResultViewModel = function (Song) {
         console.log("Want to add " + e.Song.FullPath);
         enqueueSong(e.Song.IdValue);
     }
+    this.Play = function (e) {
+        console.log("Want to play " + e.Song.FullPath);
+        enqueueSong(e.Song.IdValue, function () {
+            playFromPlaylist(e.Song.IdValue);
+        });
+    }
+}
+
+var SavedPlaylist = function (name) {
+    this.name = ko.observable(name);
 }
 
 var channel = 'maestrotest';
@@ -34,6 +52,7 @@ $(document).ready(function () {
     $("#btnBack").click(back);
     $("#btnPause").click(pause);
     $("#btnSearch").click(doSearch);
+    $("#btnAddPlaylist").click(addNewPlaylist);
 
     PUBNUB.subscribe({
         channel: channel,
@@ -102,8 +121,18 @@ function ping() {
     publishMessage({ action: "Ping" });
 }
 
-function playFromPlaylist(playlistIndex) {
-    publishMessage({ action: "PlayFromPlaylist", data: { PlaylistIndex: playlistIndex } });
+function playFromPlaylist(id) {
+    //publishMessage({ action: "PlayFromPlaylist", data: { PlaylistIndex: playlistIndex } });
+    $.ajax({
+        url: "/play/" + encodeURI(id),
+        type: "POST",
+        dataType: "json"
+    })
+       .done(function (data) {
+           popupInfoToaster(data.Title + " Now playing ");
+           getPlaylist();
+       });
+
 };
 
 function handleMessage(message) {
@@ -121,10 +150,12 @@ function nowPlaying(songInfo) {
     viewModel.artist(setField(songInfo.Artist));
     viewModel.title(songInfo.Title);
     viewModel.album(songInfo.Album);
-    viewModel.searchResults([]);
+    //viewModel.searchResults([]);
 
     refreshAlbumArt();
     getPlaylist();
+    refreshSavedPlaylistList();
+
 }
 
 function pingReply(pingData) {
@@ -142,7 +173,7 @@ function setField(val) {
     return val;
 }
 
-function getPlaylist() {
+function getPlaylist(callback) {
     $.ajax({
         url: "/Playlist",
         dataType: "json"
@@ -158,6 +189,8 @@ function getPlaylist() {
             }
 
             viewModel.playlist(newPlaylist);
+            if (callback)
+                callback();
         });
 }
 
@@ -196,7 +229,7 @@ function doSearch() {
        });
 }
 
-function enqueueSong (id) {
+function enqueueSong (id, callback) {
     $.ajax({
         url: "/enqueue/" + encodeURI(id),
         type: "POST",
@@ -204,7 +237,48 @@ function enqueueSong (id) {
     })
        .done(function (data) {
            popupInfoToaster(data.Title + " added to queue ");
-           getPlaylist();
+           getPlaylist(callback);
        });
 }
 
+function refreshSavedPlaylistList(callback) {
+    $.ajax({
+        url: "/SavedPlaylist/",
+        dataType: "json"
+    })
+      .done(function (data) {
+          var models = data.map(function (pl) { return new SavedPlaylist(pl.Name); });
+          viewModel.savedPlaylists(models);
+          if (callback)
+              callback();
+      });
+}
+
+function refreshSongsForSavedPlaylist() {
+    $.ajax({
+        url: "/SavedPlaylist/" + encodeURI(viewModel.selectedSavedPlaylist()),
+        dataType: "json"
+    })
+      .done(function (data) {
+          var results = data.map(function (song) {
+              return new SearchResultViewModel(song);
+          });
+
+          viewModel.savedPlaylistSongList(results);
+      });
+}
+
+function addNewPlaylist() {
+    var playlistName = $("#txtNewPlaylist").val();
+    //alert("searching for " + searchText);
+    $.ajax({
+        url: "/SavedPlaylist/" + encodeURI(playlistName),
+        type:"POST",
+        dataType: "json"
+    })
+       .done(function (data) {
+           refreshSavedPlaylistList(function () {
+               viewModel.selectedSavedPlaylist(playlistName);
+           });
+       });
+}

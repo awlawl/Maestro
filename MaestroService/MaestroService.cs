@@ -53,7 +53,7 @@ namespace MaestroService
             //var library = new MemoryLibraryRepository();
             var library = new MongoLibraryRepository();
             
-            InsertTestSongs(library);
+            //InsertTestSongs(library);
 
             //playlist.AddRange(library.GetAllMusic());
 
@@ -77,18 +77,18 @@ namespace MaestroService
         private void InsertTestSongs(ILibraryRepository library)
         {
             //POC code for playing in the service
-            //var testDirectory = @"C:\Users\alyons2\Documents\My Dropbox\Stuff\Maestro\TestFiles";
-            var testDirectory = @"f:\music\Manchester Orchestra\Mean Everything To Nothing";
-            //var testDirectory = @"C:\Users\alyons2\Music\Amazon MP3\Deftones\Koi No Yokan [Explicit]";
-            //var testDirectory2 = @"C:\Users\alyons2\Music\Amazon MP3\Manchester Orchestra\Mean Everything To Nothing";
-            //var td3 = @"C:\Users\awl\Dropbox\Music\Ultra Rare Trax";
-            //var testDirectory = @"C:\Users\awl\Music\deftones";
-            //var testDirectory2 = @"E:\music\KOMPRESSOR";
+            
+            var testDirectories = new string[] {
+                @"f:\music\Manchester Orchestra\Mean Everything To Nothing",
+                @"F:\music\Auf Der Maur\Auf Der Maur",
+                @"C:\Users\awl\Music\deftones",
+                @"F:\music\Nine Inch Nails"
+            };
 
             library.ClearLibrary();
-            //library.AddDirectoryToLibrary(testDirectory2);
-            library.AddDirectoryToLibrary(testDirectory);
-            //library.AddDirectoryToLibrary(td3);
+
+            foreach(var dir in testDirectories)
+               library.AddDirectoryToLibrary(dir);
         }
 
        

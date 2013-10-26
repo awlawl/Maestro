@@ -59,5 +59,25 @@ namespace MusicData
         {
             throw new System.NotImplementedException();
         }
+
+        public List<SavedPlaylist> GetAllSavedPlaylists()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<MusicInfo> GetAllSongsForSavedPlaylist(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void AddNewSavedPlaylist(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void AddSongToSavedPlaylist(string savedPlaylistName, string songId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
