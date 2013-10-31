@@ -25,6 +25,7 @@ var PlaylistViewModel = function(PlaylistItem) {
 };
 
 var SearchResultViewModel = function (Song) {
+    var self = this;
     this.Song = Song;
     this.AddToPlaylist = function (e) {
         console.log("Want to add " + e.Song.FullPath);
@@ -36,10 +37,28 @@ var SearchResultViewModel = function (Song) {
             playFromPlaylist(e.Song.IdValue);
         });
     }
+    this.isSongInSavedPlaylist = function (savedPlaylistName) {
+        var index = self.Song.SavedPlaylists.indexOf(savedPlaylistName);
+        
+        return index>=0;
+    }
+
+    this.toggleSongInPlaylist = function (e) {
+        //console.dir(e);
+
+        if (self.isSongInSavedPlaylist(e.name())) {
+            console.log("I would remove this from the playlist");
+        } else {
+            addSongToSavedPlaylist(self, e);
+        }
+    }
+    
+
 }
 
 var SavedPlaylist = function (name) {
     this.name = ko.observable(name);
+    
 }
 
 var channel = 'maestrotest';
@@ -280,5 +299,20 @@ function addNewPlaylist() {
            refreshSavedPlaylistList(function () {
                viewModel.selectedSavedPlaylist(playlistName);
            });
+       });
+}
+
+function addSongToSavedPlaylist(searchResult, savedPlaylist) {
+    var playlistName = savedPlaylist.name();
+    var song = searchResult.Song;
+    $.ajax({
+        url: "/SavedPlaylist/" + encodeURI(playlistName) + "/" + encodeURI(song.IdValue),
+        type: "POST",
+        dataType: "json"
+    })
+       .done(function (data) {
+           viewModel.selectedSavedPlaylist(playlistName);
+           song.SavedPlaylists.push(playlistName);
+           viewModel.savedPlaylistSongList.valueHasMutated()
        });
 }
