@@ -87,6 +87,15 @@
                                                 <td data-bind="text: Song.Album"></td>
                                                 <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
                                                 <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
+                                                <td><div class="btn-group">
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+    Add to playlist
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
+    <li><A href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())"></i> <span  data-bind="text: name"></span></A></li>
+  </ul>
+</div></td>
                                             </tr>
                                         </tbody>
                         
@@ -159,7 +168,7 @@
         </div>
         <div class="row-fluid">
             <div class="span5">
-                <button id="btnBack" class="btn">&lt;&lt; Back</button> <button id="btnPlay" class="btn">Play</button> <button id="btnPause" class="btn">Pause</button> <button id="btnStop" class="btn" >Stop</button> <button id="btnNext" class="btn" >Next &gt;&gt;</button>
+                <button id="btnBack" class="btn"><i class="icon-step-backward icon-3x"></i></button> <button id="btnPlay" class="btn"><i class="icon-play icon-3x"></i></button> <button id="btnPause" class="btn"><i class="icon-pause icon-3x"></i></button> <button id="btnStop" class="btn" ><i class="icon-stop icon-3x"></i></button> <button id="btnNext" class="btn" ><i class="icon-step-forward icon-3x"></i></button>
             </div>
         </div>
     </div>
