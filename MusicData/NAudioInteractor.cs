@@ -42,6 +42,7 @@ namespace MusicData
 
                 _waveOutDevice.Init(inputStream);
                 _waveOutDevice.Volume = 0.3f;
+                _waveOutDevice.PlaybackStopped += _waveOutDevice_PlaybackStopped;
                 _waveOutDevice.Play();
                 
                 Log.Debug("Playing " + filename);
@@ -61,6 +62,11 @@ namespace MusicData
             }
 
             
+        }
+
+        void _waveOutDevice_PlaybackStopped(object sender, EventArgs e)
+        {
+            Log.Debug("Playback Stopped!");
         }
 
         public event EventHandler SongChanged;
