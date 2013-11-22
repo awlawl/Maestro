@@ -11,6 +11,8 @@
     <AssemblyName>Website</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MusicData\MusicData.csproj">
-      <Project>{34fdbba7-da83-4f90-955c-56209aa0dfbd}</Project>
+      <Project>{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}</Project>
       <Name>MusicData</Name>
     </ProjectReference>
   </ItemGroup>

@@ -98,5 +98,11 @@ namespace MusicData
             foreach (var playlistWatcher in PlaylistWatcher)
                 playlistWatcher.SongEnding(CurrentSong);
         }
+
+        public void ClearPlaylist()
+        {
+            this.Clear();
+            this.CurrentPosition = 0;
+        }
     }
 }

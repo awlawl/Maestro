@@ -55,10 +55,26 @@ namespace Website
                     return response;
                 };
 
+            Post["/EnqueueSavedPlaylist/{name}"] = x =>
+            {
+                string name = x.name.ToString();
+                var response = (Nancy.Response)(new EnqueueSongRoute()).EnqueueSavedPlaylist(name);
+                response.ContentType = "application/json";
+                return response;
+            };
+
             Post["/Play/{id}"] = x =>
             {
                 string id = x.id.ToString();
                 var response = (Nancy.Response)(new PlaySongRoute()).PlaySong(id);
+                response.ContentType = "application/json";
+                return response;
+            };
+
+            Post["/PlaySavedPlaylist/{name}"] = x =>
+            {
+                string name = x.name.ToString();
+                var response = (Nancy.Response)(new PlaySongRoute()).PlaySavedPlaylist(name);
                 response.ContentType = "application/json";
                 return response;
             };
@@ -94,6 +110,17 @@ namespace Website
                 response.ContentType = "application/json";
                 return response;
             };
+
+            Delete["/SavedPlaylist/{name}/{id}"] = x =>
+            {
+                string name = x.name.ToString();
+                string id = x.id.ToString();
+                var response = (Nancy.Response)(new SavedPlaylistRoute()).RemoveSongFromSavedPlaylist(name, id);
+                response.ContentType = "application/json";
+                return response;
+            };
+
+            
 
 
         }

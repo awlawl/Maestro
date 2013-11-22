@@ -37,6 +37,12 @@ var SearchResultViewModel = function (Song) {
             playFromPlaylist(e.Song.IdValue);
         });
     }
+
+    this.Remove = function (e) {
+        console.log("Want to remove " + e.Song.FullPath + " from playlist " + viewModel.selectedSavedPlaylist());
+        removeSongFromSavedPlaylist(e.Song.IdValue);
+    }
+
     this.isSongInSavedPlaylist = function (savedPlaylistName) {
         var index = self.Song.SavedPlaylists.indexOf(savedPlaylistName);
         
@@ -72,6 +78,8 @@ $(document).ready(function () {
     $("#btnPause").click(pause);
     $("#btnSearch").click(doSearch);
     $("#btnAddPlaylist").click(addNewPlaylist);
+    $("#btnEnqueueSavedPlaylist").click(enqueueSavedPlaylist);
+    $("#btnPlaySavedPlaylist").click(playSavedPlaylist);
 
     PUBNUB.subscribe({
         channel: channel,
@@ -260,6 +268,32 @@ function enqueueSong (id, callback) {
        });
 }
 
+function enqueueSavedPlaylist() {
+    var name = viewModel.selectedSavedPlaylist();
+    $.ajax({
+        url: "/enqueueSavedPlaylist/" + encodeURI(name),
+        type: "POST",
+        dataType: "json"
+    })
+       .done(function (data) {
+           popupInfoToaster(name + " playlist added to queue ");
+           getPlaylist();
+       });
+}
+
+function playSavedPlaylist() {
+    var name = viewModel.selectedSavedPlaylist();
+    $.ajax({
+        url: "/playSavedPlaylist/" + encodeURI(name),
+        type: "POST",
+        dataType: "json"
+    })
+       .done(function (data) {
+           popupInfoToaster(name + " playlist now playing ");
+           getPlaylist();
+       });
+}
+
 function refreshSavedPlaylistList(callback) {
     $.ajax({
         url: "/SavedPlaylist/",
@@ -315,4 +349,16 @@ function addSongToSavedPlaylist(searchResult, savedPlaylist) {
            song.SavedPlaylists.push(playlistName);
            viewModel.savedPlaylistSongList.valueHasMutated()
        });
+}
+
+function removeSongFromSavedPlaylist(songId) {
+    var name = viewModel.selectedSavedPlaylist();
+    $.ajax({
+        url: "/SavedPlaylist/" + encodeURI(name) + "/" + encodeURI(songId),
+        type: "DELETE",
+        dataType: "json"
+    })
+        .done(function (data) {
+            refreshSongsForSavedPlaylist();
+        });
 }

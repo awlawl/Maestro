@@ -95,5 +95,17 @@ namespace MongoLibrary
             collection.Save(song);
 
         }
+
+        public void RemoveSongFromSavedPlaylist(string savedPlaylistName, string songId)
+        {
+            var collection = MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo");
+            var song = collection
+              .FindOneByIdAs<MongoMusicInfo>(ObjectId.Parse(songId));
+
+            song.SavedPlaylists = song.SavedPlaylists.Where(X => X != savedPlaylistName).ToArray();
+
+            collection.Save(song);
+
+        }
     }
 }

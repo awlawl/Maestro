@@ -20,5 +20,17 @@ namespace Website.Routes
 
             return JsonConvert.SerializeObject(song);
         }
+
+        public dynamic EnqueueSavedPlaylist(string savedPlaylistName)
+        {
+            var library = Player.Current.Library;
+
+            List<MusicInfo> songs = library.GetAllSongsForSavedPlaylist(savedPlaylistName);
+
+            foreach (var song in songs)
+                Player.Current.Playlist.Enqueue(song);
+
+            return "";
+        }
     }
 }

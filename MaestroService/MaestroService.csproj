@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,6 +45,8 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
@@ -90,19 +94,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MongoLibrary\MongoLibrary.csproj">
-      <Project>{4ec89ccc-817f-4d2e-9dd1-170be9e6f540}</Project>
+      <Project>{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}</Project>
       <Name>MongoLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\MusicData\MusicData.csproj">
-      <Project>{34fdbba7-da83-4f90-955c-56209aa0dfbd}</Project>
+      <Project>{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}</Project>
       <Name>MusicData</Name>
     </ProjectReference>
     <ProjectReference Include="..\RealTimeMessaging\RealTimeMessaging.csproj">
-      <Project>{d29daf70-b560-4698-8752-2f49d99dfeb8}</Project>
+      <Project>{D29DAF70-B560-4698-8752-2F49D99DFEB8}</Project>
       <Name>RealTimeMessaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Website\Website.csproj">
-      <Project>{0d3e056d-643b-423c-8133-58cfd688582b}</Project>
+      <Project>{0D3E056D-643B-423C-8133-58CFD688582B}</Project>
       <Name>Website</Name>
     </ProjectReference>
   </ItemGroup>

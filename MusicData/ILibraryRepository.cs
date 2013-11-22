@@ -14,6 +14,7 @@ namespace MusicData
         List<MusicInfo> GetAllSongsForSavedPlaylist(string savedPlaylistName);
         void AddNewSavedPlaylist(string namesavedPlaylistName);
         void AddSongToSavedPlaylist(string savedPlaylistName, string songId);
+        void RemoveSongFromSavedPlaylist(string savedPlaylistName, string songId);
 
     }
 }

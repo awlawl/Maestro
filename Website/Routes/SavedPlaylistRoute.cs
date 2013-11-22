@@ -46,6 +46,18 @@ namespace Website.Routes
             return "";
         }
 
+        public dynamic RemoveSongFromSavedPlaylist(string savedPlaylistName, string songId)
+        {
+            var library = Player.Current.Library;
+
+            library.RemoveSongFromSavedPlaylist(savedPlaylistName, songId);
+
+            return "";
+        }
+
+        
+            
+
             
     }
 }

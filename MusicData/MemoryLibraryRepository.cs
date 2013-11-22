@@ -79,5 +79,10 @@ namespace MusicData
         {
             throw new System.NotImplementedException();
         }
+
+        public void RemoveSongFromSavedPlaylist(string savedPlaylistName, string songId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
