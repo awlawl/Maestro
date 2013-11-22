@@ -37,5 +37,26 @@ namespace Website.Routes
 
             return JsonConvert.SerializeObject(songs[0]);
         }
+
+        public dynamic PlaySavedPlaylistWithShuffle(string savedPlaylistName)
+        {
+            var library = Player.Current.Library;
+
+            List<MusicInfo> songs = library.GetAllSongsForSavedPlaylist(savedPlaylistName);
+
+            if (songs.Count == 0)
+                return "";
+
+            var shuffledSongs = songs.Shuffle();
+
+            foreach (var song in shuffledSongs)
+                Player.Current.Playlist.Enqueue(song);
+
+            var firstSong = shuffledSongs.First();
+
+            Player.Current.JumpToPlaylistByPath(firstSong.FullPath);
+
+            return JsonConvert.SerializeObject(firstSong);
+        }
     }
 }

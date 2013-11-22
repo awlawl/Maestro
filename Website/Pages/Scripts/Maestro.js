@@ -284,7 +284,7 @@ function enqueueSavedPlaylist() {
 function playSavedPlaylist() {
     var name = viewModel.selectedSavedPlaylist();
     $.ajax({
-        url: "/playSavedPlaylist/" + encodeURI(name),
+        url: "/PlaySavedPlaylistWithShuffle/" + encodeURI(name),
         type: "POST",
         dataType: "json"
     })

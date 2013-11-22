@@ -79,6 +79,14 @@ namespace Website
                 return response;
             };
 
+            Post["/PlaySavedPlaylistWithShuffle/{name}"] = x =>
+            {
+                string name = x.name.ToString();
+                var response = (Nancy.Response)(new PlaySongRoute()).PlaySavedPlaylistWithShuffle(name);
+                response.ContentType = "application/json";
+                return response;
+            };
+
             Get["/SavedPlaylist"] = x =>
                 {
                     var response = (Nancy.Response)(new SavedPlaylistRoute()).GetAllSavedPlaylists();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MusicData
 {
-    static class IEnumerableExtentions
+    public static class IEnumerableExtentions
     {
         //from http://stackoverflow.com/questions/5807128/an-extension-method-on-ienumerable-needed-for-shuffling
        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source, Random rng)
@@ -16,6 +16,13 @@ namespace MusicData
 
             return source.ShuffleIterator(rng);
         }
+
+       public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+       {
+           if (source == null) throw new ArgumentNullException("source");
+
+           return source.ShuffleIterator(new Random());
+       }
 
         private static IEnumerable<T> ShuffleIterator<T>(
             this IEnumerable<T> source, Random rng)

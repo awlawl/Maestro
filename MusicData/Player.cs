@@ -129,11 +129,12 @@ namespace MusicData
         {
             Log.Debug("Jumping to song " + path + " in playlist.");
 
-            var found = this.Playlist.Where(X => X.FullPath == path).FirstOrDefault();
+            var found = this.Playlist.Where(X => X.FullPath == path).LastOrDefault();
             if (found == null)
                 return;
 
             var playlistIndex = this.Playlist.LastIndexOf(found);
+            //var playlistIndex = this.Playlist.IndexOf(found);
 
             this.Playlist.CurrentPosition = playlistIndex - 1;
             _audioInteractor.StopSong();
