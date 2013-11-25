@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using System.IO;
 using MongoDB.Driver.Linq;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
@@ -11,6 +12,10 @@ namespace MongoLibrary
     {
         public void AddMusicToLibrary(MusicInfo[] songs)
         {
+
+            if (songs.Length == 0)
+                return;
+
             var collection = MongoHelper.Current.GetCollection<MusicInfo>("musicinfo");
 
             collection.InsertBatch(songs);
@@ -27,6 +32,16 @@ namespace MongoLibrary
         public void AddDirectoryToLibrary(string directoryPath)
         {
             var musicInfoReader = new MusicInfoReader();
+
+            if (!Directory.Exists(directoryPath))
+            {
+                Log.Debug("Couldn't add directory to library: " + directoryPath);
+                return;
+            }
+            else
+            {
+                Log.Debug("Adding directory to library :" + directoryPath);
+            }
 
             List<MusicInfo> allMusic = musicInfoReader.CrawlDirectory(directoryPath);
 

@@ -67,7 +67,7 @@ var SavedPlaylist = function (name) {
     
 }
 
-var channel = 'maestrotest';
+var channel;
 var viewModel = new MaestroViewModel();
 
 $(document).ready(function () {
@@ -81,23 +81,7 @@ $(document).ready(function () {
     $("#btnEnqueueSavedPlaylist").click(enqueueSavedPlaylist);
     $("#btnPlaySavedPlaylist").click(playSavedPlaylist);
 
-    PUBNUB.subscribe({
-        channel: channel,
-        callback: function (message) {
-            console.log(JSON.stringify(message));
-            handleMessage(message);
-
-        },
-        error: function () {
-            // The internet is gone.
-            console.log("###Connection Lost");
-        },
-        connect: function () {
-            console.log("Now listening.");
-            ping();
-
-        }
-    });
+    setupPubnub();
 
     $("#txtSearch").keypress(function (e) {
         if (e.which == 13) {
@@ -109,20 +93,46 @@ $(document).ready(function () {
     ko.applyBindings(viewModel);
 });
 
-function publishMessage(message) {
+function setupPubnub() {
+    $.ajax({
+        url: "/PubNubChannel",
+        dataType: "json"
+    }).done(function (data) {
+        channel = data.Channel;
+        console.log("pubnub channel: " + channel);
+        PUBNUB.subscribe({
+            channel: channel,
+            callback: function (message) {
+                console.log(JSON.stringify(message));
+                handleMessage(message);
 
-    PUBNUB.publish({
-        channel: 'maestrotest',
-        message: message,
-        callback: function (info) {
-            console.log("Wrote message");
-            if (!info[0]) {
-                console.log("!!!!!!!!!!!!!!!!!!!! Failed! -> " + info[1]);
+            },
+            error: function () {
+                // The internet is gone.
+                console.log("###Connection Lost");
+            },
+            connect: function () {
+                console.log("Now listening.");
+                ping();
 
             }
-        }
+        });
     });
-};
+}
+
+function publishMessage(message) {
+        PUBNUB.publish({
+            channel: channel,
+            message: message,
+            callback: function (info) {
+                console.log("Wrote message");
+                if (!info[0]) {
+                    console.log("!!!!!!!!!!!!!!!!!!!! Failed! -> " + info[1]);
+
+                }
+            }
+        });
+}
 
 function play() {
     publishMessage({ action: "Play" });

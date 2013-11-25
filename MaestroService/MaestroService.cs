@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 using System.Threading;
 using MongoLibrary;
 using MusicData;
@@ -45,27 +46,34 @@ namespace MaestroService
 
         private void StartPlayer()
         {
-            
-            var playlistManager = GetPlaylistManager();
-            var messagingWatcher = new MessagingPlaylistWatcher();
-            var playlist = new Playlist(new IPlaylistWatcher[] { playlistManager, messagingWatcher });
-            var dummyAudio = new NAudioInteractor();
-            //var library = new MemoryLibraryRepository();
-            var library = new MongoLibraryRepository();
-            
-            //InsertTestSongs(library);
+            try
+            {
 
-            //playlist.AddRange(library.GetAllMusic());
+                var playlistManager = GetPlaylistManager();
+                var messagingWatcher = new MessagingPlaylistWatcher();
+                var playlist = new Playlist(new IPlaylistWatcher[] { playlistManager, messagingWatcher });
+                var dummyAudio = new NAudioInteractor();
+                //var library = new MemoryLibraryRepository();
+                var library = new MongoLibraryRepository();
 
-            var player = new Player(playlist, dummyAudio, library);
-            _pubnub = new PubnubMessaging(player,true);
-            
-            messagingWatcher.AssignMessaging(_pubnub);
-            playlistManager.AttachToPlaylist(playlist, library);
+                InsertTestSongs(library);
 
-            _pubnub.StartListening();
-            
-            player.Play();
+                //playlist.AddRange(library.GetAllMusic());
+
+                var player = new Player(playlist, dummyAudio, library);
+                _pubnub = new PubnubMessaging(player, true);
+
+                messagingWatcher.AssignMessaging(_pubnub);
+                playlistManager.AttachToPlaylist(playlist, library);
+
+                _pubnub.StartListening();
+
+                //player.Play();
+            }
+            catch (Exception exc)
+            {
+                Log.Debug(exc.ToString());
+            }
         }
 
         private IPlaylistWatcher GetPlaylistManager()
@@ -82,7 +90,9 @@ namespace MaestroService
                 @"f:\music\Manchester Orchestra\Mean Everything To Nothing",
                 @"F:\music\Auf Der Maur\Auf Der Maur",
                 @"C:\Users\awl\Music\deftones",
-                @"F:\music\Nine Inch Nails"
+                @"F:\music\Nine Inch Nails",
+                @"c:\Shared\Maestro\Music\Manual",
+                @"C:\Users\awl\Dropbox\Music\Maestro"
             };
 
             library.ClearLibrary();

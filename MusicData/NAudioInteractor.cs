@@ -29,7 +29,7 @@ namespace MusicData
 
             try
             {
-                if (filename.EndsWith(".mp3"))
+                if (IsAcceptableFileExtention(filename))
                 {
                     mp3Reader = new Mp3FileReader(filename);
 
@@ -44,10 +44,14 @@ namespace MusicData
                 _waveOutDevice.Volume = 0.3f;
                 _waveOutDevice.PlaybackStopped += _waveOutDevice_PlaybackStopped;
                 _waveOutDevice.Play();
-                
+
                 Log.Debug("Playing " + filename);
 
                 Thread.Sleep(mp3Reader.TotalTime);
+            }
+            catch (Exception exc)
+            {
+                Log.Debug("Error while playing song " + filename + ":" + exc.ToString());
             }
             finally
             {
@@ -82,11 +86,20 @@ namespace MusicData
 
         public void StopSong()
         {
-            if (_waveOutDevice!=null)
-                _waveOutDevice.Stop();
+            try
+            {
+                if (_waveOutDevice != null)
+                    _waveOutDevice.Stop();
 
-            _playingThread.Abort();
-            _playingThread.Join();
+                _playingThread.Abort();
+                _playingThread.Join();
+            }
+            finally { }
+        }
+
+        private bool IsAcceptableFileExtention(string filename)
+        {
+            return filename.EndsWith(".mp3") || filename.EndsWith("m4a");
         }
     }
 }

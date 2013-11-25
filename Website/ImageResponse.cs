@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Nancy;
 using System.IO;
+using MusicData;
 
 namespace Website
 {
@@ -22,9 +23,16 @@ namespace Website
         {
             return stream =>
             {
-                var x = new BinaryWriter(stream);
-                x.Write(data);
-                x.Close();
+                try
+                {
+                    var x = new BinaryWriter(stream);
+                    x.Write(data);
+                    x.Close();
+                }
+                catch (Exception exc)
+                {
+                    Log.Debug("While writing image response: " + exc.ToString());
+                }
             };
         }
     }

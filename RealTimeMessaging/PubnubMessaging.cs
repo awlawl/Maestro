@@ -14,7 +14,7 @@ namespace RealTimeMessaging
         private string PUBLISH_KEY = "demo";
         private string SUBSCRIBE_KEY = "demo";
         private string SECRET_KEY = "";
-        private string channel = "maestrotest";
+        private string _channel;
 
         private IPlayer _player = null;
         private bool _doThreading = false;
@@ -24,6 +24,7 @@ namespace RealTimeMessaging
         {
             _player = player;
             _doThreading = doThreading;
+            _channel = System.Configuration.ConfigurationManager.AppSettings["PubNubChannel"];
         }
 
         public void StartListening()
@@ -37,7 +38,7 @@ namespace RealTimeMessaging
                     }
                 
             };
-            _pubnub.subscribe(channel);
+            _pubnub.subscribe(_channel);
         }
 
 
@@ -120,7 +121,7 @@ namespace RealTimeMessaging
         
         public void SendMessage(PubnubMessage message)
         {
-            _pubnub.publish(this.channel, message);
+            _pubnub.publish(_channel, message);
         }
 
         public void SendNowPlaying(MusicInfo song)

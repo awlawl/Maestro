@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Nancy;
+using MusicData;
 
 namespace Website
 {
@@ -23,6 +24,7 @@ namespace Website
 
         private byte[] LoadFavIcon()
         {
+            Log.Debug("Loading favorite icon from " + _websitePath);
             return File.ReadAllBytes(_websitePath + "favicon.ico");
         }
     }

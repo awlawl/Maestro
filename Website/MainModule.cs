@@ -10,6 +10,7 @@ using Website.Routes;
 using Nancy.Extensions;
 using Nancy.IO;
 using Nancy.Responses;
+using Newtonsoft.Json;
 
 namespace Website
 {
@@ -130,7 +131,13 @@ namespace Website
                 return response;
             };
 
-            
+            Get["/PubNubChannel"] = x =>
+            {
+                var pubNubInfo = new { Channel=System.Configuration.ConfigurationManager.AppSettings["PubNubChannel"]};
+                var response = (Nancy.Response)JsonConvert.SerializeObject(pubNubInfo);
+                response.ContentType = "application/json";
+                return response;
+            };
 
 
         }

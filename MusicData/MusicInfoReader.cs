@@ -8,7 +8,7 @@ namespace MusicData
     public class MusicInfoReader
     {
         //TODO: make this configurable somehow
-        private string[] _supportedExtentions = {"mp3"};
+        private string[] _supportedExtentions = {".mp3",".m4a"};
        
         public MusicInfo GetInfoForFile(string fullPath)
         {
@@ -57,7 +57,8 @@ namespace MusicData
             var result = new List<MusicInfo>();
 
             var musicInfoReader = new MusicInfoReader();
-            var files = Directory.GetFiles(audioDirectory, "*." + _supportedExtentions[0]);
+            var files = Directory.GetFiles(audioDirectory).Where(X =>  _supportedExtentions.Contains(Path.GetExtension(X))).ToArray();
+
 
             foreach (var file in files)
             {
