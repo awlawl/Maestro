@@ -17,14 +17,16 @@ namespace Website
     {
         public MainModule()
         {
+            string websitePath = System.Configuration.ConfigurationManager.AppSettings["WebsitePath"];
+
             Get["/"] = x =>
             {
-                return File.ReadAllText(@"..\..\..\Website\Pages\Maestro.html");
+                return File.ReadAllText(websitePath + "Maestro.html");
             };
 
             Get["/Scripts/Maestro.js"] = x =>
             {
-                return File.ReadAllText(@"..\..\..\Website\Pages\Scripts\Maestro.js");
+                return File.ReadAllText(websitePath + "Scripts\\Maestro.js");
             };
 
             Get["/AlbumArt"] = x =>

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Web
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicData", "MusicData\MusicData.csproj", "{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}"
@@ -19,52 +19,37 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-		Service Debug|Any CPU = Service Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0D3E056D-643B-423C-8133-58CFD688582B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D3E056D-643B-423C-8133-58CFD688582B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D3E056D-643B-423C-8133-58CFD688582B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D3E056D-643B-423C-8133-58CFD688582B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D3E056D-643B-423C-8133-58CFD688582B}.Service Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D3E056D-643B-423C-8133-58CFD688582B}.Service Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Service Debug|Any CPU.ActiveCfg = Service Debug|Any CPU
-		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Service Debug|Any CPU.Build.0 = Service Debug|Any CPU
 		{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}.Service Debug|Any CPU.ActiveCfg = Service Debug|Any CPU
-		{3CB167F9-D48D-4AA5-882D-F9EA1BD8F08A}.Service Debug|Any CPU.Build.0 = Service Debug|Any CPU
-		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Service Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Service Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34FDBBA7-DA83-4F90-955C-56209AA0DFBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D161E47A-5764-467E-824F-26C820B2CD50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D161E47A-5764-467E-824F-26C820B2CD50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D161E47A-5764-467E-824F-26C820B2CD50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D161E47A-5764-467E-824F-26C820B2CD50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D161E47A-5764-467E-824F-26C820B2CD50}.Service Debug|Any CPU.ActiveCfg = Service Debug|Any CPU
-		{D161E47A-5764-467E-824F-26C820B2CD50}.Service Debug|Any CPU.Build.0 = Service Debug|Any CPU
 		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Service Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D29DAF70-B560-4698-8752-2F49D99DFEB8}.Service Debug|Any CPU.Build.0 = Debug|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MaestroService\MaestroService.csproj
+		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EC89CCC-817F-4D2E-9DD1-170BE9E6F540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3E056D-643B-423C-8133-58CFD688582B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3E056D-643B-423C-8133-58CFD688582B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3E056D-643B-423C-8133-58CFD688582B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3E056D-643B-423C-8133-58CFD688582B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = MaestroService\MaestroService.csproj
 	EndGlobalSection
 EndGlobal

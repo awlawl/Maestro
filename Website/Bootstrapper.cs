@@ -5,16 +5,25 @@ namespace Website
 {
     public class Bootstrapper : DefaultNancyBootstrapper
     {
-        private byte[] favicon;
+
+        private byte[] _favicon;
+        private string _websitePath;
+
+        public Bootstrapper()
+        {
+            _websitePath = System.Configuration.ConfigurationManager.AppSettings["WebsitePath"];
+        }
+
+       
 
         protected override byte[] FavIcon
         {
-            get { return this.favicon ?? (this.favicon = LoadFavIcon()); }
+            get { return this._favicon ?? (this._favicon = LoadFavIcon()); }
         }
 
         private byte[] LoadFavIcon()
         {
-            return File.ReadAllBytes(@"..\..\..\Website\Pages\favicon.ico");
+            return File.ReadAllBytes(_websitePath + "favicon.ico");
         }
     }
 }
