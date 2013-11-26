@@ -13,6 +13,7 @@ namespace MaestroService
         private PubnubMessaging _pubnub = null;
         private Thread _player = null;
         private SelfHostedWebsite _website = null;
+        private ImportFolderWatcher _folderWatcher = null;
         
         public MaestroService()
         {
@@ -31,6 +32,8 @@ namespace MaestroService
             _player.Abort();
 
             _website.Stop();
+
+            _folderWatcher.Stop();
         }
 
         public void Start()
@@ -48,13 +51,13 @@ namespace MaestroService
         {
             try
             {
-
                 var playlistManager = GetPlaylistManager();
                 var messagingWatcher = new MessagingPlaylistWatcher();
                 var playlist = new Playlist(new IPlaylistWatcher[] { playlistManager, messagingWatcher });
                 var dummyAudio = new NAudioInteractor();
                 //var library = new MemoryLibraryRepository();
-                var library = new MongoLibraryRepository();
+                var library = new MongoLibraryRepository(null);
+                _folderWatcher = new ImportFolderWatcher(library);
 
                 InsertTestSongs(library);
 
@@ -68,7 +71,11 @@ namespace MaestroService
 
                 _pubnub.StartListening();
 
-                //player.Play();
+                library.Messaging = _pubnub;
+
+                _folderWatcher.Start();
+
+                player.Play();
             }
             catch (Exception exc)
             {

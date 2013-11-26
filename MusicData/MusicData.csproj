@@ -50,13 +50,15 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio">
-      <HintPath>..\packages\NAudio.1.5\lib\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.7.0.15, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NAudio.1.7\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="policy.2.0.taglib-sharp">
       <HintPath>..\packages\taglib.2.1.0.0\lib\policy.2.0.taglib-sharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,7 +73,11 @@
     <Compile Include="AlbumArt.cs" />
     <Compile Include="IAudioInteractor.cs" />
     <Compile Include="IEnumerableExtentions.cs" />
+    <Compile Include="IImportFolderInteractor.cs" />
     <Compile Include="ILibraryRepository.cs" />
+    <Compile Include="ImportFolderInteractor.cs" />
+    <Compile Include="ImportFolderWatcher.cs" />
+    <Compile Include="IMusicInfoReader.cs" />
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlaylistWatcher.cs" />
     <Compile Include="IRealTimeMessaging.cs" />

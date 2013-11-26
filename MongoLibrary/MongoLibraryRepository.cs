@@ -10,6 +10,12 @@ namespace MongoLibrary
 {
     public class MongoLibraryRepository : ILibraryRepository
     {
+        public IRealTimeMessaging Messaging { get; set; }
+
+        public MongoLibraryRepository(IRealTimeMessaging messaging) {
+            Messaging = messaging;
+        }
+
         public void AddMusicToLibrary(MusicInfo[] songs)
         {
 
@@ -19,6 +25,9 @@ namespace MongoLibrary
             var collection = MongoHelper.Current.GetCollection<MusicInfo>("musicinfo");
 
             collection.InsertBatch(songs);
+
+            if (Messaging != null)
+                Messaging.SendSongsAdded(songs);
         }
 
         public List<MusicInfo> GetAllMusic()

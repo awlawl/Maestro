@@ -50,6 +50,10 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio, Version=1.7.0.15, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NAudio.1.7\lib\net35\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="Rhino.Mocks">
       <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
     </Reference>
@@ -65,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImportFolderTests.cs" />
     <Compile Include="RandomSongPlaylistWatcherTests_Attach.cs" />
     <Compile Include="DummyAudioInteractor.cs" />
     <Compile Include="DummyPlaylistWatcher.cs" />

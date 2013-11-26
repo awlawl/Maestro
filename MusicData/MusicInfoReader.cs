@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MusicData
 {
-    public class MusicInfoReader
+    public class MusicInfoReader : IMusicInfoReader
     {
         //TODO: make this configurable somehow
         private string[] _supportedExtentions = {".mp3",".m4a"};

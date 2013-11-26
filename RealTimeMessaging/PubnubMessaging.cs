@@ -168,6 +168,8 @@ namespace RealTimeMessaging
                         
                     };
             }
+
+            SendMessage(message);
         }
 
         private string GetIP()
