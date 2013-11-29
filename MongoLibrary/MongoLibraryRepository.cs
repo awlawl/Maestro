@@ -30,6 +30,35 @@ namespace MongoLibrary
                 Messaging.SendSongsAdded(songs);
         }
 
+        public void AddOrUpdateMusicInLibrary(MusicInfo song)
+        {
+            Log.Debug("Adding song to library:" + song.FullPath);
+            var collection = MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo");
+            
+
+            //find any existing
+            var existing = collection.FindAll()
+                .Where(X => X.FullPath == song.FullPath)
+                .ToArray();
+
+            //insert it again
+            collection.Insert(song);
+
+            if (existing.Length>0)
+            {
+                //delete the original ones
+
+                foreach (var previousVersion in existing)
+                {
+                    Log.Debug("This song was already in the library, deleting the old one: " + previousVersion.IdValue);
+                    collection.Remove(Query.EQ("_id", previousVersion.Id));
+                }
+            }
+
+            if (Messaging != null)
+                Messaging.SendSongsAdded(new MusicInfo[] { song });
+        }
+
         public List<MusicInfo> GetAllMusic()
         {
             return MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo")
@@ -131,5 +160,6 @@ namespace MongoLibrary
             collection.Save(song);
 
         }
+
     }
 }

@@ -26,6 +26,14 @@ namespace MusicData
                 
         }
 
+        public void AddOrUpdateMusicInLibrary(MusicInfo song)
+        {
+            _library.Add(song);
+
+            if (_messaging != null)
+                _messaging.SendSongsAdded(new MusicInfo[] {song});
+        }
+
         public List<MusicInfo> GetAllMusic()
         {
             var result = new List<MusicInfo>();
@@ -84,5 +92,8 @@ namespace MusicData
         {
             throw new System.NotImplementedException();
         }
+
+
+        
     }
 }

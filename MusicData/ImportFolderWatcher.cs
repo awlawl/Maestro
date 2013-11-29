@@ -56,7 +56,7 @@ namespace MusicData
                     var artist = string.IsNullOrEmpty(musicInfo.Artist) ? UNKNOWN_ARTIST_NAME : musicInfo.Artist;
 
                     musicInfo.FullPath = MoveToLibraryFolder(filePath, artist, album);
-                    _library.AddMusicToLibrary(new MusicInfo[] { musicInfo });
+                    _library.AddOrUpdateMusicInLibrary(musicInfo);
                 }
             }
         }
@@ -74,6 +74,8 @@ namespace MusicData
 
             if (!_folderInteractor.DirectoryExists(albumPath))
                 _folderInteractor.CreateDirectory(albumPath);
+
+            Log.Debug("Moving file to library folder: " + newFullPath);
 
             _folderInteractor.DeleteFile(newFullPath);
             _folderInteractor.MoveFile(file, newFullPath);

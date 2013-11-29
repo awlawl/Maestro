@@ -5,6 +5,7 @@ namespace MusicData
     public interface ILibraryRepository
     {
         void AddMusicToLibrary(MusicInfo[] song);
+        void AddOrUpdateMusicInLibrary(MusicInfo song);
         List<MusicInfo> GetAllMusic();
         void AddDirectoryToLibrary(string directoryPath);
         void ClearLibrary();
