@@ -41,10 +41,10 @@ namespace MusicData
             var files = _folderInteractor.GetFilesForFolder(_folderToWatch);
             foreach (var file in files)
             {
-                if (IsSupportedFileType(file))
+                if (SupportedFileTypes.IsSupportedFileType(file))
                 {
                     var filePath = file;
-                    if (RequiresTranscoding(file))
+                    if (SupportedFileTypes.RequiresTranscoding(file))
                     {
                         var newFile = _transcoder.Transcode(filePath);
                         _folderInteractor.DeleteFile(filePath);
@@ -61,19 +61,7 @@ namespace MusicData
             }
         }
 
-        private bool IsSupportedFileType(string filePath)
-        {
-            var extention = Path.GetExtension(filePath).ToLower();
-            var allowedExtentions = new string[] { ".mp3", ".m4a" };
-            return allowedExtentions.Contains(extention);
-        }
-
-        private bool RequiresTranscoding(string filePath)
-        {
-            var extention = Path.GetExtension(filePath).ToLower();
-            var transCodingExtentions = new string[] { ".m4a" };
-            return transCodingExtentions.Contains(extention);
-        }
+       
 
         private string MoveToLibraryFolder(string file, string artist, string album)
         {

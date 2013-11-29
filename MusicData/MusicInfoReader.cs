@@ -7,9 +7,6 @@ namespace MusicData
 {
     public class MusicInfoReader : IMusicInfoReader
     {
-        //TODO: make this configurable somehow
-        private string[] _supportedExtentions = {".mp3",".m4a", ".ogg"};
-       
         public MusicInfo GetInfoForFile(string fullPath)
         {
              var result = new MusicInfo();
@@ -57,7 +54,7 @@ namespace MusicData
             var result = new List<MusicInfo>();
 
             var musicInfoReader = new MusicInfoReader();
-            var files = Directory.GetFiles(audioDirectory).Where(X =>  _supportedExtentions.Contains(Path.GetExtension(X))).ToArray();
+            var files = Directory.GetFiles(audioDirectory).Where(X =>  SupportedFileTypes.IsSupportedFileType(X)).ToArray();
 
 
             foreach (var file in files)

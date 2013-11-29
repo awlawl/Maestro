@@ -93,6 +93,7 @@
     <Compile Include="LoopingPlaylistWatcher.cs" />
     <Compile Include="RandomSongPlaylistWatcher.cs" />
     <Compile Include="SavedPlaylist.cs" />
+    <Compile Include="SupportedFileTypes.cs" />
     <Compile Include="Transcoder.cs" />
   </ItemGroup>
   <ItemGroup>

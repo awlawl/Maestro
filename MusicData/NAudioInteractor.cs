@@ -30,7 +30,7 @@ namespace MusicData
 
             try
             {
-                if (IsAcceptableFileExtention(filename))
+                if (SupportedFileTypes.CanBePlayed(filename))
                 {
                     mp3Reader = new Mp3FileReader(filename);
 
@@ -98,11 +98,6 @@ namespace MusicData
             finally { }
         }
 
-        private bool IsAcceptableFileExtention(string filePath)
-        {
-             var extention = Path.GetExtension(filePath).ToLower();
-            var allowedExtentions = new string[] { ".mp3"};
-            return allowedExtentions.Contains(extention);
-        }
+        
     }
 }
