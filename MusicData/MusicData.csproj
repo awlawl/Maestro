@@ -81,6 +81,7 @@
     <Compile Include="IPlayer.cs" />
     <Compile Include="IPlaylistWatcher.cs" />
     <Compile Include="IRealTimeMessaging.cs" />
+    <Compile Include="ITranscoder.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MemoryLibraryRepository.cs" />
     <Compile Include="MusicInfo.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="LoopingPlaylistWatcher.cs" />
     <Compile Include="RandomSongPlaylistWatcher.cs" />
     <Compile Include="SavedPlaylist.cs" />
+    <Compile Include="Transcoder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

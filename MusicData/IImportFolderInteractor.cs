@@ -9,6 +9,9 @@ namespace MusicData
     public interface IImportFolderInteractor
     {
         string[] GetFilesForFolder(string folder);
-        string MoveToLibraryFolder(string file, string artist, string album);
+        void MoveFile(string sourceFile, string destinationFile);
+        void DeleteFile(string file);
+        bool DirectoryExists(string folder);
+        void CreateDirectory(string folder);
     }
 }

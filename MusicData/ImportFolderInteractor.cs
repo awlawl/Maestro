@@ -14,21 +14,26 @@ namespace MusicData
             return Directory.GetFiles(folder);
         }
 
-        public string MoveToLibraryFolder(string file, string artist, string album)
+        public void DeleteFile(string file)
         {
-            var root = System.Configuration.ConfigurationManager.AppSettings["LibraryRootFolder"];
-            var artistPath = root + "\\" + artist;
-            var albumPath = artistPath + "\\" + album;
-            var fullPath  = albumPath + "\\" + Path.GetFileName(file);
+            File.Delete(file);
+        }
 
-            if (!Directory.Exists(artistPath))
-                Directory.CreateDirectory(artistPath);
 
-            if (!Directory.Exists(albumPath))
-                Directory.CreateDirectory(albumPath);
+        public void MoveFile(string sourceFile, string destinationFile)
+        {
+            File.Move(sourceFile, destinationFile);
+        }
 
-            File.Move(file, fullPath);
-            return fullPath;
+
+        public bool DirectoryExists(string folder)
+        {
+            return Directory.Exists(folder);
+        }
+
+        public void CreateDirectory(string folder)
+        {
+            Directory.CreateDirectory(folder);
         }
     }
 }

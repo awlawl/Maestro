@@ -14,8 +14,8 @@ namespace Tests
         [Test]
         public void NoFiles()
         {
-            var importFolderInteractor = new FakeFolderInteractor(new string[0],"");
-            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, null, null);
+            var importFolderInteractor = new FakeFolderInteractor(new string[0]);
+            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, null, null, null);
 
             importFolderWatcher.ProcessFiles();
 
@@ -31,25 +31,25 @@ namespace Tests
                 Artist = "oneartist"
             };
 
-            var fakeNewPath = "ASDASDASDASDASD";
             var fakeMusicInfoReader = new FakeMusicInfoReader(fakeMusicInfo);
-            var importFolderInteractor = new FakeFolderInteractor(fakeFiles, fakeNewPath);
+            var importFolderInteractor = new FakeFolderInteractor(fakeFiles);
             var library = new MemoryLibraryRepository();
             library.ClearLibrary();
-            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, fakeMusicInfoReader, library);
+            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, fakeMusicInfoReader, library, null);
 
             importFolderWatcher.ProcessFiles();
 
+            var expectedLibraryPath = @"c:\temp\" + fakeMusicInfo.Artist + "\\" + fakeMusicInfo.Album + "\\" + fakeFiles[0];
+
             Assert.AreEqual(1, importFolderInteractor.MovedFiles.Count(), "There must one moved file");
-            Assert.AreEqual(fakeFiles[0], importFolderInteractor.MovedFiles[0].FileName, "The file to move must be correct.");
-            Assert.AreEqual(fakeMusicInfo.Artist, importFolderInteractor.MovedFiles[0].ArtistFolder, "The file must be moved to the correct artist folder.");
-            Assert.AreEqual(fakeMusicInfo.Album, importFolderInteractor.MovedFiles[0].AlbumFolder, "The file must be moved to the correct album folder.");
+            Assert.AreEqual(fakeFiles[0], importFolderInteractor.MovedFiles[0].SourceFile, "The file to move must be correct.");
+            Assert.AreEqual(expectedLibraryPath, importFolderInteractor.MovedFiles[0].DestinationFile, "The file must be moved to the correct folder.");
 
             var libraryFiles = library.GetAllMusic();
 
             Assert.AreEqual(1, libraryFiles.Count(), "There must be one file in the library.");
             Assert.AreEqual(fakeMusicInfo.Artist, libraryFiles[0].Artist, "The artist added to the library must be correct.");
-            Assert.AreEqual(fakeNewPath, libraryFiles[0].FullPath, "The full path of the file in the library must be correct.");
+            Assert.AreEqual(expectedLibraryPath, libraryFiles[0].FullPath, "The full path of the file in the library must be correct.");
         }
 
         [Test]
@@ -63,27 +63,59 @@ namespace Tests
             };
 
             var fakeMusicInfoReader = new FakeMusicInfoReader(fakeMusicInfo);
-            var importFolderInteractor = new FakeFolderInteractor(fakeFiles,"");
-            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, fakeMusicInfoReader, new MemoryLibraryRepository());
+            var importFolderInteractor = new FakeFolderInteractor(fakeFiles);
+            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, fakeMusicInfoReader, new MemoryLibraryRepository(), null);
 
             importFolderWatcher.ProcessFiles();
 
+            var expectedLibraryPath = @"c:\temp\Unknown Artist\Unknown Album\" + fakeFiles[0];
+
             Assert.AreEqual(1, importFolderInteractor.MovedFiles.Count(), "There must one moved file");
-            Assert.AreEqual(fakeFiles[0], importFolderInteractor.MovedFiles[0].FileName, "The file to move must be correct.");
-            //Assert.AreEqual("Unknown Artist", importFolderInteractor.MovedFiles[0].ArtistFolder, "The file must be moved to the correct artist folder.");
-            Assert.AreEqual("Unknown Album", importFolderInteractor.MovedFiles[0].AlbumFolder, "The file must be moved to the correct album folder.");
+            Assert.AreEqual(fakeFiles[0], importFolderInteractor.MovedFiles[0].SourceFile, "The file to move must be correct.");
+            Assert.AreEqual(expectedLibraryPath, importFolderInteractor.MovedFiles[0].DestinationFile, "The file must be moved to the correct folder.");
         }
 
         [Test]
         public void UnknownFileType()
         {
             var fakeFiles = new string[] { "readme.txt" };
-            var importFolderInteractor = new FakeFolderInteractor(fakeFiles, "");
-            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, null, null);
+            var importFolderInteractor = new FakeFolderInteractor(fakeFiles);
+            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, null, null,null);
 
             importFolderWatcher.ProcessFiles();
 
             Assert.AreEqual(0, importFolderInteractor.MovedFiles.Count(), "There must no moved files.");
+        }
+
+        [Test]
+        public void TranscodesOtherFormats()
+        {
+            var fakeFiles = new string[] { "test.m4a" };
+            var fakeMusicInfo = new MusicInfo()
+            {
+                Album = "Test",
+                Artist = "Test2"
+            };
+
+            var transcodedFile = "test.mp3";
+            var fakeMusicInfoReader = new FakeMusicInfoReader(fakeMusicInfo);
+            var importFolderInteractor = new FakeFolderInteractor(fakeFiles);
+            var fakeTranscoder = new FakeTranscoder();
+            var library = new MemoryLibraryRepository();
+            library.ClearLibrary();
+            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, fakeMusicInfoReader, library, fakeTranscoder);
+
+            importFolderWatcher.ProcessFiles();
+
+            var expectedLibraryPath = @"c:\temp\" + fakeMusicInfo.Artist + "\\" + fakeMusicInfo.Album + "\\" + transcodedFile;
+
+            Assert.AreEqual(1, importFolderInteractor.MovedFiles.Count(), "There must one moved file");
+            Assert.AreEqual(transcodedFile, importFolderInteractor.MovedFiles[0].SourceFile, "The file to move must be correct.");
+            Assert.AreEqual(expectedLibraryPath, importFolderInteractor.MovedFiles[0].DestinationFile, "The file must be moved to the correct folder.");
+            Assert.IsTrue(importFolderInteractor.DeletedFiles.Contains(fakeFiles[0]), "The original file must be deleted.");
+            Assert.IsTrue(importFolderInteractor.DeletedFiles.Contains(expectedLibraryPath), "The library path must be deleted.");
+            Assert.AreEqual(2, importFolderInteractor.DeletedFiles.Count(), "There must be 2 attempted file deletes.");
+
         }
 
 
@@ -92,26 +124,42 @@ namespace Tests
 
     public class FakeFolderInteractor : IImportFolderInteractor
     {
-        public FakeFolderInteractor(string[] fakeFiles, string fakeNewPath)
+        public FakeFolderInteractor(string[] fakeFiles)
         {
+            DeletedFiles = new List<string>();
             MovedFiles = new List<dynamic>();
             Files = fakeFiles;
-            FakeNewPath = fakeNewPath;
         }
 
         public List<dynamic> MovedFiles { get; set; }
         public string[] Files { get; set; }
-        public string FakeNewPath { get; set; }
+        public List<string> DeletedFiles { get; set; }
 
         public string[] GetFilesForFolder(string folder)
         {
             return Files;
         }
 
-        public string MoveToLibraryFolder(string file, string artist, string album)
+        public void DeleteFile(string file)
         {
-            MovedFiles.Add(new { FileName = file, AlbumFolder = album, ArtistFolder=artist });
-            return FakeNewPath;
+            DeletedFiles.Add(file);
+        }
+
+
+        public void MoveFile(string sourceFile, string destinationFile)
+        {
+            MovedFiles.Add(new { SourceFile = sourceFile, DestinationFile = destinationFile});
+        }
+
+
+        public bool DirectoryExists(string folder)
+        {
+            return true;
+        }
+
+        public void CreateDirectory(string folder)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -127,6 +175,14 @@ namespace Tests
         public MusicInfo GetInfoForFile(string fullPath)
         {
             return _musicInfo;
+        }
+    }
+
+    public class FakeTranscoder : ITranscoder
+    {
+        public string Transcode(string inputFile)
+        {
+            return inputFile.Replace(".m4a", ".mp3");
         }
     }
 

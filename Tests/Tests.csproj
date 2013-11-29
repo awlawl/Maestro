@@ -83,6 +83,7 @@
     <Compile Include="PubnubMessageTranslatorTests.cs" />
     <Compile Include="PubnubMessagingTests.cs" />
     <Compile Include="RandomSongPlaylistWatcherTests.cs" />
+    <Compile Include="TranscoderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

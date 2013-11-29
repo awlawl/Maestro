@@ -17,20 +17,23 @@ namespace MusicData
         private IMusicInfoReader _musicInfoReader = null;
         private ILibraryRepository _library = null;
         private string _folderToWatch = "";
+        private ITranscoder _transcoder = null;
+        private string _libraryRootFolder = @"c:\temp";
 
         private Thread _workerThread = null;
 
-        public ImportFolderWatcher(ILibraryRepository library) : this(new ImportFolderInteractor(), new MusicInfoReader(),library)
+        public ImportFolderWatcher(ILibraryRepository library) : this(new ImportFolderInteractor(), new MusicInfoReader(),library, new Transcoder() )
         {
             _folderToWatch = System.Configuration.ConfigurationManager.AppSettings["ImportWatchFolder"];
-
+            _libraryRootFolder = System.Configuration.ConfigurationManager.AppSettings["LibraryRootFolder"];
         }
 
-        public ImportFolderWatcher(IImportFolderInteractor folder, IMusicInfoReader musicInfoReader, ILibraryRepository library)
+        public ImportFolderWatcher(IImportFolderInteractor folder, IMusicInfoReader musicInfoReader, ILibraryRepository library, ITranscoder transcoder )
         {
             _folderInteractor = folder;
             _musicInfoReader = musicInfoReader;
             _library = library;
+            _transcoder = transcoder;
         }
 
         public void ProcessFiles()
@@ -38,25 +41,55 @@ namespace MusicData
             var files = _folderInteractor.GetFilesForFolder(_folderToWatch);
             foreach (var file in files)
             {
-                if (!IsSupportedFileType(file))
+                if (IsSupportedFileType(file))
                 {
-                    continue; 
+                    var filePath = file;
+                    if (RequiresTranscoding(file))
+                    {
+                        var newFile = _transcoder.Transcode(filePath);
+                        _folderInteractor.DeleteFile(filePath);
+                        filePath = newFile;
+                    }
+
+                    var musicInfo = _musicInfoReader.GetInfoForFile(filePath);
+                    var album = string.IsNullOrEmpty(musicInfo.Album) ? UNKNOWN_ALBUM_NAME : musicInfo.Album;
+                    var artist = string.IsNullOrEmpty(musicInfo.Artist) ? UNKNOWN_ARTIST_NAME : musicInfo.Artist;
+
+                    musicInfo.FullPath = MoveToLibraryFolder(filePath, artist, album);
+                    _library.AddMusicToLibrary(new MusicInfo[] { musicInfo });
                 }
-
-                var musicInfo = _musicInfoReader.GetInfoForFile(file);
-                var album = string.IsNullOrEmpty(musicInfo.Album) ? UNKNOWN_ALBUM_NAME : musicInfo.Album;
-                var artist = string.IsNullOrEmpty(musicInfo.Artist) ? UNKNOWN_ARTIST_NAME : musicInfo.Artist;
-
-                musicInfo.FullPath = _folderInteractor.MoveToLibraryFolder(file, musicInfo.Artist,album);
-                _library.AddMusicToLibrary(new MusicInfo[] { musicInfo });
             }
         }
 
         private bool IsSupportedFileType(string filePath)
         {
             var extention = Path.GetExtension(filePath).ToLower();
-            var allowedExtentions = new string[] { ".mp3",".ogg"};
+            var allowedExtentions = new string[] { ".mp3", ".m4a" };
             return allowedExtentions.Contains(extention);
+        }
+
+        private bool RequiresTranscoding(string filePath)
+        {
+            var extention = Path.GetExtension(filePath).ToLower();
+            var transCodingExtentions = new string[] { ".m4a" };
+            return transCodingExtentions.Contains(extention);
+        }
+
+        private string MoveToLibraryFolder(string file, string artist, string album)
+        {
+            var artistPath = _libraryRootFolder + "\\" + artist;
+            var albumPath = artistPath + "\\" + album;
+            var newFullPath = albumPath + "\\" + Path.GetFileName(file);
+
+            if (!_folderInteractor.DirectoryExists(artistPath))
+                _folderInteractor.CreateDirectory(artistPath);
+
+            if (!_folderInteractor.DirectoryExists(albumPath))
+                _folderInteractor.CreateDirectory(albumPath);
+
+            _folderInteractor.DeleteFile(newFullPath);
+            _folderInteractor.MoveFile(file, newFullPath);
+            return newFullPath;
         }
 
         private void WatchingWorkerThread()

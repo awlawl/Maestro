@@ -55,13 +55,10 @@ namespace MaestroService
                 var messagingWatcher = new MessagingPlaylistWatcher();
                 var playlist = new Playlist(new IPlaylistWatcher[] { playlistManager, messagingWatcher });
                 var dummyAudio = new NAudioInteractor();
-                //var library = new MemoryLibraryRepository();
                 var library = new MongoLibraryRepository(null);
                 _folderWatcher = new ImportFolderWatcher(library);
 
                 InsertTestSongs(library);
-
-                //playlist.AddRange(library.GetAllMusic());
 
                 var player = new Player(playlist, dummyAudio, library);
                 _pubnub = new PubnubMessaging(player, true);
@@ -98,8 +95,8 @@ namespace MaestroService
                 @"F:\music\Auf Der Maur\Auf Der Maur",
                 @"C:\Users\awl\Music\deftones",
                 @"F:\music\Nine Inch Nails",
-                @"c:\Shared\Maestro\Music\Manual",
-                @"C:\Users\awl\Dropbox\Music\Maestro"
+                @"c:\Shared\Maestro\Music\Manual"
+                //@"C:\Users\awl\Dropbox\Music\Maestro"
             };
 
             library.ClearLibrary();
