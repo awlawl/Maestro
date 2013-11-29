@@ -74,6 +74,19 @@ namespace Tests
             Assert.AreEqual("Unknown Album", importFolderInteractor.MovedFiles[0].AlbumFolder, "The file must be moved to the correct album folder.");
         }
 
+        [Test]
+        public void UnknownFileType()
+        {
+            var fakeFiles = new string[] { "readme.txt" };
+            var importFolderInteractor = new FakeFolderInteractor(fakeFiles, "");
+            var importFolderWatcher = new ImportFolderWatcher(importFolderInteractor, null, null);
+
+            importFolderWatcher.ProcessFiles();
+
+            Assert.AreEqual(0, importFolderInteractor.MovedFiles.Count(), "There must no moved files.");
+        }
+
+
 
     }
 

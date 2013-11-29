@@ -1,5 +1,6 @@
-﻿
-using System;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using NAudio.Wave;
 
@@ -97,9 +98,11 @@ namespace MusicData
             finally { }
         }
 
-        private bool IsAcceptableFileExtention(string filename)
+        private bool IsAcceptableFileExtention(string filePath)
         {
-            return filename.EndsWith(".mp3") || filename.EndsWith("m4a");
+             var extention = Path.GetExtension(filePath).ToLower();
+            var allowedExtentions = new string[] { ".mp3"};
+            return allowedExtentions.Contains(extention);
         }
     }
 }

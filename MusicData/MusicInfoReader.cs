@@ -8,7 +8,7 @@ namespace MusicData
     public class MusicInfoReader : IMusicInfoReader
     {
         //TODO: make this configurable somehow
-        private string[] _supportedExtentions = {".mp3",".m4a"};
+        private string[] _supportedExtentions = {".mp3",".m4a", ".ogg"};
        
         public MusicInfo GetInfoForFile(string fullPath)
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 
 namespace MusicData
 {
@@ -37,6 +38,11 @@ namespace MusicData
             var files = _folderInteractor.GetFilesForFolder(_folderToWatch);
             foreach (var file in files)
             {
+                if (!IsSupportedFileType(file))
+                {
+                    continue; 
+                }
+
                 var musicInfo = _musicInfoReader.GetInfoForFile(file);
                 var album = string.IsNullOrEmpty(musicInfo.Album) ? UNKNOWN_ALBUM_NAME : musicInfo.Album;
                 var artist = string.IsNullOrEmpty(musicInfo.Artist) ? UNKNOWN_ARTIST_NAME : musicInfo.Artist;
@@ -44,6 +50,13 @@ namespace MusicData
                 musicInfo.FullPath = _folderInteractor.MoveToLibraryFolder(file, musicInfo.Artist,album);
                 _library.AddMusicToLibrary(new MusicInfo[] { musicInfo });
             }
+        }
+
+        private bool IsSupportedFileType(string filePath)
+        {
+            var extention = Path.GetExtension(filePath).ToLower();
+            var allowedExtentions = new string[] { ".mp3",".ogg"};
+            return allowedExtentions.Contains(extention);
         }
 
         private void WatchingWorkerThread()
