@@ -94,7 +94,7 @@ namespace MusicData
 
                 _playingThread.Abort();
                 _playingThread.Join();
-            }
+            } catch(Exception) {}
             finally { }
         }
 

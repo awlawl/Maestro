@@ -184,10 +184,12 @@ function handleMessage(message) {
 }
 
 function nowPlaying(songInfo) {
-    viewModel.artist(setField(songInfo.Artist));
-    viewModel.title(songInfo.Title);
-    viewModel.album(songInfo.Album);
-    //viewModel.searchResults([]);
+    if (songInfo) {
+        viewModel.artist(setField(songInfo.Artist));
+        viewModel.title(songInfo.Title);
+        viewModel.album(songInfo.Album);
+        //viewModel.searchResults([]);
+    }
 
     refreshAlbumArt();
     getPlaylist();

@@ -139,7 +139,8 @@ namespace MusicData
             this.Playlist.CurrentPosition = playlistIndex - 1;
             _audioInteractor.StopSong();
 
-            //this.Play();
+            //if (_stopped)
+            //    this.Play();
         }
     }
 }

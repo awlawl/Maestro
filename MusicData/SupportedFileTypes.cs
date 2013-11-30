@@ -15,7 +15,7 @@ namespace MusicData
         public static bool RequiresTranscoding(string filePath)
         {
             var extention = Path.GetExtension(filePath).ToLower();
-            var transCodingExtentions = new string[] { ".m4a", ".ogg" };
+            var transCodingExtentions = new string[] { ".m4a", ".ogg", ".mov" };
             return transCodingExtentions.Contains(extention);
         }
 

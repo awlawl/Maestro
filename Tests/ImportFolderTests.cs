@@ -118,6 +118,17 @@ namespace Tests
 
         }
 
+        [Test]
+        public void SanitizeFolderNames()
+        {
+            var importFolder = new ImportFolderWatcher(new MemoryLibraryRepository());
+            var badFolderName = "[]/\\&~?*|<>\";:+";
+            var expectedName = "               ";
+
+            var result = importFolder.SanitizeFolderName(badFolderName);
+
+            Assert.AreEqual(expectedName, result, "The folder name must replace the bad characters with spaces.");
+        }
 
 
     }

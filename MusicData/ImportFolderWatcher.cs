@@ -38,7 +38,7 @@ namespace MusicData
 
         public void ProcessFiles()
         {
-            var files = _folderInteractor.GetFilesForFolder(_folderToWatch);
+            var files = _folderInteractor.GetFilesForFolder(_folderToWatch).Shuffle();
             foreach (var file in files)
             {
                 if (SupportedFileTypes.IsSupportedFileType(file))
@@ -65,8 +65,8 @@ namespace MusicData
 
         private string MoveToLibraryFolder(string file, string artist, string album)
         {
-            var artistPath = _libraryRootFolder + "\\" + artist;
-            var albumPath = artistPath + "\\" + album;
+            var artistPath = _libraryRootFolder + "\\" + SanitizeFolderName(artist);
+            var albumPath = artistPath + "\\" + SanitizeFolderName(album);
             var newFullPath = albumPath + "\\" + Path.GetFileName(file);
 
             if (!_folderInteractor.DirectoryExists(artistPath))
@@ -80,6 +80,16 @@ namespace MusicData
             _folderInteractor.DeleteFile(newFullPath);
             _folderInteractor.MoveFile(file, newFullPath);
             return newFullPath;
+        }
+
+        public string SanitizeFolderName(string folderName)
+        {
+            //TODO: this could probably be replace with a regex
+            var badChars = new char[] {'[',']', '/', '\\', '&', '~', '?', '*', '|', '<', '>', '"', ';', ':', '+'};
+            foreach (var ch in badChars)
+                folderName = folderName.Replace(ch, ' ');
+
+            return folderName;
         }
 
         private void WatchingWorkerThread()
@@ -96,7 +106,7 @@ namespace MusicData
                 catch (Exception exc)
                 {
                     Log.Debug("Error while watching: " + exc.ToString());
-                    Thread.Sleep(60 * 1000);
+                    Thread.Sleep(10 * 1000);
                 }
             }
         }

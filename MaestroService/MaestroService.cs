@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceProcess;
 using System.Threading;
+using System.Configuration;
 using MongoLibrary;
 using MusicData;
 using RealTimeMessaging;
@@ -58,7 +59,8 @@ namespace MaestroService
                 var library = new MongoLibraryRepository(null);
                 _folderWatcher = new ImportFolderWatcher(library);
 
-                InsertTestSongs(library);
+                if (ConfigurationManager.AppSettings["ResetLibraryForTesting"]=="true")
+                    InsertTestSongs(library);
 
                 var player = new Player(playlist, dummyAudio, library);
                 _pubnub = new PubnubMessaging(player, true);
@@ -72,7 +74,8 @@ namespace MaestroService
 
                 _folderWatcher.Start();
 
-                player.Play();
+                if (ConfigurationManager.AppSettings["AutoStartPlaying"]=="true")
+                    player.Play();
             }
             catch (Exception exc)
             {
