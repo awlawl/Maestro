@@ -32,7 +32,7 @@ namespace MongoLibrary
 
         public void AddOrUpdateMusicInLibrary(MusicInfo song)
         {
-            Log.Debug("Adding song to library:" + song.FullPath);
+            Log.Debug("Adding song to library: " + song.FullPath);
             var collection = MongoHelper.Current.GetCollection<MongoMusicInfo>("musicinfo");
             
 

@@ -12,6 +12,7 @@ namespace Website.Routes
     {
         public dynamic PlaySong(string id)
         {
+            Log.Debug("Requested to play song: " + id);
             var library = Player.Current.Library;
 
             var song = library.GetSongById(id);

@@ -25,6 +25,7 @@ namespace MusicData
 
         public string Transcode(string inputFile)
         {
+            Log.Debug("Transcoding " + inputFile);
             var cmd = GetCommandLine(inputFile);
             File.Delete(cmd.OutputPath);
 
@@ -34,6 +35,8 @@ namespace MusicData
             process.StartInfo.Arguments = cmd.Arguments;
             process.Start();
             process.WaitForExit();
+
+            Log.Debug("Done Transcoding " + cmd.OutputPath);
 
             return cmd.OutputPath;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nancy.Hosting.Self;
+using MusicData;
 
 namespace Website
 {
@@ -13,8 +14,10 @@ namespace Website
 
         public void Start() 
         {
+            Log.Debug("Starting self hosted website");
             _nancyHost = new Nancy.Hosting.Self.NancyHost(new Uri("http://localhost:1234"));
             _nancyHost.Start();
+            Log.Debug("Done starting self hosted website");
 
         }
 
