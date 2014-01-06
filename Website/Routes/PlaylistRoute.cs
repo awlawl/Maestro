@@ -39,6 +39,18 @@ namespace Website.Routes
             return response;
         }
 
+        public void RemoveFromPlaylist(string id, int index)
+        {
+            Log.Debug("Removing " + id + " position " + index + " from the playlist.");
+
+            var found = Player.Current.Playlist[index];
+
+            Log.Debug("Removing " + found.FullPath);
+            Player.Current.Playlist.RemoveAtAndNotify(index);
+
+            return;
+        }
+
         
     }
 }

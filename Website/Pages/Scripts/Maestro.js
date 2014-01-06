@@ -16,11 +16,16 @@
     };
 };
 
-var PlaylistViewModel = function(PlaylistItem) {
+var PlaylistViewModel = function (PlaylistItem) {
+    var self = this;
     this.Song = ko.observable(PlaylistItem.Song);
     this.PlaylistIndex = ko.observable(PlaylistItem.PlaylistIndex);
     this.PlayFomPlaylist = function(e) {
         playFromPlaylist(e.Song().IdValue);
+    };
+    this.RemoveFromPlaylist = function (e) {
+        removeSongFromPlaylist(e.Song().IdValue, self.PlaylistIndex());
+        console.log("want to remove " + e.Song().IdValue + " " + self.PlaylistIndex());
     };
 };
 
@@ -373,4 +378,15 @@ function removeSongFromSavedPlaylist(songId) {
         .done(function (data) {
             refreshSongsForSavedPlaylist();
         });
+}
+
+function removeSongFromPlaylist(songId, index) {
+    $.ajax({
+        url: "/Playlist/" + encodeURI(songId) + "/" + encodeURI(index),
+        type: "DELETE",
+        dataType: "json"
+    });
+        /*.done(function (data) {
+            refreshSongsForSavedPlaylist();
+        });*/
 }

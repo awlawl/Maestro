@@ -42,6 +42,16 @@ namespace Website
                 return response;
             };
 
+            Delete["/Playlist/{id}/{index}"] = x =>
+            {
+                string id = x.id.ToString();
+                int index = int.Parse(x.index.ToString());
+                (new PlaylistRoute()).RemoveFromPlaylist(id, index);
+                var response = (Nancy.Response)"";
+                response.ContentType = "application/json";
+                return response;
+            };
+
             Get["/Search/{term}"] = x =>
                 {
                     string q = x.term.ToString();
@@ -61,7 +71,7 @@ namespace Website
             Post["/EnqueueSavedPlaylist/{name}"] = x =>
             {
                 string name = x.name.ToString();
-                var response = (Nancy.Response)(new EnqueueSongRoute()).EnqueueSavedPlaylist(name);
+                var response = (Nancy.Response)(new EnqueueSongRoute()).EnqueueSavedPlaylistWithShuffle(name);
                 response.ContentType = "application/json";
                 return response;
             };

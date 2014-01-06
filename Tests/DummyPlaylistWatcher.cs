@@ -27,5 +27,10 @@ namespace Tests
         {
             
         }
+
+
+        public void PlaylistChanged()
+        {
+        }
     }
 }

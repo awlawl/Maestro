@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MusicData
 {
@@ -51,15 +48,22 @@ namespace MusicData
             var allMusic = _library.GetAllMusic().Shuffle(_random).ToArray();
             for (var i = 0; i < allMusic.Length; i++)
             {
-                if (!_playlist.Exists(X => 
-                    X.FullPath == allMusic[i].FullPath
-                    ))
+                if (!_playlist
+                    .AsQueryable()
+                    .Reverse()
+                    .Take(allMusic.Length/2)
+                    .Any(X => X.FullPath == allMusic[i].FullPath))
                 {
                     _playlist.Add(allMusic[i]);
                     break;
                 }
                     
             }
+        }
+
+
+        public void PlaylistChanged()
+        {
         }
     }
 }

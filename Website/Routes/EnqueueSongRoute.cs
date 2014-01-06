@@ -32,5 +32,19 @@ namespace Website.Routes
 
             return "";
         }
+
+        public dynamic EnqueueSavedPlaylistWithShuffle(string savedPlaylistName)
+        {
+            var library = Player.Current.Library;
+
+            List<MusicInfo> songs = library.GetAllSongsForSavedPlaylist(savedPlaylistName);
+
+            var shuffledSongs = songs.Shuffle();
+
+            foreach (var song in shuffledSongs)
+                Player.Current.Playlist.Enqueue(song);
+
+            return "";
+        }
     }
 }

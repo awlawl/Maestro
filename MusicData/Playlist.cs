@@ -104,5 +104,17 @@ namespace MusicData
             this.Clear();
             this.CurrentPosition = 0;
         }
+
+        public void RemoveAtAndNotify(int index)
+        {
+            this.RemoveAt(index);
+            DoPlaylistChanged();
+        }
+
+        private void DoPlaylistChanged()
+        {
+            foreach (var playlistWatcher in PlaylistWatcher)
+                playlistWatcher.PlaylistChanged();
+        }
     }
 }

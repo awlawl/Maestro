@@ -8,5 +8,6 @@ namespace MusicData
         void AttachToPlaylist(Playlist playlist, ILibraryRepository library);
         void SongStarting(MusicInfo song);
         void SongEnding(MusicInfo song);
+        void PlaylistChanged();
     }
 }

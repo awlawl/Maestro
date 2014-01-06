@@ -12,25 +12,25 @@ namespace Website.Routes
 
         public ImageResponse GetAlbumArt()
         {
-            var musicInfoReader = new MusicInfoReader();
-            AlbumArt art = null;
+            //var musicInfoReader = new MusicInfoReader();
+            //AlbumArt art = null;
 
-            if (Player.Current.Playlist.CurrentSong!=null)
-                art = musicInfoReader.GetAlbumArtForFile(Player.Current.Playlist.CurrentSong.FullPath);
+            //if (Player.Current.Playlist.CurrentSong!=null)
+            //    art = musicInfoReader.GetAlbumArtForFile(Player.Current.Playlist.CurrentSong.FullPath);
 
             byte[] data = null;
             string contentType = "";
             
-            if (art == null)
-            {
+            //if (art == null)
+            //{
                 data = BLANKGIF;
                 contentType = "image/gif";
-            }
-            else
-            {
-                data = art.RawData;
-                contentType = art.ContentType;
-            }
+            //}
+            //else
+            //{
+            //    data = art.RawData;
+            //    contentType = art.ContentType;
+            //}
 
             return new ImageResponse(data, contentType);
         }

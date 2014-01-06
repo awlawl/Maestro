@@ -22,6 +22,11 @@ namespace MusicData
             _playlist.Enqueue(song);
         }
 
-        
+
+
+
+        public void PlaylistChanged()
+        {
+        }
     }
 }
