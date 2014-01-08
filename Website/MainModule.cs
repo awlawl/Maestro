@@ -25,6 +25,8 @@ namespace Website
                 return File.ReadAllText(websitePath + "old Maestro.html");
             };
 
+            
+
             Get["/Scripts/Maestro.js"] = x =>
             {
                 return File.ReadAllText(websitePath + "Scripts\\Maestro.js");

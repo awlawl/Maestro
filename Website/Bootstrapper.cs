@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using Nancy;
 using MusicData;
+using Nancy.Conventions;
 
 namespace Website
 {
@@ -15,6 +17,20 @@ namespace Website
             _websitePath = System.Configuration.ConfigurationManager.AppSettings["WebsitePath"];
         }
 
+        protected override IRootPathProvider RootPathProvider
+        {
+            get { return new CustomRootPathProvider(_websitePath); }
+        }
+
+        protected override void ConfigureConventions(NancyConventions conventions)
+        {
+            base.ConfigureConventions(conventions);
+
+            AddStaticPath(conventions, "img");
+            AddStaticPath(conventions, "lib");
+            AddStaticPath(conventions, "css");
+            AddStaticPath(conventions, "js");
+        }
        
 
         protected override byte[] FavIcon
@@ -26,6 +42,13 @@ namespace Website
         {
             Log.Debug("Loading favorite icon from " + _websitePath);
             return File.ReadAllBytes(_websitePath + "favicon.ico");
+        }
+
+        private void AddStaticPath(NancyConventions conventions, string folderFromRoot)
+        {
+            conventions.StaticContentsConventions.Add(
+                StaticContentConventionBuilder.AddDirectory(folderFromRoot, folderFromRoot)
+            );
         }
     }
 }
