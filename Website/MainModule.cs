@@ -22,7 +22,7 @@ namespace Website
 
             Get["/"] = x =>
             {
-                return File.ReadAllText(websitePath + "Maestro.html");
+                return File.ReadAllText(websitePath + "old Maestro.html");
             };
 
             Get["/Scripts/Maestro.js"] = x =>
