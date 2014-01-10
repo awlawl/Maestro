@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
+using System.Runtime.Remoting.Messaging;
 using MusicData;
-using Nancy;
 using Website.Routes;
-using Nancy.Extensions;
-using Nancy.IO;
-using Nancy.Responses;
 using Newtonsoft.Json;
 
 namespace Website
@@ -25,7 +17,17 @@ namespace Website
                 return File.ReadAllText(websitePath + "old Maestro.html");
             };
 
-            
+            Get["/new"] = x =>
+            {
+                return File.ReadAllText(websitePath + "Maestro.html");
+            };
+
+            Get["/NowPlaying"] = x =>
+            {
+                var currentSongJson = (Nancy.Response)JsonConvert.SerializeObject(Player.Current.Playlist.CurrentSong);
+                currentSongJson.ContentType = "application/json";
+                return currentSongJson;
+            };
 
             Get["/Scripts/Maestro.js"] = x =>
             {

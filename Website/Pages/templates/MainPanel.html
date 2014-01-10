@@ -1,0 +1,49 @@
+﻿    <div class="row home-row">
+        <div class="col-sm-6">
+            <img ng-src="{{NowPlaying.AlbumArtUrl}} " class="img-thumbnail img-responsive" />
+        </div>
+        <div class="col-sm-4">
+            <dl>
+                <dt>Artist</dt>
+                <dd>{{NowPlaying.Artist}}</dd>
+                <dt>Title</dt>
+                <dd>{{NowPlaying.Title}}</dd>
+                <dt>Album</dt>
+                <dd>{{NowPlaying.Album}}</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row home-row">
+        <div class="col-sm-12">
+            <table class="table span6 table-striped table-bordered table-condensed">
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th>Artist</th>
+                        <th>Title</th>
+                        <th>Album</th>
+                        <th colspan="2">&nbsp;</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="song in Playlist" class="success">
+                        <td class="{{song.RowClass}}">{{song.Song.Artist}}</td>
+                        <td class="{{song.RowClass}}">{{song.Song.Title}}</td>
+                        <td class="{{song.RowClass}}">{{song.Song.Album}}</td>
+                        <td class="{{song.RowClass}}">
+                            <button class="btn btn-success"><i class="fa fa-2x fa-play-circle"></i></button>
+                        </td>
+                        <td class="{{song.RowClass}}">
+                            <button class="btn btn-danger"><i class="fa fa-2x fa-times"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    

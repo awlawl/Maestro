@@ -104,7 +104,7 @@ function setupPubnub() {
         dataType: "json"
     }).done(function (data) {
         channel = data.Channel;
-        console.log("pubnub channel: " + channel);
+        console.log("pubhnub channel: " + channel);
         PUBNUB.subscribe({
             channel: channel,
             callback: function (message) {

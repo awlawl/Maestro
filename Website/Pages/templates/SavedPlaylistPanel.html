@@ -1,0 +1,37 @@
+﻿<div class="row">
+    <input id="txtNewPlaylist">
+    <button id="btnAddPlaylist" class="btn">Add New</button>
+    <hr>
+    <div class="row">
+        <div class="col-sm-4">
+            <ul class="nav nav-list">
+                <li><a href="#">Brennan's Playlist</a></li>
+
+                <li><a href="#">Business Time</a></li>
+
+                <li><a href="#">Christmas Music</a></li>
+            </ul>
+        </div>
+
+        <div class="col-sm-8">
+            <a id="btnEnqueueSavedPlaylist" href="javascript:;">Enqueue Playlist</a><br />
+            <a id="btnPlaySavedPlaylist" href="javascript:;">Play Playlist</a>
+            <table class="table span6 table-striped table-bordered table-condensed">
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th>Artist</th>
+                        <th>Title</th>
+                        <th colspan="4">Album</th>
+                    </tr>
+                </thead>
+
+                <tbody data-bind="foreach: savedPlaylistSongList"></tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

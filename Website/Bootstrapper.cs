@@ -30,6 +30,7 @@ namespace Website
             AddStaticPath(conventions, "lib");
             AddStaticPath(conventions, "css");
             AddStaticPath(conventions, "js");
+            AddStaticPath(conventions, "templates");
         }
        
 

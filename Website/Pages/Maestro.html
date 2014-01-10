@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en" ng-app="maestroApp">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,455 +9,146 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <title>Maestro</title>
+    <div id="pubnub" 
+           pub-key="demo" 
+           sub-key="demo" ssl="off" origin="pubsub.pubnub.com">
+      </div>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-   
-   
-      <style type="text/css">
-          /* Sticky footer styles
+
+
+    <style type="text/css">
+        /* Sticky footer styles
 -------------------------------------------------- */
 
-html,
-body {
-  height: 100%;
-  /* The html and body elements cannot have any padding or margin. */
-}
+        html,
+        body {
+            height: 100%;
+            /* The html and body elements cannot have any padding or margin. */
+        }
 
-/* Wrapper for page content to push down footer */
-#wrap {
-  min-height: 100%;
-  height: auto;
-  /* Negative indent footer by its height */
-  margin: 0 auto -60px;
-  /* Pad bottom by footer height */
-  padding: 0 0 60px;
-}
+        /* Wrapper for page content to push down footer */
+        #wrap {
+            min-height: 100%;
+            height: auto;
+            /* Negative indent footer by its height */
+            margin: 0 auto -60px;
+            /* Pad bottom by footer height */
+            padding: 0 0 60px;
+        }
 
-/* Set the fixed height of the footer here */
-#footer {
-  height: 60px;
-  background-color: #f5f5f5;
-}
+        /* Set the fixed height of the footer here */
+        #footer {
+            height: 60px;
+            background-color: #f5f5f5;
+        }
 
 
-/* Custom page CSS
+        /* Custom page CSS
 -------------------------------------------------- */
-/* Not required for template or sticky footer method. */
+        /* Not required for template or sticky footer method. */
 
-#wrap > .container {
-  padding: 60px 15px 0;
-}
-.container .text-muted {
-  margin: 20px 0;
-}
+        #wrap > .container {
+            padding: 60px 15px 0;
+        }
 
-#footer > .container {
-  padding-left: 15px;
-  padding-right: 15px;
-}
+        .container .text-muted {
+            margin: 20px 0;
+        }
 
-code {
-  font-size: 80%;
-}
+        #footer > .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
 
-      </style>
-  </head>
+        code {
+            font-size: 80%;
+        }
 
-  <body>
+        .currentPlaylistSong {
+            background: #c4e3f3 !important;
+        }
+    </style>
+</head>
+
+<body>
 
     <!-- Wrap all page content here -->
     <div id="wrap">
 
-      <!-- Fixed navbar -->
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" id="btnHome">Maestro</a>
-          </div>
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a id="btnSearch" href="#">Search</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Playlists <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                      <li class="dropdown-header">Play</li>
-                      <li><a href="#">Christmas</a></li>
-                      <li><a href="#">Brennan Essentials</a></li>
-                      <li><a href="#">Business Time</a></li>
-                      <li class="divider"></li>
-                      <li class="dropdown-header">Enqueue</li>
-                      <li><a href="#">Christmas</a></li>
-                      <li><a href="#">Brennan Essentials</a></li>
-                      <li><a href="#">Business Time</a></li>                  </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="NavController">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/home">Maestro</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/search">Search</a></li>
+                        <li><a href="#/savedPlaylists">Playlists</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Play <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header">Play</li>
+                                <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="#">{{savedPlaylist}}</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Enqueue</li>
+                                <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="#">{{savedPlaylist}}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
         </div>
-      </div>
 
-      <!-- Begin page content -->
-      <div class="container">
-          <div class="row home-row">
-              <div class="col-sm-6"><img src="albumart.jpg" class="img-thumbnail img-responsive"/></div>
-              <div class="col-sm-4">
-                  <dl >
-                            <dt>Artist</dt>
-                            <dd data-bind="text: artist">Boards of Canada</dd>
-                            <dt>Title</dt>
-                            <dd data-bind="text: title">Julie and Candy</dd>
-                            <dt>Album</dt>
-                            <dd data-bind="text: album">Geogaddi</dd>
-                        </dl>
-              </div>
-          </div>
-          <div class="row home-row">
-              <div class="col-sm-12">
-                  <table class="table span6 table-striped table-bordered table-condensed">
-                      <tbody><tr>
-                             </tr></tbody><thead>
-                                              <tr><th>Artist</th>
-                                                  <th>Title</th>
-                                                  <th>Album</th>
-                                                  <th colspan="2">&nbsp;</th>
-                                              </tr></thead>
-                    
-                      <tbody data-bind="foreach: playlist">
-                          <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex()}" class="success">
-                              <td data-bind="text: Song().Artist">Illuminant</td>
-                              <td data-bind="text: Song().Title">That Recurring Moment</td>
-                              <td data-bind="text: Song().Album">October 5th</td>
-                              <td><button class="btn btn-success"><i class="fa fa-2x fa-play-circle"></i></button></td>
-                              <td><button class="btn btn-danger"><i class="fa fa-2x fa-times"></i></button></td>
-                          </tr>
-                    
-                          <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex()}" class="">
-                              <td data-bind="text: Song().Artist"></td>
-                              <td data-bind="text: Song().Title">Video Sep 22, 7 31 05 PM</td>
-                              <td data-bind="text: Song().Album"></td>
-                              <td><a href="javascript:;" data-bind="click: PlayFomPlaylist">Play</a></td>
-                              <td><a href="javascript:;" data-bind="click: RemoveFromPlaylist">Remove</a></td>
-                          </tr>
-                    
-                          <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex()}" class="">
-                              <td data-bind="text: Song().Artist">Tobacco</td>
-                              <td data-bind="text: Song().Title">Super Gum</td>
-                              <td data-bind="text: Song().Album"></td>
-                              <td><a href="javascript:;" data-bind="click: PlayFomPlaylist">Play</a></td>
-                              <td><a href="javascript:;" data-bind="click: RemoveFromPlaylist">Remove</a></td>
-                          </tr>
-                    
-                          <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex()}" class="">
-                              <td data-bind="text: Song().Artist">Build 2011</td>
-                              <td data-bind="text: Song().Title">Keynote #1</td>
-                              <td data-bind="text: Song().Album"></td>
-                              <td><a href="javascript:;" data-bind="click: PlayFomPlaylist">Play</a></td>
-                              <td><a href="javascript:;" data-bind="click: RemoveFromPlaylist">Remove</a></td>
-                          </tr>
-                    
-                          <tr data-bind="css: {success: $parent.currentSongIndex()===PlaylistIndex()}" class="">
-                              <td data-bind="text: Song().Artist">Aspirins</td>
-                              <td data-bind="text: Song().Title">Cutter</td>
-                              <td data-bind="text: Song().Album">Cutter</td>
-                              <td><a href="javascript:;" data-bind="click: PlayFomPlaylist">Play</a></td>
-                              <td><a href="javascript:;" data-bind="click: RemoveFromPlaylist">Remove</a></td>
-                          </tr>
-                      </tbody>
-                        
-                  </table>
-              </div>
-          </div>
-          <div class="row search-row" style="display: none;">
-              <ul class="nav nav-tabs">
-                  <li class="active"><a href="#tabSongs" data-toggle="tab">Songs</a></li>
-                  <li><a href="#tabPlaylists" data-toggle="tab">Playlists</a></li>
-              </ul>
-              <div class="tab-content">
-                  <div class="tab-pane active" id="tabSongs">
-                                    <input id="txtSearch"> <button id="Button1" class="btn">Search</button>
-                                    <hr>
-                                     <table class="table span6 table-striped table-bordered table-condensed">
-                                        <tbody><tr>
-                                            </tr></tbody><thead>
-                                                <tr><th>Artist</th>
-                                                <th>Title</th>
-                                                    <th>Album</th>
-                                                    <th colspan="3">&nbsp;</th>
-                                            </tr></thead>
-                                        
-                                        <tbody data-bind="foreach: searchResults">
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">Aspirins</td>
-                                                <td data-bind="text: Song.Title">Cutter</td>
-                                                <td data-bind="text: Song.Album">Cutter</td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">Boards of Canada</td>
-                                                <td data-bind="text: Song.Title">Heard from Telegraph Lines 2</td>
-                                                <td data-bind="text: Song.Album">Trans Canada Highway</td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">Build 2011</td>
-                                                <td data-bind="text: Song.Title">Keynote #1</td>
-                                                <td data-bind="text: Song.Album"></td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">Illuminant</td>
-                                                <td data-bind="text: Song.Title">That Recurring Moment</td>
-                                                <td data-bind="text: Song.Album">October 5th</td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">System of a Down</td>
-                                                <td data-bind="text: Song.Title">Kill Rock 'n Roll</td>
-                                                <td data-bind="text: Song.Album">Hypnotize</td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">The Mouseketeers</td>
-                                                <td data-bind="text: Song.Title">Mickey Mouse Club March</td>
-                                                <td data-bind="text: Song.Album">Classic Disney: Vol. II 60 Years Of Music Magical</td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        
-                                            <tr>
-                                                <td data-bind="text: Song.Artist">Tobacco</td>
-                                                <td data-bind="text: Song.Title">Super Gum</td>
-                                                <td data-bind="text: Song.Album"></td>
-                                                <td><a href="javascript:;" data-bind="click: AddToPlaylist">Enqueue</a></td>
-                                                <td><a href="javascript:;" data-bind="click: Play">Play</a></td>
-                                                <td><div class="btn-group">
-  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-    Add to playlist
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Brennan's Playlist</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Business Time</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">Christmas Music</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">New One</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test</span></a></li>
-  
-    <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i> <span data-bind="text: name">test q</span></a></li>
-  </ul>
-</div></td>
-                                            </tr>
-                                        </tbody>
-                        
-                                    </table>
-                                
-                  </div>
-                  <div class="tab-pane" id="tabPlaylists">
-                      
-                                  <input id="txtNewPlaylist"> <button id="btnAddPlaylist" class="btn">Add New</button>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <ul class="nav nav-list">
-                                                <li><a href="#">Brennan's Playlist</a></li>
-                                    
-                                                <li><a href="#">Business Time</a></li>
-                                    
-                                                <li><a href="#">Christmas Music</a></li>
-                                            </ul>
-                                        </div>
-                                        
-                                    <div class="col-sm-8">
-                                        <a id="btnEnqueueSavedPlaylist" href="javascript:;">Enqueue Playlist</a><br/>
-                                        <a id="btnPlaySavedPlaylist" href="javascript:;">Play Playlist</a>
-                                        <table class="table span6 table-striped table-bordered table-condensed">
-                                        <tbody><tr>
-                                            </tr></tbody><thead>
-                                                <tr><th>Artist</th>
-                                                <th>Title</th>
-                                                <th colspan="4">Album</th>
-                                            </tr></thead>
-                                        
-                                        <tbody data-bind="foreach: savedPlaylistSongList"></tbody>
-                        
-                                    </table>
-                                    </div>
-                                        </div>
-                                </div>
-              </div>
-          </div>
-    </div></div>
+        <!-- Begin page content -->
+        <div class="container">
+
+
+            <ng-view></ng-view>
+
+        </div>
+    </div>
 
     <div id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12" style="margin-top: 5px">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-step-backward"></i></button> 
-                    <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-play"></i></button> 
-                    <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-stop"></i></button> 
-                    <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-step-forward"></i></button> 
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-step-backward"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-play"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-stop"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-step-forward"></i></button>
                     </div>
-                  </div>
+                </div>
             </div>
         </div>
     </div>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
-      <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-      
-      <script>
-          $(document).ready(function() {
-              $("#btnSearch").click(function() {
-                  $(".home-row").hide();
-                  $(".search-row").show();
-              });
-              
-              $("#btnHome").click(function () {
-                  $(".home-row").show();
-                  $(".search-row").hide();
-              });
-          })
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://cdn.pubnub.com/pubnub-3.3.min.js"></script>
+    <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular/angular-resource.js"></script>
+    <script src="/lib/angular/angular-route.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/controllers/MainPanelController.js"></script>
+    <script src="/js/controllers/NavController.js"></script>
+    <script src="/js/controllers/SavedPlaylistController.js"></script>
+    <script src="/js/controllers/SearchController.js"></script>
+    <script src="/js/services/CurrentStatusService.js"></script>
+    <script src="/js/services/PubNubService.js"></script>
 
-      </script>
-  </body>
+</body>
 </html>
