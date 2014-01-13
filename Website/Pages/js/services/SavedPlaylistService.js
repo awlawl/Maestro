@@ -48,7 +48,7 @@ maestroApp.factory('savedPlaylistService', function($http, $log) {
                     $log.warn(data, status, headers, config);
                 });
         },
-        enqueueSavedPlaylist :function(savedPlaylistName) {
+        enqueueSavedPlaylist: function(savedPlaylistName) {
             $http({
                 method: 'POST',
                 url: "/EnqueueSavedPlaylistWithShuffle/" + encodeURI(savedPlaylistName),
@@ -59,7 +59,19 @@ maestroApp.factory('savedPlaylistService', function($http, $log) {
                 .error(function (data, status, headers, config) {
                     $log.warn(data, status, headers, config);
                 });
-        }
+        },
+        playSavedPlaylist: function (savedPlaylistName) {
+            $http({
+                method: 'POST',
+                url: "/PlaySavedPlaylistWithShuffle/" + encodeURI(savedPlaylistName),
+            })
+                .success(function () {
+
+                })
+                .error(function (data, status, headers, config) {
+                    $log.warn(data, status, headers, config);
+                });
+        },
         
        
     };

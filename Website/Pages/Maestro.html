@@ -99,10 +99,10 @@
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Quick Play <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">Play</li>
-                                <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="#">{{savedPlaylist}}</a></li>
+                                <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="javascript:;" ng-click="playSavedPlaylist(savedPlaylist)">{{savedPlaylist.Name}}</a></li>
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Enqueue</li>
-                                <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="#">{{savedPlaylist}}</a></li>
+                                <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="javascript:;" ng-click="enqueueSavedPlaylist(savedPlaylist)">{{savedPlaylist.Name}}</a></li>
                             </ul>
                         </li>
                     </ul>

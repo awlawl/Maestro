@@ -1,7 +1,7 @@
 'use strict';
 
 maestroApp.controller('SavedPlaylistController',
-    function SavedPlaylistController($scope, savedPlaylistService,controlService) {
+    function SavedPlaylistController($scope, $rootScope, savedPlaylistService,controlService) {
         $scope.SavedPlaylists = [];
         $scope.CurrentPlaylistSongs = [];
         $scope.newSavedPlaylistName = "";
@@ -60,6 +60,10 @@ maestroApp.controller('SavedPlaylistController',
             savedPlaylistService.enqueueSavedPlaylist($scope.selectedSavedPlaylist.Name);
         };
 
+        $scope.playSavedPlaylist = function() {
+            savedPlaylistService.playSavedPlaylist($scope.selectedSavedPlaylist.Name);
+        };
+
         var refreshSongsForSavedPlaylist = function (newValue) {
             savedPlaylistService.getSongsForSavedPlaylist(newValue.Name, function(songs) {
                 $scope.CurrentPlaylistSongs = songs;
@@ -71,6 +75,8 @@ maestroApp.controller('SavedPlaylistController',
                 $scope.SavedPlaylists = savedPlaylists;
                 if (callback)
                     callback();
+                
+                $rootScope.$broadcast('savedPlaylistsChanged', savedPlaylists);
             });
         };
 
