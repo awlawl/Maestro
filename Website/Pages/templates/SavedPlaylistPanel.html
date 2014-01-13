@@ -4,16 +4,13 @@
     <hr>
     <div class="row">
         <div class="col-sm-4">
-            <ul class="nav nav-list">
-                <li><a href="#">Brennan's Playlist</a></li>
-
-                <li><a href="#">Business Time</a></li>
-
-                <li><a href="#">Christmas Music</a></li>
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-repeat="savedPlaylist in SavedPlaylists" ng-class="{active: savedPlaylist==selectedSavedPlaylist}" ng-click="savedPlaylistSelect(savedPlaylist)"><a>{{savedPlaylist.Name}}</a></li>
             </ul>
         </div>
 
-        <div class="col-sm-8">
+        <div class="col-sm-8" ng-show="shouldShowSavedPlaylistDetails()">
+            <div ng-show="shouldShowSavedPlaylistSongs()">
             <a id="btnEnqueueSavedPlaylist" href="javascript:;">Enqueue Playlist</a><br />
             <a id="btnPlaySavedPlaylist" href="javascript:;">Play Playlist</a>
             <table class="table span6 table-striped table-bordered table-condensed">
@@ -29,9 +26,25 @@
                     </tr>
                 </thead>
 
-                <tbody data-bind="foreach: savedPlaylistSongList"></tbody>
+                <tbody>
+                    <tr ng-repeat="song in CurrentPlaylistSongs">
+                        <td>{{song.Artist}}</td>
+                        <td>{{song.Title}}</td>
+                        <td>{{song.Album}}</td>
+                        <td><button class="btn btn-primary"><i class="fa fa-2x fa-long-arrow-down" ng-click="enqueue(song)"></i></button></td>
+                        <td><button class="btn btn-success"><i class="fa fa-2x fa-play-circle" ng-click="play(song)"></i></button></td>
+                        <td><button class="btn btn-danger"><i class="fa fa-2x fa-times" ng-click="removeSongFromSavedPlaylist(song)"></i></button></td>
+                    </tr>
+                </tbody>
 
             </table>
+            </div>
+            <div ng-show="!shouldShowSavedPlaylistSongs()">
+                There are no songs yet for this saved playlist.
+            </div>
         </div>
-    </div>
+        
+        <div class="col-sm-8" ng-show="!shouldShowSavedPlaylistDetails()">
+            Select a playlist to begin.
+        </div>
 </div>

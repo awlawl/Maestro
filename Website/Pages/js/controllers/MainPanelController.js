@@ -34,9 +34,6 @@ maestroApp.controller('MainPanelController',
         $scope.removeFromPlaylist = function (song) {
             controlService.removeFromPlaylist(song.Song.IdValue, song.PlaylistIndex);
         };
-        
-        $scope.$on('playlistChanged', function() {
-            getPlaylist();
-        });
+
     }
 );

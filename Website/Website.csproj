@@ -87,6 +87,7 @@
     <Content Include="Pages\js\controllers\NavController.js" />
     <Content Include="Pages\js\controllers\MainPanelController.js" />
     <Content Include="Pages\js\services\ControlService.js" />
+    <Content Include="Pages\js\services\SavedPlaylistService.js" />
     <Content Include="Pages\js\services\SearchService.js" />
     <Content Include="Pages\js\services\PubNubService.js" />
     <Content Include="Pages\js\services\CurrentStatusService.js" />
