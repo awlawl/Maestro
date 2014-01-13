@@ -35,6 +35,30 @@ maestroApp.factory('savedPlaylistService', function($http, $log) {
                 .error(function (data, status, headers, config) {
                     $log.warn(data, status, headers, config);
                 });
+        },
+        newSavedPlaylist: function(newSavedPlaylistName, callback) {
+            $http({
+                method: 'POST',
+                url: "/SavedPlaylist/" + encodeURI(newSavedPlaylistName),
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function (data, status, headers, config) {
+                    $log.warn(data, status, headers, config);
+                });
+        },
+        enqueueSavedPlaylist :function(savedPlaylistName) {
+            $http({
+                method: 'POST',
+                url: "/EnqueueSavedPlaylistWithShuffle/" + encodeURI(savedPlaylistName),
+            })
+                .success(function () {
+                    
+                })
+                .error(function (data, status, headers, config) {
+                    $log.warn(data, status, headers, config);
+                });
         }
         
        

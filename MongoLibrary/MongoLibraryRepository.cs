@@ -128,13 +128,17 @@ namespace MongoLibrary
 
         }
 
-        public void AddNewSavedPlaylist(string name)
+        public SavedPlaylist AddNewSavedPlaylist(string name)
         {
+            var newOne = new MongoSavedPlaylist()
+            {
+                Name = name
+            };
+
             MongoHelper.Current.GetCollection<MongoSavedPlaylist>("savedplaylist")
-                .Insert(new MongoSavedPlaylist()
-                {
-                    Name=name
-                });
+                .Insert(newOne);
+
+            return newOne;
         }
 
         public void AddSongToSavedPlaylist(string savedPlaylistName, string songId)

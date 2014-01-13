@@ -72,7 +72,7 @@ namespace Website
                     return response;
                 };
 
-            Post["/EnqueueSavedPlaylist/{name}"] = x =>
+            Post["/EnqueueSavedPlaylistWithShuffle/{name}"] = x =>
             {
                 string name = x.name.ToString();
                 var response = (Nancy.Response)(new EnqueueSongRoute()).EnqueueSavedPlaylistWithShuffle(name);

@@ -1,6 +1,6 @@
 ﻿<div class="row">
-    <input id="txtNewPlaylist">
-    <button id="btnAddPlaylist" class="btn">Add New</button>
+    <input ng-model="newSavedPlaylistName" ng-enter="newSavedPlaylist()">
+    <button class="btn" ng-click="newSavedPlaylist()">Add New</button>
     <hr>
     <div class="row">
         <div class="col-sm-4">
@@ -11,8 +11,8 @@
 
         <div class="col-sm-8" ng-show="shouldShowSavedPlaylistDetails()">
             <div ng-show="shouldShowSavedPlaylistSongs()">
-            <a id="btnEnqueueSavedPlaylist" href="javascript:;">Enqueue Playlist</a><br />
-            <a id="btnPlaySavedPlaylist" href="javascript:;">Play Playlist</a>
+                <a ng-click="enqueueSavedPlaylist()">Enqueue Playlist</a><br />
+                <a ng-click="playSavedPlaylist()">Play Playlist</a>
             <table class="table span6 table-striped table-bordered table-condensed">
                 <tbody>
                     <tr>

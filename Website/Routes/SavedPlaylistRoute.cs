@@ -32,9 +32,9 @@ namespace Website.Routes
         {
             var library = Player.Current.Library;
 
-            library.AddNewSavedPlaylist(savedPlaylistName);
+            var newSavedPlaylist = library.AddNewSavedPlaylist(savedPlaylistName);
 
-            return "";
+            return JsonConvert.SerializeObject(newSavedPlaylist);
         }
 
         public dynamic AddSongToSavedPlaylist(string savedPlaylistName, string songId)

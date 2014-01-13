@@ -78,7 +78,7 @@ namespace MusicData
             throw new System.NotImplementedException();
         }
 
-        public void AddNewSavedPlaylist(string name)
+        public SavedPlaylist AddNewSavedPlaylist(string name)
         {
             throw new System.NotImplementedException();
         }

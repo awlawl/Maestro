@@ -13,7 +13,7 @@ namespace MusicData
         MusicInfo GetSongById(string id);
         List<SavedPlaylist> GetAllSavedPlaylists();
         List<MusicInfo> GetAllSongsForSavedPlaylist(string savedPlaylistName);
-        void AddNewSavedPlaylist(string namesavedPlaylistName);
+        SavedPlaylist AddNewSavedPlaylist(string namesavedPlaylistName);
         void AddSongToSavedPlaylist(string savedPlaylistName, string songId);
         void RemoveSongFromSavedPlaylist(string savedPlaylistName, string songId);
 

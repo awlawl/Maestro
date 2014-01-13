@@ -4,6 +4,7 @@ maestroApp.controller('SavedPlaylistController',
     function SavedPlaylistController($scope, savedPlaylistService,controlService) {
         $scope.SavedPlaylists = [];
         $scope.CurrentPlaylistSongs = [];
+        $scope.newSavedPlaylistName = "";
 
         $scope.savedPlaylistSelect = function (playlistName) {
             $scope.selectedSavedPlaylist = playlistName;
@@ -39,15 +40,37 @@ maestroApp.controller('SavedPlaylistController',
             });
         };
 
+        $scope.newSavedPlaylist = function () {
+            savedPlaylistService.newSavedPlaylist($scope.newSavedPlaylistName, function () {
+                refreshSavedPlaylistList(function() {
+                    
+                    for (var i = 0; i < $scope.SavedPlaylists.length; i++) {
+                        if ($scope.newSavedPlaylistName == $scope.SavedPlaylists[i].Name) {
+                            $scope.selectedSavedPlaylist = $scope.SavedPlaylists[i];
+                            break;
+                        }
+                    }
+                    
+                    $scope.newSavedPlaylistName = "";
+                });
+            });
+        };
+
+        $scope.enqueueSavedPlaylist = function() {
+            savedPlaylistService.enqueueSavedPlaylist($scope.selectedSavedPlaylist.Name);
+        };
+
         var refreshSongsForSavedPlaylist = function (newValue) {
             savedPlaylistService.getSongsForSavedPlaylist(newValue.Name, function(songs) {
                 $scope.CurrentPlaylistSongs = songs;
             });
         };
 
-        var refreshSavedPlaylistList = function() {
+        var refreshSavedPlaylistList = function(callback) {
             savedPlaylistService.getSavedPlaylists(function(savedPlaylists) {
                 $scope.SavedPlaylists = savedPlaylists;
+                if (callback)
+                    callback();
             });
         };
 
