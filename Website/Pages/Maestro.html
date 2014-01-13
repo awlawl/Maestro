@@ -96,7 +96,7 @@
                         <li><a href="#/search">Search</a></li>
                         <li><a href="#/savedPlaylists">Playlists</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Play <b class="caret"></b></a>
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">Quick Play <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-header">Play</li>
                                 <li ng-repeat="savedPlaylist in SavedPlaylists"><a href="#">{{savedPlaylist}}</a></li>
@@ -121,14 +121,15 @@
     </div>
 
     <div id="footer">
-        <div class="container">
+        <div class="container" ng-controller="ButtonBarController">
             <div class="row">
                 <div class="col-sm-12" style="margin-top: 5px">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-step-backward"></i></button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-play"></i></button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-stop"></i></button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-3x fa-fw fa-step-forward"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="back()"><i class="fa fa-3x fa-fw fa-step-backward"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="play()"><i class="fa fa-3x fa-fw fa-play"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="pause()"><i class="fa fa-3x fa-fw fa-pause"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="stop()"><i class="fa fa-3x fa-fw fa-stop"></i></button>
+                        <button type="button" class="btn btn-default" ng-click="next()"><i class="fa fa-3x fa-fw fa-step-forward"></i></button>
                     </div>
                 </div>
             </div>
@@ -143,12 +144,17 @@
     <script src="/lib/angular/angular-resource.js"></script>
     <script src="/lib/angular/angular-route.js"></script>
     <script src="/js/app.js"></script>
+    
     <script src="/js/controllers/MainPanelController.js"></script>
     <script src="/js/controllers/NavController.js"></script>
     <script src="/js/controllers/SavedPlaylistController.js"></script>
     <script src="/js/controllers/SearchController.js"></script>
+    <script src="/js/controllers/ButtonBarController.js"></script>
+    
     <script src="/js/services/CurrentStatusService.js"></script>
     <script src="/js/services/PubNubService.js"></script>
+    <script src="/js/services/ControlService.js"></script>
+    <script src="/js/services/SearchService.js"></script>
 
 </body>
 </html>

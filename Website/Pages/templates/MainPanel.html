@@ -35,10 +35,10 @@
                         <td class="{{song.RowClass}}">{{song.Song.Title}}</td>
                         <td class="{{song.RowClass}}">{{song.Song.Album}}</td>
                         <td class="{{song.RowClass}}">
-                            <button class="btn btn-success"><i class="fa fa-2x fa-play-circle"></i></button>
+                            <button class="btn btn-success"><i class="fa fa-2x fa-play-circle" ng-click="playFromPlaylist(song)"></i></button>
                         </td>
                         <td class="{{song.RowClass}}">
-                            <button class="btn btn-danger"><i class="fa fa-2x fa-times"></i></button>
+                            <button class="btn btn-danger"><i class="fa fa-2x fa-times" ng-click="removeFromPlaylist(song)"></i></button>
                         </td>
                     </tr>
                 </tbody>

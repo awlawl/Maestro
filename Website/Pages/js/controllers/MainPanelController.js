@@ -1,7 +1,7 @@
 'use strict';
 
 maestroApp.controller('MainPanelController',
-    function MainPanelController($scope, currentStatusService, pubNubService) {
+    function MainPanelController($scope, currentStatusService, pubNubService, controlService) {
 
         var getNowPlaying = function() {
             currentStatusService.getNowPlaying(function(nowPlaying) {
@@ -26,5 +26,17 @@ maestroApp.controller('MainPanelController',
 
         getNowPlaying();
         getPlaylist();
+
+        $scope.playFromPlaylist = function(song) {
+            controlService.playFromPlaylist(song.Song.IdValue);
+        };
+        
+        $scope.removeFromPlaylist = function (song) {
+            controlService.removeFromPlaylist(song.Song.IdValue, song.PlaylistIndex);
+        };
+        
+        $scope.$on('playlistChanged', function() {
+            getPlaylist();
+        });
     }
 );

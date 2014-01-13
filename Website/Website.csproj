@@ -56,6 +56,7 @@
     <Compile Include="ImageResponse.cs" />
     <Compile Include="MainModule.cs" />
     <Compile Include="Routes\AlbumArtRoute.cs" />
+    <Compile Include="Routes\ButtonControllsRoute.cs" />
     <Compile Include="Routes\PlaySongRoute.cs" />
     <Compile Include="Routes\EnqueueSongRoute.cs" />
     <Compile Include="Routes\PlaylistRoute.cs" />
@@ -80,10 +81,13 @@
   <ItemGroup>
     <Content Include="Pages\css\app.css" />
     <Content Include="Pages\js\app.js" />
+    <Content Include="Pages\js\controllers\ButtonBarController.js" />
     <Content Include="Pages\js\controllers\SearchController.js" />
     <Content Include="Pages\js\controllers\SavedPlaylistController.js" />
     <Content Include="Pages\js\controllers\NavController.js" />
     <Content Include="Pages\js\controllers\MainPanelController.js" />
+    <Content Include="Pages\js\services\ControlService.js" />
+    <Content Include="Pages\js\services\SearchService.js" />
     <Content Include="Pages\js\services\PubNubService.js" />
     <Content Include="Pages\js\services\CurrentStatusService.js" />
     <Content Include="Pages\templates\SearchPanel.html" />

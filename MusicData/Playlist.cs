@@ -77,6 +77,8 @@ namespace MusicData
         public void Enqueue(MusicInfo song)
         {
             this.Add(song);
+            foreach (var playlistWatcher in PlaylistWatcher)
+                playlistWatcher.PlaylistChanged();
         }
 
         public int RemainingSongs

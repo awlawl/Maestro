@@ -88,6 +88,13 @@ namespace Website
                 return response;
             };
 
+            Put["/Play"] = x =>
+            {
+                var response = (Nancy.Response)(new ButtonControllsRoute()).PlayButton();
+                response.ContentType = "application/json";
+                return response;
+            };
+
             Post["/PlaySavedPlaylist/{name}"] = x =>
             {
                 string name = x.name.ToString();
@@ -152,6 +159,39 @@ namespace Website
                 response.ContentType = "application/json";
                 return response;
             };
+
+            Put["/Stop"] = x =>
+            {
+                var response = (Nancy.Response)(new ButtonControllsRoute()).StopButton();
+                response.ContentType = "application/json";
+                return response;
+            };
+
+            Put["/Pause"] = x =>
+            {
+                var response = (Nancy.Response)(new ButtonControllsRoute()).PauseButton();
+                response.ContentType = "application/json";
+                return response;
+                return "";
+            };
+
+            Put["/Next"] = x =>
+            {
+                var response = (Nancy.Response)(new ButtonControllsRoute()).NextButton();
+                response.ContentType = "application/json";
+                return response;
+                return "";
+            };
+
+            Put["/Back"] = x =>
+            {
+                var response = (Nancy.Response)(new ButtonControllsRoute()).BackButton();
+                response.ContentType = "application/json";
+                return response;
+                return "";
+            };
+
+
 
 
         }
