@@ -11,6 +11,19 @@ namespace MusicData
         private Thread _playingThread = null;
         private WaveOut _waveOutDevice = null;
 
+        private float _volume = 0.3f;
+
+        public float Volume
+        {
+            get { return _volume; }
+            set
+            {
+                _volume = value;
+                if ((_waveOutDevice != null) && (_waveOutDevice.PlaybackState!=PlaybackState.Stopped))
+                    _waveOutDevice.Volume = value;
+            }
+        }
+
         public void PlaySong(string filename)
         {
             _playingThread = new Thread(new ParameterizedThreadStart(PlayInThread));
@@ -18,7 +31,6 @@ namespace MusicData
             _playingThread.Start(filename);
             _playingThread.Join();
         }
-
         
         private void PlayInThread(object data)
         {
@@ -42,7 +54,7 @@ namespace MusicData
                 }
 
                 _waveOutDevice.Init(inputStream);
-                _waveOutDevice.Volume = 0.3f;
+                _waveOutDevice.Volume = _volume;
                 _waveOutDevice.PlaybackStopped += _waveOutDevice_PlaybackStopped;
                 _waveOutDevice.Play();
 

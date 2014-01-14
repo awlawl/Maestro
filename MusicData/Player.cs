@@ -4,7 +4,7 @@ namespace MusicData
 {
     public class Player : IPlayer
     {
-        private IAudioInteractor _audioInteractor = null;
+        public IAudioInteractor AudioInteractor { get; set; }
         public Playlist Playlist {get;set;}
         public ILibraryRepository Library { get; set; }
         private bool _stopped = false;
@@ -26,10 +26,11 @@ namespace MusicData
 
         public Player(Playlist playlist, IAudioInteractor audioInteractor, ILibraryRepository library)
         {
-            _audioInteractor = audioInteractor;
+            AudioInteractor = audioInteractor;
             Playlist = playlist;
             _current = this;
             Library = library;
+           
         }
         
         public void Play()
@@ -48,7 +49,7 @@ namespace MusicData
                 while (!_stopped)
                 {
                     Playlist.CurrentSongIsStarting();
-                    _audioInteractor.PlaySong(Playlist.CurrentSong.FullPath);
+                    AudioInteractor.PlaySong(Playlist.CurrentSong.FullPath);
                     PlayCount++;
                     Playlist.CurrentSongIsEnding();
 
@@ -75,7 +76,7 @@ namespace MusicData
         public void Pause()
         {
             Log.Debug("Pausing");
-            _audioInteractor.PauseSong();
+            AudioInteractor.PauseSong();
             IsPaused = true;
         }
 
@@ -84,7 +85,7 @@ namespace MusicData
             Log.Debug("Resuming");
             if (IsPaused)
             {
-                _audioInteractor.ResumeSong();
+                AudioInteractor.ResumeSong();
                 IsPaused = false;
             }
         }
@@ -92,7 +93,7 @@ namespace MusicData
         public void Next()
         {
             Log.Debug("Next-ing.");
-            _audioInteractor.StopSong();
+            AudioInteractor.StopSong();
             //Stop();
             /*Playlist.MoveToNextSong();
             Play();*/
@@ -104,7 +105,7 @@ namespace MusicData
 
             Playlist.MoveBackOneSong();
             Playlist.MoveBackOneSong();
-            _audioInteractor.StopSong();
+            AudioInteractor.StopSong();
             
 
         }
@@ -113,14 +114,14 @@ namespace MusicData
         {
             Log.Debug("Stopping");
             _stopped = true;
-            _audioInteractor.StopSong();
+            AudioInteractor.StopSong();
         }
 
         public void JumpToPlaylistIndex(int playlistIndex)
         {
             Log.Debug("Jumping to index in playlist " + playlistIndex);
             this.Playlist.CurrentPosition = playlistIndex-1;
-            _audioInteractor.StopSong();
+            AudioInteractor.StopSong();
             
             //this.Play();
         }
@@ -137,10 +138,13 @@ namespace MusicData
             //var playlistIndex = this.Playlist.IndexOf(found);
 
             this.Playlist.CurrentPosition = playlistIndex - 1;
-            _audioInteractor.StopSong();
 
             //if (_stopped)
             //    this.Play();
+
+            AudioInteractor.StopSong();
+
+            
         }
     }
 }

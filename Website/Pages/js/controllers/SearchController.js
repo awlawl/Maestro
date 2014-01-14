@@ -47,7 +47,7 @@ maestroApp.controller('SearchController',
         $scope.toggleSongInSavedPlaylist = function (song, savedPlaylist) {
             if ($scope.isSongInSavedPlaylist(song, savedPlaylist)) {
                 savedPlaylistService.removeSongFromSavedPlaylist(song.IdValue, savedPlaylist.Name, function () {
-                    //song.SavedPlaylists.rem(savedPlaylist.Name);
+                    song.SavedPlaylists=_.reject(song.SavedPlaylists, function(pl) { return pl == savedPlaylist.Name; });
                 });
             } else {
                 savedPlaylistService.addSongToSavedPlaylist(song.IdValue, savedPlaylist.Name, function() {

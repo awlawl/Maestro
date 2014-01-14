@@ -99,6 +99,33 @@ maestroApp.factory('controlService', function($http, $log) {
                      $log.warn(data, status, headers, config);
                  });
         },
+        
+        getVolume: function(callback) {
+            $http({
+                method: "GET",
+                url: "/Volume/"
+        })
+                 .success(function (data) {
+                     console.log("Current volume is " + data);
+                     callback(data);
+                 })
+                 .error(function (data, status, headers, config) {
+                     $log.warn(data, status, headers, config);
+                 });
+        },
+        
+        changeVolume: function(newVolume) {
+            $http({
+                method: "POST",
+                url: "/Volume/" + newVolume
+            })
+                 .success(function () {
+                 })
+                 .error(function (data, status, headers, config) {
+                     $log.warn(data, status, headers, config);
+                 });
+        }
+
 
     };
 });

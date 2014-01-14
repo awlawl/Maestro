@@ -9,5 +9,6 @@ namespace MusicData
         void PauseSong();
         void ResumeSong();
         void StopSong();
+        float Volume { get; set; }
     }
 }

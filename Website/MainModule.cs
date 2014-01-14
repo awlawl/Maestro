@@ -12,12 +12,12 @@ namespace Website
         {
             string websitePath = System.Configuration.ConfigurationManager.AppSettings["WebsitePath"];
 
-            Get["/"] = x =>
+            Get["/old"] = x =>
             {
                 return File.ReadAllText(websitePath + "old Maestro.html");
             };
 
-            Get["/new"] = x =>
+            Get["/"] = x =>
             {
                 return File.ReadAllText(websitePath + "Maestro.html");
             };
@@ -180,7 +180,6 @@ namespace Website
                 var response = (Nancy.Response)(new ButtonControllsRoute()).NextButton();
                 response.ContentType = "application/json";
                 return response;
-                return "";
             };
 
             Put["/Back"] = x =>
@@ -188,10 +187,23 @@ namespace Website
                 var response = (Nancy.Response)(new ButtonControllsRoute()).BackButton();
                 response.ContentType = "application/json";
                 return response;
-                return "";
             };
 
+            Get["/Volume"] = x =>
+            {
+                var response = (Nancy.Response) (new VolumeRoute()).GetVolume();
+                response.ContentType = "application/json";
+                return response;
+            };
 
+            Post["/Volume/{value}"] = x =>
+            {
+                float value = float.Parse(x.value.ToString());
+                var response = (Nancy.Response)(new VolumeRoute()).SetVolume(value);
+                response.ContentType = "application/json";
+                return response;
+            };
+            
 
 
         }

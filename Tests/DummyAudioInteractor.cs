@@ -40,5 +40,8 @@ namespace Tests
         public bool WasResumed { get; set; }
 
         public bool WasStopped { get; set; }
+
+
+        public float Volume { get; set; }
     }
 }

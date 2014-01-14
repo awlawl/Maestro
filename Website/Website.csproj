@@ -62,6 +62,7 @@
     <Compile Include="Routes\PlaylistRoute.cs" />
     <Compile Include="Routes\SavedPlaylistRoute.cs" />
     <Compile Include="Routes\SearchRoute.cs" />
+    <Compile Include="Routes\VolumeRoute.cs" />
     <Compile Include="SelfHostedWebsite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
