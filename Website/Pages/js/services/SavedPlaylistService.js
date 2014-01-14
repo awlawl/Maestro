@@ -72,6 +72,18 @@ maestroApp.factory('savedPlaylistService', function($http, $log) {
                     $log.warn(data, status, headers, config);
                 });
         },
+        addSongToSavedPlaylist: function(id, savedPlaylistName, callback) {
+            $http({
+                method: 'POST',
+                url: "/SavedPlaylist/" + encodeURI(savedPlaylistName) + "/" + encodeURI(id),
+            })
+               .success(function () {
+                   callback();
+               })
+               .error(function (data, status, headers, config) {
+                   $log.warn(data, status, headers, config);
+               });
+        }
         
        
     };

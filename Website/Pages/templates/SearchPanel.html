@@ -21,25 +21,15 @@
                 <td>{{song.Artist}}</td>
                 <td>{{song.Title}}</td>
                 <td>{{song.Album}}</td>
-                <td><button class="btn btn-primary"><i class="fa fa-2x fa-long-arrow-down" ng-click="enqueue(song)"></i></button></td>
-                <td> <button class="btn btn-success"><i class="fa fa-2x fa-play-circle" ng-click="play(song)"></i></button></td>
+                <td><button class="btn btn-primary" ng-click="enqueue(song)"><i class="fa fa-2x fa-long-arrow-down" ></i></button></td>
+                <td> <button class="btn btn-success" ng-click="play(song)"><i class="fa fa-2x fa-play-circle" ng-click="play(song)"></i></button></td>
                 <td>
                     <div class="btn-group">
                         <a class="btn dropdown-toggle" data-toggle="dropdown">Add to playlist
                             <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu" data-bind="foreach: $root.savedPlaylists">
-                            <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i><span data-bind="text: name">Brennan's Playlist</span></a></li>
-
-                            <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i><span data-bind="text: name">Business Time</span></a></li>
-
-                            <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i><span data-bind="text: name">Christmas Music</span></a></li>
-
-                            <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i><span data-bind="text: name">New One</span></a></li>
-
-                            <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i><span data-bind="text: name">test</span></a></li>
-
-                            <li><a href="javascript:;" data-bind="click: $parent.toggleSongInPlaylist"><i class="icon-check" data-bind="visible: $parent.isSongInSavedPlaylist(name())" style="display: none;"></i><span data-bind="text: name">test q</span></a></li>
+                        <ul class="dropdown-menu" >
+                            <li ng-repeat="savedPlaylist in SavedPlaylists" ><a href="javascript:;" ng-click="toggleSongInSavedPlaylist(song,savedPlaylist)"><i class="fa fa-check" ng-show="isSongInSavedPlaylist(song,savedPlaylist)"></i><span> {{savedPlaylist.Name}}</span></a></li>
                         </ul>
                     </div>
                 </td>

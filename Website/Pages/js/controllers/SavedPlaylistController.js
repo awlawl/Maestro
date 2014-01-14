@@ -25,12 +25,16 @@ maestroApp.controller('SavedPlaylistController',
         };
 
         $scope.enqueue = function(song) {
-            controlService.enqueueSong(song.IdValue, function (){});
+            controlService.enqueueSong(song.IdValue, function() {
+                toastr.info(song.Title + " added to the queue.");
+            });
+
         };
         
         $scope.play = function (song) {
             controlService.enqueueSong(song.IdValue, function () {
                 controlService.playFromPlaylist(song.IdValue);
+                toastr.info("Now playing " + song.Title + ".");
             });
         };
 
@@ -58,10 +62,12 @@ maestroApp.controller('SavedPlaylistController',
 
         $scope.enqueueSavedPlaylist = function() {
             savedPlaylistService.enqueueSavedPlaylist($scope.selectedSavedPlaylist.Name);
+            toastr.info("Playlist " + $scope.selectedSavedPlaylist.Name + " added to the queue.");
         };
 
         $scope.playSavedPlaylist = function() {
             savedPlaylistService.playSavedPlaylist($scope.selectedSavedPlaylist.Name);
+            toastr.info("Now playing " + $scope.selectedSavedPlaylist.Name + " playlist.");
         };
 
         var refreshSongsForSavedPlaylist = function (newValue) {
