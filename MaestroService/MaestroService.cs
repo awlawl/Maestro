@@ -97,13 +97,13 @@ namespace MaestroService
             //POC code for playing in the service
             
             var testDirectories = new string[] {
-                @"f:\music\Manchester Orchestra\Mean Everything To Nothing",
-                @"F:\music\Auf Der Maur\Auf Der Maur",
-                @"C:\Users\awl\Music\deftones",
-                @"F:\music\Nine Inch Nails",
-                @"c:\Shared\Maestro\Music\Manual",
+                //@"f:\music\Manchester Orchestra\Mean Everything To Nothing",
+                //@"F:\music\Auf Der Maur\Auf Der Maur",
+                //@"C:\Users\awl\Music\deftones",
+                //@"F:\music\Nine Inch Nails",
+                //@"c:\Shared\Maestro\Music\Manual",
                 //@"C:\Users\awl\Dropbox\Music\Maestro",
-                @"C:\Users\alyons2\Dropbox\Stuff\Maestro\TestLibrary"
+                @"C:\Users\alyons2\Dropbox\Music\Maestro"
             };
 
             library.ClearLibrary();

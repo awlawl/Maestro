@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-sm-4">
             <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="savedPlaylist in SavedPlaylists" ng-class="{active: savedPlaylist==selectedSavedPlaylist}" ng-click="savedPlaylistSelect(savedPlaylist)"><a>{{savedPlaylist.Name}}</a></li>
+                <li ng-repeat="savedPlaylist in SavedPlaylists" ng-class="{active: savedPlaylist==selectedSavedPlaylist}" ng-click="savedPlaylistSelect(savedPlaylist)"><a>{{savedPlaylist.Name}}</a>&nbsp;<button class="btn btn-danger" ng-click="removeSavedPlaylist(savedPlaylist.IdValue)"><i class="fa fa-times"></i></button></li>
             </ul>
         </div>
 

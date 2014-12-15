@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using MongoDB.Driver.Builders;
 using MongoDB.Bson;
@@ -165,5 +166,10 @@ namespace MongoLibrary
 
         }
 
+        public void RemoveSavedPlaylist(string savedPlaylistId)
+        {
+            var collection = MongoHelper.Current.GetCollection<MongoSavedPlaylist>("savedplaylist");
+            collection.Remove(Query<MongoSavedPlaylist>.EQ(e => e.Id, ObjectId.Parse(savedPlaylistId)),WriteConcern.Acknowledged);
+        }
     }
 }

@@ -143,6 +143,14 @@ namespace Website
                 return response;
             };
 
+            Delete["/SavedPlaylist/{playlistId}"] = x =>
+            {
+                string playlistId = x.playlistId.ToString();
+                var response = (Nancy.Response) (new SavedPlaylistRoute()).RemoveSavedPlaylist(playlistId);
+                response.ContentType = "application/json";
+                return response;
+            };
+
             Delete["/SavedPlaylist/{name}/{id}"] = x =>
             {
                 string name = x.name.ToString();

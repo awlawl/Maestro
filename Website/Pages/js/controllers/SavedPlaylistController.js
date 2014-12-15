@@ -44,17 +44,25 @@ maestroApp.controller('SavedPlaylistController',
             });
         };
 
-        $scope.newSavedPlaylist = function () {
-            savedPlaylistService.newSavedPlaylist($scope.newSavedPlaylistName, function () {
+        $scope.removeSavedPlaylist = function (playlistId) {
+            $scope.newSavedPlaylistName = "";
+
+            savedPlaylistService.removeSavedPlaylist(playlistId, function () {
+                refreshSavedPlaylistList();
+            });
+        };
+
+        $scope.newSavedPlaylist = function() {
+            savedPlaylistService.newSavedPlaylist($scope.newSavedPlaylistName, function() {
                 refreshSavedPlaylistList(function() {
-                    
+
                     for (var i = 0; i < $scope.SavedPlaylists.length; i++) {
                         if ($scope.newSavedPlaylistName == $scope.SavedPlaylists[i].Name) {
                             $scope.selectedSavedPlaylist = $scope.SavedPlaylists[i];
                             break;
                         }
                     }
-                    
+
                     $scope.newSavedPlaylistName = "";
                 });
             });
