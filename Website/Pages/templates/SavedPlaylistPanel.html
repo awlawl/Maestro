@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-sm-4">
             <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="savedPlaylist in SavedPlaylists" ng-class="{active: savedPlaylist==selectedSavedPlaylist}" ng-click="savedPlaylistSelect(savedPlaylist)"><a>{{savedPlaylist.Name}}</a>&nbsp;<button class="btn btn-danger" ng-click="removeSavedPlaylist(savedPlaylist)"><i class="fa fa-times"></i></button></li>
+                <li ng-repeat="savedPlaylist in SavedPlaylists" ng-class="{active: savedPlaylist==selectedSavedPlaylist}" ng-click="savedPlaylistSelect(savedPlaylist)"><nobr><button class="btn btn-danger" ng-click="removeSavedPlaylist(savedPlaylist)"><i class="fa fa-times"></i></button>&nbsp;<a>{{savedPlaylist.Name}}</a>&nbsp;</nobr></li>
             </ul>
         </div>
 
         <div class="col-sm-8" ng-show="shouldShowSavedPlaylistDetails()">
             <div ng-show="shouldShowSavedPlaylistSongs()">
-                <a ng-click="playSavedPlaylist()">Play Playlist</a>
+                <a ng-click="playSavedPlaylist()">Play Playlist</a> - 
                 <a ng-click="enqueueSavedPlaylist()">Enqueue Playlist</a><br />
             <table class="table span6 table-striped table-bordered table-condensed">
                 <tbody>
