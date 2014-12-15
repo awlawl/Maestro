@@ -44,12 +44,14 @@ maestroApp.controller('SavedPlaylistController',
             });
         };
 
-        $scope.removeSavedPlaylist = function (playlistId) {
-            $scope.newSavedPlaylistName = "";
+        $scope.removeSavedPlaylist = function (savedPlaylist) {
+            if (confirm("Are you sure you want to remove " + savedPlaylist.Name)) {
+                $scope.newSavedPlaylistName = "";
 
-            savedPlaylistService.removeSavedPlaylist(playlistId, function () {
-                refreshSavedPlaylistList();
-            });
+                savedPlaylistService.removeSavedPlaylist(savedPlaylist.IdValue, function() {
+                    refreshSavedPlaylistList();
+                });
+            }
         };
 
         $scope.newSavedPlaylist = function() {
