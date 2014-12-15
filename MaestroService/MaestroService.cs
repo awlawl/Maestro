@@ -66,6 +66,7 @@ namespace MaestroService
                 _pubnub = new PubnubMessaging(player, true);
 
                 messagingWatcher.AssignMessaging(_pubnub);
+                messagingWatcher.AttachToPlaylist(playlist, library);
                 playlistManager.AttachToPlaylist(playlist, library);
 
                 _pubnub.StartListening();
@@ -76,6 +77,8 @@ namespace MaestroService
 
                 if (ConfigurationManager.AppSettings["AutoStartPlaying"]=="true")
                     player.Play();
+
+                _pubnub.SendNowPlaying(playlist[0]);
             }
             catch (Exception exc)
             {
@@ -98,8 +101,9 @@ namespace MaestroService
                 @"F:\music\Auf Der Maur\Auf Der Maur",
                 @"C:\Users\awl\Music\deftones",
                 @"F:\music\Nine Inch Nails",
-                @"c:\Shared\Maestro\Music\Manual"
-                //@"C:\Users\awl\Dropbox\Music\Maestro"
+                @"c:\Shared\Maestro\Music\Manual",
+                //@"C:\Users\awl\Dropbox\Music\Maestro",
+                @"C:\Users\alyons2\Dropbox\Stuff\Maestro\TestLibrary"
             };
 
             library.ClearLibrary();

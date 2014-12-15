@@ -27,7 +27,6 @@ maestroApp.controller('ButtonBarController',
             
             $scope.$watch('volume', function (newValue, oldValue) {
                 if (newValue != oldValue) {
-                    console.log("volume changed from " + oldValue + " to " + newValue);
                     controlService.changeVolume(newValue/100);
                 }
             });

@@ -13,7 +13,8 @@ maestroApp.factory('currentStatusService', function($http, $log) {
         },
         getNowPlaying: function(callback) {
             $http({ method: 'GET', url: '/NowPlaying' })
-                .success(function(data, status, headers, config) {
+                .success(function (data, status, headers, config) {
+                    data.AlbumArtUrl = "/AlbumArt?" + data.IdValue;
                     callback(data);
                 })
                 .error(function(data, status, headers, config) {
